@@ -12,12 +12,12 @@ use DateTime;
 use JSON ();
 use List::Util qw( max );
 use Socket;
+use Sys::Hostname;
 
-use constant HOST      => "emit";
 use constant HOME_HOST => "pike.dyn.hexten.net";
 
 my $CONN = {
-  host     => HOST,
+  host     => "localhost",
   database => "activity_log",
   user     => "root",
   pass     => "",
@@ -30,20 +30,27 @@ my $now = DateTime->now;
 my @columns = map { $_->{Field} }
  @{ $dbh->selectall_arrayref( "DESCRIBE `activity`", { Slice => {} } ) };
 
-$dbh->do(
-  "INSERT INTO `batch` (`when`, `home_ip`) VALUES (?, ?)",
-  {},
-  DateTime::Format::MySQL->format_datetime($now),
-  join( ",", resolve_host(HOME_HOST) )
-);
-my $batch_id = $dbh->last_insert_id( undef, undef, undef, undef );
+my $batch_id = undef;
+my $host     = short_hostname();
+my @db       = @{ $dbh->selectcol_arrayref("SHOW DATABASES") };
 
-my @db = @{ $dbh->selectcol_arrayref("SHOW DATABASES") };
 for my $db (@db) {
   my @pfx = get_wp_prefix( $dbh, $db, "aryo_activity_log" );
   for my $pfx (@pfx) {
-    my $log = tail_log( $dbh, $batch_id, HOST, $db, $pfx );
+    my $log = tail_log( $dbh, $host, $db, $pfx );
     next unless @$log;
+
+    $batch_id //= do {
+      $dbh->do(
+        "INSERT INTO `batch` (`when`, `home_ip`) VALUES (?, ?)",
+        {},
+        DateTime::Format::MySQL->format_datetime($now),
+        join( ",", resolve_host(HOME_HOST) )
+      );
+      $dbh->last_insert_id( undef, undef, undef, undef );
+    };
+
+    $_->{batch_id} = $batch_id for @$log;
     my $ph = join ", ", map "?", @columns;
     $dbh->do(
       join( " ",
@@ -58,7 +65,7 @@ for my $db (@db) {
 }
 
 sub tail_log {
-  my ( $dbh, $batch_id, $host, $db, $pfx ) = @_;
+  my ( $dbh, $host, $db, $pfx ) = @_;
   my $t_aal   = "${pfx}aryo_activity_log";
   my $t_users = "${pfx}users";
 
@@ -102,7 +109,6 @@ sub tail_log {
     $row->{database} = $db;
     $row->{table}    = $t_aal;
     $row->{when}     = DateTime::Format::MySQL->format_datetime($when);
-    $row->{batch_id} = $batch_id;
   }
 
   return $rows;
@@ -134,6 +140,11 @@ sub resolve_host {
   my $name = shift;
   my @addr = gethostbyname($name) or return;
   return map { inet_ntoa($_) } @addr[4 .. $#addr];
+}
+
+sub short_hostname {
+  ( my $host = shift // hostname ) =~ s/\..*//;
+  return $host;
 }
 
 # vim:ts=2:sw=2:sts=2:et:ft=perl
