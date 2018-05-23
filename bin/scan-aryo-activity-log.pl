@@ -34,6 +34,8 @@ my $batch_id = undef;
 my $host     = short_hostname();
 my @db       = @{ $dbh->selectcol_arrayref("SHOW DATABASES") };
 
+$dbh->do("START TRANSACTION");
+
 for my $db (@db) {
   my @pfx = get_wp_prefix( $dbh, $db, "aryo_activity_log" );
   for my $pfx (@pfx) {
@@ -63,6 +65,8 @@ for my $db (@db) {
     );
   }
 }
+
+$dbh->do("COMMIT");
 
 sub tail_log {
   my ( $dbh, $host, $db, $pfx ) = @_;
