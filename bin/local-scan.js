@@ -32,12 +32,14 @@ const getBatch = lazy(() => {
   });
 });
 
-loadLatest(sequelize)
+loadLatest(sequelize, TABLE_SUFFIX)
   .then(() => sequelize.close())
   .catch(e => console.log(e));
 
-async function loadLatest(sequelize) {
-  const info = await survey(sequelize, TABLE_SUFFIX);
+async function loadLatest(sequelize, table) {
+  const info = await survey(sequelize, table);
+
+  let bulk = [];
 
   for (let spec of info) {
     const log = await loadLog(sequelize, spec, os.hostname());
@@ -45,15 +47,15 @@ async function loadLatest(sequelize) {
 
     const batch = await getBatch();
 
-    let bulk = [];
     for (let ent of log) {
       let rec = mapAttributes(Activity, ent);
       rec.batchId = batch.id;
       bulk.push(rec);
     }
-
-    await Activity.bulkCreate(bulk);
   }
+
+  if (bulk.length)
+    await Activity.bulkCreate(bulk);
 }
 
 function mapAttributes(model, rec) {
