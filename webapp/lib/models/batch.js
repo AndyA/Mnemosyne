@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       field: "when"
     },
-    homeIp: {
+    homeAddr: {
       type: DataTypes.STRING(55),
       allowNull: false,
       field: "home_ip"

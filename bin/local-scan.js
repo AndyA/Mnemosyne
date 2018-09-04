@@ -18,7 +18,7 @@ const sequelize = new Sequelize({
   operatorsAliases: false
 });
 
-const {Activity, ActivityHWM, Batch} = require("../webapp/lib/models")(sequelize);
+const {Activity, Batch} = require("../webapp/lib/models")(sequelize);
 
 const getHomeHost = lazy(() => {
   return dns.resolve4Async(HOME_HOST);
@@ -27,7 +27,7 @@ const getHomeHost = lazy(() => {
 const getBatch = lazy(() => {
   return getHomeHost().then(addr => {
     return Batch.create({
-      homeIp: addr[0]
+      homeAddr: addr[0]
     });
   });
 });
@@ -49,7 +49,7 @@ async function loadLatest(sequelize, table) {
 
     for (let ent of log) {
       let rec = mapAttributes(Activity, ent);
-      rec.batchId = batch.id;
+      rec.batchID = batch.id;
       bulk.push(rec);
     }
   }

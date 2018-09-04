@@ -20,13 +20,13 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       field: "table"
     },
-    histId: {
+    histID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       field: "histid"
     },
-    batchId: {
+    batchID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       field: "batch_id"
@@ -61,17 +61,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       field: "object_name"
     },
-    objectId: {
+    objectID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       field: "object_id"
     },
-    userId: {
+    userID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       field: "user_id"
     },
-    histIp: {
+    histAddr: {
       type: DataTypes.STRING(55),
       allowNull: false,
       field: "hist_ip"
