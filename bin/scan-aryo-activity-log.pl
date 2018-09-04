@@ -78,7 +78,8 @@ sub tail_log {
 
   my ($hwm) = $dbh->selectrow_array(
     join( " ",
-      "SELECT `histid` FROM `activity_hwm`",
+      "SELECT MAX(`histid`) AS `hwm`",
+      "  FROM `activity`",
       " WHERE `host` = ?",
       "   AND `database` = ?",
       "   AND `table` = ?" ),
@@ -97,14 +98,6 @@ sub tail_log {
       join( " AND ", @term ) ),
     { Slice => {} },
     @bind
-  );
-
-  return [] unless @$rows;
-
-  my $new_hwm = max( map { $_->{histid} } @$rows );
-  $dbh->do(
-    "REPLACE INTO `activity_hwm` (`host`, `database`, `table`, `histid`) VALUES (?, ?, ?, ?)",
-    {}, $host, $db, $t_aal, $new_hwm
   );
 
   for my $row (@$rows) {
