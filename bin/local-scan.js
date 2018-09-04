@@ -1,7 +1,6 @@
 "use strict";
 
 const os = require("os");
-const _ = require("lodash");
 const Promise = require("bluebird");
 const Sequelize = require("sequelize");
 const lazy = require("lazy-eval").default;
@@ -33,24 +32,29 @@ const getBatch = lazy(() => {
   });
 });
 
-survey(sequelize, TABLE_SUFFIX).then(info => {
-  return Promise.map(info, spec => {
-    return loadLog(sequelize, spec, os.hostname()).then(log => {
-      if (!log.length)
-        return null;
-      return getBatch().then(batch => {
-        let bulk = [];
-        for (let ent of log) {
-          let rec = mapAttributes(Activity, ent);
-          rec.batchId = batch.id;
-          bulk.push(rec);
-        }
-        return Activity.bulkCreate(bulk);
-      });
-    });
-  });
-}).then(() => sequelize.close())
+loadLatest(sequelize)
+  .then(() => sequelize.close())
   .catch(e => console.log(e));
+
+async function loadLatest(sequelize) {
+  const info = await survey(sequelize, TABLE_SUFFIX);
+
+  for (let spec of info) {
+    const log = await loadLog(sequelize, spec, os.hostname());
+    if (!log.length) continue;
+
+    const batch = await getBatch();
+
+    let bulk = [];
+    for (let ent of log) {
+      let rec = mapAttributes(Activity, ent);
+      rec.batchId = batch.id;
+      bulk.push(rec);
+    }
+
+    await Activity.bulkCreate(bulk);
+  }
+}
 
 function mapAttributes(model, rec) {
   const attrs = model.rawAttributes;
@@ -64,8 +68,8 @@ function mapAttributes(model, rec) {
   return out;
 }
 
-function loadLog(sequelize, spec, host) {
-  return sequelize.query(
+async function loadLog(sequelize, spec, host) {
+  const histid = await sequelize.query(
     "SELECT MAX(`histid`) AS `hwm`" +
     "  FROM `activity`" +
     " WHERE `host` = ?" +
@@ -74,59 +78,62 @@ function loadLog(sequelize, spec, host) {
       raw: true,
       type: Sequelize.QueryTypes.SELECT,
       replacements: [host, spec.db, spec.table]
-    }).then(histid => {
+    });
 
-    let term = [quoteIdent("aal", "user_id") + " = " + quoteIdent("u", "ID")];
-    let bind = [host, spec.db, spec.table];
+  let term = [quoteIdent("aal", "user_id") + " = " + quoteIdent("u", "ID")];
+  let bind = [host, spec.db, spec.table];
 
-    if (histid[0].hwm !== null) {
-      term.push(quoteIdent("aal", "histid") + " > ?");
-      bind.push(histid[0].hwm);
-    }
+  if (histid[0].hwm !== null) {
+    term.push(quoteIdent("aal", "histid") + " > ?");
+    bind.push(histid[0].hwm);
+  }
 
-    return sequelize.query(
-      "SELECT ? AS `host`, ? AS `database`, ? AS `table`, " +
-      "       FROM_UNIXTIME(`aal`.`hist_time`) AS `when`, " +
-      "       `aal`.*, `u`.* " +
-      "  FROM " + quoteIdent(spec.db, spec.table) + " AS `aal`, " +
-      "       " + quoteIdent(spec.db, spec.prefix + "users") + " AS `u`" +
-      " WHERE " + term.join(" AND "), {
-        type: Sequelize.QueryTypes.SELECT,
-        replacements: bind
-      });
-  });
+  return sequelize.query(
+    "SELECT ? AS `host`, ? AS `database`, ? AS `table`, " +
+    "       FROM_UNIXTIME(`aal`.`hist_time`) AS `when`, " +
+    "       `aal`.*, `u`.* " +
+    "  FROM " + quoteIdent(spec.db, spec.table) + " AS `aal`, " +
+    "       " + quoteIdent(spec.db, spec.prefix + "users") + " AS `u`" +
+    " WHERE " + term.join(" AND "), {
+      type: Sequelize.QueryTypes.SELECT,
+      replacements: bind
+    });
 }
 
-function survey(sequelize, table) {
+async function survey(sequelize, table) {
 
   const re = new RegExp(`^(.*?)${quoteMeta(table)}$`);
 
-  return sequelize.query("SHOW DATABASES", {
+  const databases = await sequelize.query("SHOW DATABASES", {
     raw: true,
     type: Sequelize.QueryTypes.SELECT
-  }).then(databases => {
-    return Promise.map(databases, db => {
-      return sequelize.query(`SHOW TABLES FROM ${quoteIdent(db.Database)} LIKE ?`, {
-        raw: true,
-        type: Sequelize.QueryTypes.SELECT,
-        replacements: ["%" + table]
-      }).then(tables => {
-        return tables.map(t => {
-          const tableName = (Object.values(t))[0];
-          const m = re.exec(tableName);
-          if (!m)
-            throw new Error(tableName + " does not match " + re);
-          return {
-            db: db.Database,
-            table: tableName,
-            prefix: m[1],
-          }
-        });
-      });
-    });
-  }).then(info => {
-    return _.flatten(info);
   });
+
+  let info = [];
+
+  for (let db of databases) {
+    const tables = await sequelize.query(`SHOW TABLES FROM ${quoteIdent(db.Database)} LIKE ?`, {
+      raw: true,
+      type: Sequelize.QueryTypes.SELECT,
+      replacements: ["%" + table]
+    });
+
+    for (let t of tables) {
+      const tableName = (Object.values(t))[0];
+
+      const m = re.exec(tableName);
+      if (!m)
+        throw new Error(tableName + " does not match " + re);
+
+      info.push({
+        db: db.Database,
+        table: tableName,
+        prefix: m[1],
+      });
+    }
+  }
+
+  return info;
 }
 
 function quoteMeta(str) {
