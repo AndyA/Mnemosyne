@@ -11,7 +11,7 @@ const HOME_HOST = "pike.dyn.hexten.net";
 const TABLE_SUFFIX = "aryo_activity_log";
 
 const sequelize = new Sequelize({
-  database: "activity_log_2",
+  database: "activity_log",
   username: "root",
   password: null,
   dialect: "mysql",
@@ -49,7 +49,8 @@ survey(sequelize, TABLE_SUFFIX).then(info => {
       });
     });
   });
-}).then(() => sequelize.close());;
+}).then(() => sequelize.close())
+  .catch(e => console.log(e));
 
 function mapAttributes(model, rec) {
   const attrs = model.rawAttributes;
@@ -124,7 +125,7 @@ function survey(sequelize, table) {
       });
     });
   }).then(info => {
-    return _.flatten(info.filter(x => x.length));
+    return _.flatten(info);
   });
 }
 
