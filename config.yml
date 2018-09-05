@@ -1,2 +1,7 @@
 ---
 appname: WPActivityLog
+db:
+  database: activity_log
+  username: root
+  password: null
+  dialect: mysql

@@ -5,18 +5,20 @@ const Promise = require("bluebird");
 const Sequelize = require("sequelize");
 const lazy = require("lazy-eval").default;
 const dns = Promise.promisifyAll(require('dns'));
+const YAML = require('yamljs');
 
 const HOME_HOST = "pike.dyn.hexten.net";
 const TABLE_SUFFIX = "aryo_activity_log";
+const CONFIG_FILE = "config.yml";
 
-const sequelize = new Sequelize({
-  database: "activity_log",
-  username: "root",
-  password: null,
-  dialect: "mysql",
+const config = YAML.load(CONFIG_FILE);
+
+const dbConfig = Object.assign({}, {
   logging: false,
   operatorsAliases: false
-});
+}, config.db);
+
+const sequelize = new Sequelize(dbConfig);
 
 const {Activity, Batch} = require("../webapp/lib/models")(sequelize);
 
