@@ -7,8 +7,6 @@ const lazy = require("lazy-eval").default;
 const dns = Promise.promisifyAll(require('dns'));
 const YAML = require('yamljs');
 
-const HOME_HOST = "pike.dyn.hexten.net";
-const TABLE_SUFFIX = "aryo_activity_log";
 const CONFIG_FILE = "config.yml";
 
 const config = YAML.load(CONFIG_FILE);
@@ -23,7 +21,7 @@ const sequelize = new Sequelize(dbConfig);
 const {Activity, Batch} = require("../webapp/lib/models")(sequelize);
 
 const getHomeHost = lazy(() => {
-  return dns.resolve4Async(HOME_HOST);
+  return dns.resolve4Async(config.app.home_host);
 });
 
 const getBatch = lazy(() => {
@@ -34,7 +32,7 @@ const getBatch = lazy(() => {
   });
 });
 
-loadLatest(sequelize, TABLE_SUFFIX)
+loadLatest(sequelize, config.app.table_suffix)
   .then(() => sequelize.close())
   .catch(e => console.log(e));
 
