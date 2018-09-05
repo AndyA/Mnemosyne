@@ -1,7 +1,7 @@
 {
    "author" : "Andy Armstrong <andy@hexten.net>",
    "bugs" : {
-      "url" : "https://github.com/AndyA/WPActivityLog/issues"
+      "url" : "https://github.com/AndyA/Mnemosyne/issues"
    },
    "dependencies" : {
       "bluebird" : "^3.5.2",
@@ -40,13 +40,13 @@
       "watchify" : "^3.11.0",
       "yamljs" : "^0.3.0"
    },
-   "homepage" : "https://github.com/AndyA/WPActivityLog#readme",
+   "homepage" : "https://github.com/AndyA/Mnemosyne#readme",
    "license" : "ISC",
    "main" : "index.js",
-   "name" : "wpactivitylog",
+   "name" : "mnemosyne",
    "repository" : {
       "type" : "git",
-      "url" : "git+https://github.com/AndyA/WPActivityLog.git"
+      "url" : "git+https://github.com/AndyA/Mnemosyne.git"
    },
    "scripts" : {
       "test" : "echo \"Error: no test specified\" && exit 1"
