@@ -32,7 +32,19 @@ final class MnemosyneMain
     }
 
     public function cron() {
-        $resp = wp_remote_retrieve_body(wp_remote_get("https://mn.tthtesting.co.uk/mn.php"));
+        error_log("Starting cron");
+        $ex = new MnemosyneExport();
+        $rep = $ex->getLatest();
+        $resp = wp_remote_post("http://192.168.1.131:3000/api/wp/push", array(
+            "headers" => array("Content-type" => "application/json"),
+            "body" => json_encode($rep)
+        ));
+        if (is_wp_error($resp)) {
+            error_log("Error: " . $resp->get_error_message());
+        }
+        else {
+            error_log("Cron done");
+        }
     }
 
     /**

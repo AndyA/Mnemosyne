@@ -12,6 +12,7 @@ var app = express();
 app.use(bodyParser.json());
 
 app.use(require("../webapp/srv/js/views.js"));
+app.use(require("../webapp/srv/js/api.js"));
 
 app.use(express.static(WEBROOT));
 
