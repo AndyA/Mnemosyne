@@ -1,0 +1,3 @@
+[submodule "ext/activity-log"]
+	path = ext/activity-log
+	url = https://github.com/pojome/activity-log.git
