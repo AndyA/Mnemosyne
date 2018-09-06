@@ -33,4 +33,12 @@ if (!defined('WPINC')) {
 define( 'MNEMOSYNE__FILE__', __FILE__ );
 define( 'MNEMOSYNE_BASE', plugin_basename( MNEMOSYNE__FILE__ ) );
 
+include( 'classes/class-mnem-settings.php' );
+include( 'classes/class-mnem-cron.php' );
+include( 'classes/class-main.php' );
+
+register_activation_hook( MNEMOSYNE__FILE__, array("MnemosyneMain", "activate" ));
+register_deactivation_hook( MNEMOSYNE__FILE__, array("MnemosyneMain", "deactivate" ));
+
+MnemosyneMain::instance();
 
