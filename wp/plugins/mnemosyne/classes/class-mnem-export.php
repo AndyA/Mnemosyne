@@ -70,8 +70,9 @@ class MnemosyneExport {
 
     private function fixLog($log) {
         $url = home_url();
+        $host = gethostname();
 
-        return array_map(function ($ent) use ($url) {
+        return array_map(function ($ent) use ($url, $host) {
             unset($ent['ID']);
             unset($ent['user_pass']);
             unset($ent['user_activation_key']);
@@ -79,7 +80,6 @@ class MnemosyneExport {
             $ent['siteurl'] = $url;
 
             $ts = new DateTime("@" . $ent['hist_time']);
-            $host = gethostname();
 
             $ev = array(
               "uuid" => self::createUUID(array(
@@ -109,8 +109,7 @@ class MnemosyneExport {
                   "user_email"      => "email",
                   "user_url"        => "url",
                   "user_registered" => "registered",
-                  "display_name"    => "display", 
-                  "host_ip"         => "addr"
+                  "display_name"    => "display"
                 )
               ), 
               "target" => self::pickKeys($ent, array(
@@ -135,7 +134,6 @@ class MnemosyneExport {
                 array("meta.sender", "meta.kind"), 
                 array("meta.sender", "meta.host"), 
                 array("identity.email"), 
-                array("identity.addr"), 
                 array("identity.login"), 
                 array("identity.login", "target.site_url"), 
                 array("identity.caps"), 
