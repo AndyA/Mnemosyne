@@ -89,9 +89,14 @@ class MnemosyneExport {
                 $ent['hist_time'] 
               )), 
               "sender" => "Wordpress", 
+              "kind" => "Activity Log", 
               "host" => $host, 
               "timing" => array(
-                "start" => $ts->format(DateTime::ATOM)
+                "start" => $ts->format(DateTime::ATOM),
+                "busy"  => array(
+                  "before" => 10,
+                  "after"  =>  5
+                )
               ), 
               "identity" => self::pickKeys($ent, array(
                   "user_id"         => "id",
@@ -120,8 +125,15 @@ class MnemosyneExport {
             );
 
             $ev["index"] = self::buildIndex($ev, array(
+                array("sender"), 
+                array("kind"), 
+                array("host"), 
+                array("sender", "kind"), 
+                array("sender", "host"), 
                 array("identity.email"), 
+                array("identity.login"), 
                 array("identity.login", "target.site_url"), 
+                array("identity.caps"), 
                 array("target.site_url"), 
                 array("event.action"), 
                 array("event.object_type"), 
