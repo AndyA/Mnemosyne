@@ -11,10 +11,6 @@ class MnemosyneData {
     return this.data.index = this.data.index || {};
   }
 
-  get invertedIndex() {
-    return this.inv = this.inv || this.invertIndex(this.index);
-  }
-
   atPath(path) {
     const keys = path.split(".");
     let obj = this.data;
@@ -25,36 +21,29 @@ class MnemosyneData {
     return obj;
   }
 
-  indexUUID(set) {
-    return MnemosyneHash.createUUID(
-      set.split(":").map(path => this.atPath(path)));
+  getSetData(set) {
+    return set.split(":").map(path => this.atPath(path));
+  }
+
+  getSetUUID(set) {
+    return MnemosyneHash.createUUID(this.getSetData(set));
   }
 
   buildIndex(sets) {
     let index = {};
     for (const set of sets) {
-      const uuid = this.indexUUID(set);
-      index[uuid] = set;
+      const uuid = this.getSetUUID(set);
+      index[set] = uuid;
     }
     return index;
   }
 
-  invertIndex(index) {
-    var out = {};
-    for (const key of Object.keys(index)) {
-      const val = index[key];
-      out[val] = key;
-    }
-    return out;
-  }
-
-  checkIndex(index, inv = null) {
-    inv = inv || this.invertIndex(index);
-    const sets = Object.keys(inv).sort();
+  checkIndex(index) {
+    const sets = Object.keys(index).sort();
     let fail = [];
     for (const set of sets) {
-      const suspect = inv[set];
-      const uuid = this.indexUUID(set);
+      const suspect = index[set];
+      const uuid = this.getSetUUID(set);
       if (suspect !== uuid)
         fail.push({
           set,
@@ -75,18 +64,15 @@ class MnemosyneData {
 
   addIndex(set) {
     let index = this.index;
-    let inv = this.invertedIndex;
+    const uuid = this.getSetUUID(set);
 
-    const uuid = this.indexUUID(set);
-
-    if (inv[set] !== undefined) {
-      if (inv[set] !== uuid)
+    if (index[set] !== undefined) {
+      if (index[set] !== uuid)
         throw new Error("Index uuid incorrect for " + set);
       return this;
     }
 
-    inv[set] = uuid;
-    index[uuid] = set;
+    index[set] = uuid;
 
     return this;
   }

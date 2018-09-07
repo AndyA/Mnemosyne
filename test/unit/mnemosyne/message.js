@@ -3,9 +3,9 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-const MnemosyneData = require("../../../webapp/lib/mnemosyne/data.js");
+const MnemosyneMessage = require("../../../webapp/lib/mnemosyne/message.js");
 
-describe("MnemosyneData", () => {
+describe("MnemosyneMessage", () => {
   const message = {
     "event": {
       "action": "updated",
@@ -80,94 +80,21 @@ describe("MnemosyneData", () => {
     "uuid": "9d9afe82-5a71-2312-3415-a59e7f5b9597"
   };
 
-  describe("atPath", () => {
-    it("should find fields by path", () => {
-      const d = new MnemosyneData(message);
-      const want = {
-        "identity.email": "andy@hexten.net",
-        "meta.host": "emit",
-      };
-      let got = {};
-      for (const path of Object.keys(want)) {
-        got[path] = d.atPath(path)
-      }
-      expect(got).to.deep.equal(want);
+  describe("uuid", () => {
+    it("should have the correct UUID", () => {
+      const m = new MnemosyneMessage(message);
+      expect(m.uuid).to.equal("9d9afe82-5a71-2312-3415-a59e7f5b9597");
+    });
+  });
+
+  describe("timing", () => {
+    it("should have the correct time", () => {
+      const m = new MnemosyneMessage(message);
+      expect(m.timing.start.toISOString()).to.equal("2018-09-05T14:38:08.000Z");
     });
   });
 
 
-  describe("getSetUUID", () => {
-    it("should compute field UUIDs", () => {
-      const d = new MnemosyneData(message);
-      const want = message.index;
-      let got = {};
-      for (const set of Object.keys(want)) {
-        const uuid = d.getSetUUID(set);
-        got[set] = uuid;
-      }
-      expect(got).to.deep.equal(want);
-    });
-  });
-
-  describe("buildIndex", () => {
-    it("should build a valid index", () => {
-      const d = new MnemosyneData(message);
-      const want = message.index;
-      const got = d.buildIndex(Object.keys(want));
-      expect(got).to.deep.equal(want);
-    });
-  });
-
-  describe("checkIndex", () => {
-    it("should ok a valid index", () => {
-      const d = new MnemosyneData(message);
-      expect(d.checkIndex(message.index)).to.deep.equal([]);
-    });
-
-    it("should spot an invalid index", () => {
-      const d = new MnemosyneData(message);
-      let index = Object.assign({}, message.index);
-      const want = [
-        {
-          uuid: "8860a97b-861a-c461-0307-420d4a11d46b",
-          suspect: "8fb2737a-ef8b-45c3-8d2b-3cc6a863ab9b",
-          set: "identity.email"
-        },
-        {
-          uuid: "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
-          suspect: "55b58ae1-afca-46ea-89b2-38a4bbf75aca",
-          set: "meta.sender"
-        },
-      ];
-
-      for (const fail of want) {
-        index[fail.set] = fail.suspect;
-      }
-
-      expect(d.checkIndex(index)).to.deep.equal(want);
-
-    });
-  });
-
-  describe("addIndex", () => {
-    it("should ignore an existing index", () => {
-      const d = new MnemosyneData(message);
-      const index = JSON.parse(JSON.stringify(d.index));
-      d.addIndex("event.object_type:event.object_subtype");
-      expect(d.index).to.deep.equal(index);
-    });
-
-    it("should add a new index", () => {
-      const d = new MnemosyneData(message);
-      const index = JSON.parse(JSON.stringify(d.index));
-
-      d.addIndex("event.object_type:event.object_id");
-
-      index["event.object_type:event.object_id"] = "73c05820-52a7-a59a-1db6-39d391708115";
-
-      expect(d.index).to.deep.equal(index);
-    });
-  });
 
 });
 

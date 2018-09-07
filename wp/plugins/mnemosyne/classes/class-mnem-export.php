@@ -62,7 +62,8 @@ class MnemosyneExport {
                 }
             }
             $uuid = self::createUUID($vals);
-            $idx[$uuid] = implode(":", $set);
+            $key = implode(":", $set);
+            $idx[$key] = $uuid;
         }
         return $idx;
     }
@@ -88,9 +89,11 @@ class MnemosyneExport {
                 // Include time because aryo log can be truncated
                 $ent['hist_time'] 
               )), 
-              "sender" => "Wordpress", 
-              "kind" => "Activity Log", 
-              "host" => $host, 
+              "meta" => array(
+                "sender" => "Wordpress", 
+                "kind" => "Activity Log", 
+                "host" => $host
+              ), 
               "timing" => array(
                 "start" => $ts->format(DateTime::ATOM),
                 "busy"  => array(
@@ -125,11 +128,11 @@ class MnemosyneExport {
             );
 
             $ev["index"] = self::buildIndex($ev, array(
-                array("sender"), 
-                array("kind"), 
-                array("host"), 
-                array("sender", "kind"), 
-                array("sender", "host"), 
+                array("meta.sender"), 
+                array("meta.kind"), 
+                array("meta.host"), 
+                array("meta.sender", "meta.kind"), 
+                array("meta.sender", "meta.host"), 
                 array("identity.email"), 
                 array("identity.login"), 
                 array("identity.login", "target.site_url"), 

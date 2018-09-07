@@ -7,7 +7,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -19,23 +18,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -56,7 +60,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -77,7 +80,6 @@
          "object_subtype" : "7.1.11",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -89,24 +91,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "3fc26b93-a9c2-4f67-ff4c-ee643a4f134a" : "event.object_type:event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8801e579-5a7a-f114-b158-f707bc49f7a8" : "event.action",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "91dd4d4c-143e-93fa-3818-e82abfc358e6" : "event.object_subtype",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "eb7a6625-aea4-b983-e1cd-4641672af8c1" : "event.object_name",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "8801e579-5a7a-f114-b158-f707bc49f7a8",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "eb7a6625-aea4-b983-e1cd-4641672af8c1",
+         "event.object_subtype" : "91dd4d4c-143e-93fa-3818-e82abfc358e6",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "3fc26b93-a9c2-4f67-ff4c-ee643a4f134a",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "installed",
          "display_name" : "admin",
@@ -127,7 +133,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -148,7 +153,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -160,24 +164,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "eb7a6625-aea4-b983-e1cd-4641672af8c1" : "event.object_name",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "eb7a6625-aea4-b983-e1cd-4641672af8c1",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -198,7 +206,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -219,7 +226,6 @@
          "object_subtype" : "3.6.0",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -231,24 +237,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "0aad79dc-3d01-fc4b-4687-065ce58d3c0f" : "event.object_type:event.object_subtype",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8801e579-5a7a-f114-b158-f707bc49f7a8" : "event.action",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "8ec6e276-3de7-eeb5-f5ff-2cb1ed776103" : "event.object_subtype",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "adfb9eb9-1e15-fdd6-d1d9-af1fb27d219a" : "event.object_name",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "8801e579-5a7a-f114-b158-f707bc49f7a8",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "adfb9eb9-1e15-fdd6-d1d9-af1fb27d219a",
+         "event.object_subtype" : "8ec6e276-3de7-eeb5-f5ff-2cb1ed776103",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "0aad79dc-3d01-fc4b-4687-065ce58d3c0f",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "installed",
          "display_name" : "admin",
@@ -269,7 +279,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -290,7 +299,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -302,24 +310,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "adfb9eb9-1e15-fdd6-d1d9-af1fb27d219a" : "event.object_name",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "adfb9eb9-1e15-fdd6-d1d9-af1fb27d219a",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -340,7 +352,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -361,7 +372,6 @@
          "object_subtype" : "",
          "object_type" : "Options"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -373,24 +383,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "4e4325d6-e483-a007-2752-7ac21610ae1c" : "event.object_type:event.object_subtype",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "9372c6d4-358c-a7c1-36bb-bccf61a87f89" : "event.action",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a8e7727b-78a7-2dd9-4fa8-a682827c7045" : "event.object_type",
-         "cc058d13-2177-3a55-cb42-a5f7e09767ae" : "event.object_name",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "9372c6d4-358c-a7c1-36bb-bccf61a87f89",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "cc058d13-2177-3a55-cb42-a5f7e09767ae",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "a8e7727b-78a7-2dd9-4fa8-a682827c7045",
+         "event.object_type:event.object_subtype" : "4e4325d6-e483-a007-2752-7ac21610ae1c",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "updated",
          "display_name" : "admin",
@@ -411,7 +425,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -432,7 +445,6 @@
          "object_subtype" : "",
          "object_type" : "Options"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -444,24 +456,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "4e4325d6-e483-a007-2752-7ac21610ae1c" : "event.object_type:event.object_subtype",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "53e4f61e-8c21-6770-be9d-b1db28782b85" : "event.object_name",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "9372c6d4-358c-a7c1-36bb-bccf61a87f89" : "event.action",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a8e7727b-78a7-2dd9-4fa8-a682827c7045" : "event.object_type",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "9372c6d4-358c-a7c1-36bb-bccf61a87f89",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "53e4f61e-8c21-6770-be9d-b1db28782b85",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "a8e7727b-78a7-2dd9-4fa8-a682827c7045",
+         "event.object_type:event.object_subtype" : "4e4325d6-e483-a007-2752-7ac21610ae1c",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "updated",
          "display_name" : "admin",
@@ -482,7 +498,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -503,7 +518,6 @@
          "object_subtype" : "",
          "object_type" : "User"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "guest",
          "display" : "admin",
@@ -515,23 +529,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "0de6dff0-93f1-cc6d-8695-4cd917f800df" : "event.object_id:target.site_url",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "2b88701d-befa-1882-f505-a418badd6b1a" : "event.object_type:event.object_subtype",
-         "31abe973-b6de-aa05-15a3-b7956be0394c" : "event.action",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "6f46c425-e6a0-cf09-d0d8-4b8512b7d2bc" : "identity.caps",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "f7b6f300-6693-bb43-1c57-6cfe36cd0270" : "event.object_type",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "event.object_name"
+         "event.action" : "31abe973-b6de-aa05-15a3-b7956be0394c",
+         "event.object_id:target.site_url" : "0de6dff0-93f1-cc6d-8695-4cd917f800df",
+         "event.object_name" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "f7b6f300-6693-bb43-1c57-6cfe36cd0270",
+         "event.object_type:event.object_subtype" : "2b88701d-befa-1882-f505-a418badd6b1a",
+         "identity.caps" : "6f46c425-e6a0-cf09-d0d8-4b8512b7d2bc",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "logged_in",
          "display_name" : "admin",
@@ -552,7 +571,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -573,7 +591,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -585,24 +602,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -623,7 +644,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -644,7 +664,6 @@
          "object_subtype" : "3.7.0",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -656,24 +675,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "3d01d4e5-a277-453d-4a4d-bea42a8b6116" : "event.object_type:event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "62e248db-dc9a-8b33-fb68-52151f0f7ccf" : "event.object_name",
-         "79086e56-00bc-6e6a-da8e-254b5a502e7d" : "event.object_subtype",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8801e579-5a7a-f114-b158-f707bc49f7a8" : "event.action",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "8801e579-5a7a-f114-b158-f707bc49f7a8",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "62e248db-dc9a-8b33-fb68-52151f0f7ccf",
+         "event.object_subtype" : "79086e56-00bc-6e6a-da8e-254b5a502e7d",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "3d01d4e5-a277-453d-4a4d-bea42a8b6116",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "installed",
          "display_name" : "admin",
@@ -694,7 +717,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -715,7 +737,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -727,24 +748,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "62e248db-dc9a-8b33-fb68-52151f0f7ccf" : "event.object_name",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "62e248db-dc9a-8b33-fb68-52151f0f7ccf",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -765,7 +790,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -786,7 +810,6 @@
          "object_subtype" : "post",
          "object_type" : "Post"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -798,24 +821,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "1ba1934b-a51e-725c-6a62-d3b90caa5085" : "event.object_subtype",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "2332adc1-a85b-93b0-d143-92c344c5c4b1" : "event.object_type:event.object_subtype",
-         "348982af-9692-c09c-273f-b1d48ded6332" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "6dc41842-da54-27db-67ae-6d5c52ddc06f" : "event.object_id:target.site_url",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a7c227c8-2d73-9c0a-ddb8-46bfec39162f" : "event.action",
-         "d3e9e7d6-c0e6-38b4-e8fe-aa2a425b3e57" : "event.object_type",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "a7c227c8-2d73-9c0a-ddb8-46bfec39162f",
+         "event.object_id:target.site_url" : "6dc41842-da54-27db-67ae-6d5c52ddc06f",
+         "event.object_name" : "348982af-9692-c09c-273f-b1d48ded6332",
+         "event.object_subtype" : "1ba1934b-a51e-725c-6a62-d3b90caa5085",
+         "event.object_type" : "d3e9e7d6-c0e6-38b4-e8fe-aa2a425b3e57",
+         "event.object_type:event.object_subtype" : "2332adc1-a85b-93b0-d143-92c344c5c4b1",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "created",
          "display_name" : "admin",
@@ -836,7 +863,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -857,7 +883,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -869,24 +894,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -907,7 +936,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -928,7 +956,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -940,24 +967,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -978,7 +1009,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -999,7 +1029,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1011,24 +1040,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -1049,7 +1082,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1070,7 +1102,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1082,24 +1113,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -1120,7 +1155,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1141,7 +1175,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1153,24 +1186,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -1191,7 +1228,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1212,7 +1248,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1224,24 +1259,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -1262,7 +1301,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1283,7 +1321,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1295,24 +1332,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -1333,7 +1374,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1354,7 +1394,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1366,24 +1405,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -1404,7 +1447,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1425,7 +1467,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1437,24 +1478,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -1475,7 +1520,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1496,7 +1540,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1508,24 +1551,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -1546,7 +1593,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1567,7 +1613,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1579,24 +1624,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -1617,7 +1666,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1638,7 +1686,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1650,24 +1697,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -1688,7 +1739,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1709,7 +1759,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1721,24 +1770,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -1759,7 +1812,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1780,7 +1832,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1792,24 +1843,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -1830,7 +1885,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1851,7 +1905,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1863,23 +1916,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "15c79118-1a96-c4e3-5642-3e68f1afb3c7" : "event.action",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "15c79118-1a96-c4e3-5642-3e68f1afb3c7",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "deactivated",
          "display_name" : "admin",
@@ -1900,9 +1958,8 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
-         "site_url" : "https://mn.tthtesting.co.uk"
+         "site_url" : "https\n://mn.tthtesting.co.uk"
       },
       "timing" : {
          "busy" : {
@@ -1921,7 +1978,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -1933,23 +1989,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -1970,7 +2031,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
@@ -1991,7 +2051,6 @@
          "object_subtype" : "",
          "object_type" : "Plugin"
       },
-      "host" : "emit",
       "identity" : {
          "caps" : "administrator",
          "display" : "admin",
@@ -2003,24 +2062,28 @@
          "url" : ""
       },
       "index" : {
-         "08ba534d-16f3-a31d-e641-7615cf42699a" : "sender:kind",
-         "1ac62b22-264f-0213-479c-11374c1623ea" : "target.site_url",
-         "2264b6a8-a828-1d63-ec2b-f5369c98b6ed" : "kind",
-         "35922808-8840-366e-6d3d-7344ab6e8702" : "event.object_name",
-         "37a7da91-1f0f-91ee-e13d-f463611803fd" : "host",
-         "50a58568-adc8-a717-ef7e-5ce1058c4790" : "event.object_subtype",
-         "61754e38-b7c0-cf69-2638-79078093e01d" : "event.object_type",
-         "8336fa70-48cc-9bd1-b486-a9667bcd726f" : "sender:host",
-         "83dbb73b-b6a6-c5a3-4394-3824b9c747ba" : "event.action",
-         "87f0c07f-d0ba-185f-dffc-8d235793d3d6" : "sender",
-         "8860a97b-861a-c461-0307-420d4a11d46b" : "identity.email",
-         "a11e73a7-16b7-5b61-1487-199e3db27bd4" : "event.object_id:target.site_url",
-         "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7" : "identity.caps",
-         "a931de87-db7c-6e8f-8868-03177c7cc019" : "event.object_type:event.object_subtype",
-         "da9570c7-c3ed-2b8f-65e7-9adc49578757" : "identity.login:target.site_url",
-         "fa348c3a-76d7-0b2e-c283-283f8da9a26d" : "identity.login"
+         "event.action" : "83dbb73b-b6a6-c5a3-4394-3824b9c747ba",
+         "event.object_id:target.site_url" : "a11e73a7-16b7-5b61-1487-199e3db27bd4",
+         "event.object_name" : "35922808-8840-366e-6d3d-7344ab6e8702",
+         "event.object_subtype" : "50a58568-adc8-a717-ef7e-5ce1058c4790",
+         "event.object_type" : "61754e38-b7c0-cf69-2638-79078093e01d",
+         "event.object_type:event.object_subtype" : "a931de87-db7c-6e8f-8868-03177c7cc019",
+         "identity.caps" : "a4d53f6b-6ca0-8fba-8192-ee1b2b7517c7",
+         "identity.email" : "8860a97b-861a-c461-0307-420d4a11d46b",
+         "identity.login" : "fa348c3a-76d7-0b2e-c283-283f8da9a26d",
+         "identity.login:target.site_url" : "da9570c7-c3ed-2b8f-65e7-9adc49578757",
+         "meta.host" : "37a7da91-1f0f-91ee-e13d-f463611803fd",
+         "meta.kind" : "2264b6a8-a828-1d63-ec2b-f5369c98b6ed",
+         "meta.sender" : "87f0c07f-d0ba-185f-dffc-8d235793d3d6",
+         "meta.sender:meta.host" : "8336fa70-48cc-9bd1-b486-a9667bcd726f",
+         "meta.sender:meta.kind" : "08ba534d-16f3-a31d-e641-7615cf42699a",
+         "target.site_url" : "1ac62b22-264f-0213-479c-11374c1623ea"
       },
-      "kind" : "Activity Log",
+      "meta" : {
+         "host" : "emit",
+         "kind" : "Activity Log",
+         "sender" : "Wordpress"
+      },
       "raw" : {
          "action" : "activated",
          "display_name" : "admin",
@@ -2041,7 +2104,6 @@
          "user_status" : "0",
          "user_url" : ""
       },
-      "sender" : "Wordpress",
       "target" : {
          "site_url" : "https://mn.tthtesting.co.uk"
       },
