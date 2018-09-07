@@ -12,10 +12,6 @@ class MnemosyneMessage extends MnemosyneData {
     super(msg);
   }
 
-  get uuid() {
-    return this.data.uuid;
-  }
-
   get timing() {
     return this._timing = this._timing || new MnemosyneTiming(this.data.timing);
   }
