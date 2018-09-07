@@ -7,6 +7,10 @@ class MnemosyneData {
     this.data = data;
   }
 
+  get uuid() {
+    return this.data.uuid || "UNKNOWN";
+  }
+
   get index() {
     return this.data.index = this.data.index || {};
   }
@@ -26,14 +30,18 @@ class MnemosyneData {
   }
 
   getSetUUID(set) {
-    return MnemosyneHash.createUUID(this.getSetData(set));
+    const data = this.getSetData(set);
+    const missing = data.filter(x => x === undefined);
+    if (missing.length) return;
+    return MnemosyneHash.createUUID(data);
   }
 
   buildIndex(sets) {
     let index = {};
     for (const set of sets) {
       const uuid = this.getSetUUID(set);
-      index[set] = uuid;
+      if (uuid !== undefined)
+        index[set] = uuid;
     }
     return index;
   }
@@ -55,20 +63,21 @@ class MnemosyneData {
   }
 
   validate() {
-    const fail = this.checkIndex(this.index, this.invertedIndex);
+    const fail = this.checkIndex(this.index);
     if (fail.length)
       throw new Error("Index validation failed for " +
-        fail.map(f => f.set).join(", "));
+        fail.map(f => f.set).join(", ") + " on " + this.uuid);
     return this;
   }
 
   addIndex(set) {
     let index = this.index;
     const uuid = this.getSetUUID(set);
+    if (uuid === undefined) return this;
 
     if (index[set] !== undefined) {
       if (index[set] !== uuid)
-        throw new Error("Index uuid incorrect for " + set);
+        throw new Error("Index UUID incorrect for " + set + " on " + this.uuid);
       return this;
     }
 

@@ -81,8 +81,8 @@ describe("MnemosyneData", () => {
   };
 
   describe("atPath", () => {
+    const d = new MnemosyneData(message);
     it("should find fields by path", () => {
-      const d = new MnemosyneData(message);
       const want = {
         "identity.email": "andy@hexten.net",
         "meta.host": "emit",
@@ -93,12 +93,17 @@ describe("MnemosyneData", () => {
       }
       expect(got).to.deep.equal(want);
     });
+    it("should return undefined for missing paths", () => {
+      expect(d.atPath("foo")).to.be.undefined;
+      expect(d.atPath("foo.bar.baz")).to.be.undefined;
+    });
   });
 
 
   describe("getSetUUID", () => {
+    const d = new MnemosyneData(message);
+
     it("should compute field UUIDs", () => {
-      const d = new MnemosyneData(message);
       const want = message.index;
       let got = {};
       for (const set of Object.keys(want)) {
@@ -106,6 +111,11 @@ describe("MnemosyneData", () => {
         got[set] = uuid;
       }
       expect(got).to.deep.equal(want);
+    });
+
+    it("should return undefined if any fields are missing", () => {
+      const uuid = d.getSetUUID("identity.email|foo.bar");
+      expect(uuid).to.be.undefined;
     });
   });
 

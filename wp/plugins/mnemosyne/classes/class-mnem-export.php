@@ -109,7 +109,8 @@ class MnemosyneExport {
                   "user_email"      => "email",
                   "user_url"        => "url",
                   "user_registered" => "registered",
-                  "display_name"    => "display"
+                  "display_name"    => "display", 
+                  "host_ip"         => "addr"
                 )
               ), 
               "target" => self::pickKeys($ent, array(
@@ -134,6 +135,7 @@ class MnemosyneExport {
                 array("meta.sender", "meta.kind"), 
                 array("meta.sender", "meta.host"), 
                 array("identity.email"), 
+                array("identity.addr"), 
                 array("identity.login"), 
                 array("identity.login", "target.site_url"), 
                 array("identity.caps"), 

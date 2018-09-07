@@ -51,7 +51,7 @@ class MnemosyneMessage extends MnemosyneData {
   }
 
   static fromLog(log) {
-    return log.map(msg => new MnemosyneMessage(msg));
+    return log.map(msg => new MnemosyneMessage(msg).validate());
   }
 }
 
