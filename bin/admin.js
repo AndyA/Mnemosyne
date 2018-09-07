@@ -35,13 +35,18 @@ class Mnemosyne {
   async loadLog(data) {
     const stash = data.map(ent => ent.getStash());
     const indexStash = _.flatten(data.map(ent => ent.getIndexStash()));
-    return this.models.Event.bulkCreate(stash, {
-      ignoreDuplicates: true
-    }).then(() => {
-      return this.models.HashIndex.bulkCreate(indexStash, {
+
+    while (stash.length) {
+      await this.models.Event.bulkCreate(stash.splice(0, 100), {
         ignoreDuplicates: true
       });
-    });
+    }
+
+    while (indexStash.length) {
+      await this.models.HashIndex.bulkCreate(indexStash.splice(0, 100), {
+        ignoreDuplicates: true
+      });
+    }
   }
 
   pickKeys(obj, keyMap) {
@@ -102,7 +107,7 @@ class Mnemosyne {
         },
         identity: this.pickKeys(ent, {
           "user_id": "id",
-          "user_caps": "caps",
+          "user_caps": "capabilities",
           "user_login": "login",
           "user_nicename": "nicename",
           "user_email": "email",
@@ -131,10 +136,9 @@ class Mnemosyne {
         .addIndex("meta.sender:meta.kind")
         .addIndex("meta.sender:meta.host")
         .addIndex("identity.email")
-        .addIndex("identity.addr")
         .addIndex("identity.login")
         .addIndex("identity.login:target.site_url")
-        .addIndex("identity.caps")
+        .addIndex("identity.capabilities")
         .addIndex("target.site_url")
         .addIndex("event.action")
         .addIndex("event.object_type")

@@ -17,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(80),
       allowNull: false,
       primaryKey: true,
+    }, 
+    values: {
+      type: DataTypes.TEXT,
+      allowNull: true, 
     }
   };
 

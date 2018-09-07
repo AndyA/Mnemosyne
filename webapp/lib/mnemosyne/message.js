@@ -41,6 +41,7 @@ class MnemosyneMessage extends MnemosyneData {
       return {
         uuid: this.uuid,
         hash: this.index[set],
+        values: JSON.stringify(this.getSetData(set)), 
         set
       }
     });
