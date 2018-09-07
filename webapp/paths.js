@@ -7,6 +7,6 @@ module.exports = exports = {
     "webapp/web/less"
   ],
   js: "webapp/app/**/*.{js,jsx}",
-  js_libs: ["webapp/lib/js", "webapp/web/js", "build/js"],
+  js_libs: ["webapp/lib", "webapp/srv", "build/js"],
   test: "test/**/*.js"
 }
