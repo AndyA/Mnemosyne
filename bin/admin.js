@@ -37,13 +37,13 @@ class Mnemosyne {
     const indexStash = _.flatten(data.map(ent => ent.getIndexStash()));
 
     while (stash.length) {
-      await this.models.Event.bulkCreate(stash.splice(0, 100), {
+      await this.models.Event.bulkCreate(stash.splice(0, 1000), {
         ignoreDuplicates: true
       });
     }
 
     while (indexStash.length) {
-      await this.models.HashIndex.bulkCreate(indexStash.splice(0, 100), {
+      await this.models.HashIndex.bulkCreate(indexStash.splice(0, 10000), {
         ignoreDuplicates: true
       });
     }
