@@ -31,8 +31,7 @@ class MnemosyneData {
 
   getSetUUID(set) {
     const data = this.getSetData(set);
-    const missing = data.filter(x => x === undefined);
-    if (missing.length) return;
+    if (!data.every(x => x !== undefined && x !== null)) return;
     return MnemosyneHash.createUUID(data);
   }
 
