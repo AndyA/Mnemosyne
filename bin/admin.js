@@ -6,6 +6,9 @@ const Promise = require("bluebird");
 const fs = Promise.promisifyAll(require('fs'));
 const _ = require("lodash");
 
+const PouchDB = require("pouchdb");
+PouchDB.plugin(require("pouchdb-find"));
+
 const MnemosyneHash = require("../webapp/lib/mnemosyne/hash.js");
 const MnemosyneMessage = require("../webapp/lib/mnemosyne/message.js");
 
@@ -18,7 +21,11 @@ class Mnemosyne {
   init() {
     // Load config
     this.config = YAML.load(this.opts.config);
+    this.initSequelize();
+    this.initCouch();
+  }
 
+  initSequelize() {
     const dbConfig = Object.assign({}, {
       logging: false,
       operatorsAliases: false
@@ -26,6 +33,11 @@ class Mnemosyne {
 
     this.sequelize = new Sequelize(dbConfig);
     this.models = require("../webapp/lib/models")(this.sequelize);
+  }
+
+  initCouch() {
+    const dbConfig = this.config.couch;
+    this.db = new PouchDB(dbConfig.url, dbConfig.options);
   }
 
   close() {
@@ -47,6 +59,31 @@ class Mnemosyne {
         ignoreDuplicates: true
       });
     }
+  }
+
+  byKey(data, key) {
+    let bk = {};
+    for (const row of data) {
+      const id = row[key];
+      bk[id] = row;
+    }
+    return bk;
+  }
+
+  async addRev(data) {
+    const all = await this.db.allDocs();
+    const bk = this.byKey(all.rows, "id");
+    for (const ent of data) {
+      const old = bk[ent._id];
+      if (old)
+        ent._rev = old.value.rev;
+    }
+    return data;
+  }
+
+  async loadCouch(data) {
+    const stash = await this.addRev(data.map(ent => ent.getCouchStash()));
+    return this.db.bulkDocs(stash).then(resp => console.log(JSON.stringify(resp, null, 2)));
   }
 
   pickKeys(obj, keyMap) {
@@ -193,6 +230,17 @@ program
     const al = new Mnemosyne(program);
     al.convertLog()
       .then(data => al.loadLog(data))
+      .catch(e => console.log(e))
+      .finally(() => al.close());
+  });
+
+program
+  .command("couch")
+  .description("Convert old activity log to CouchDB")
+  .action((env, options) => {
+    const al = new Mnemosyne(program);
+    al.convertLog()
+      .then(data => al.loadCouch(data))
       .catch(e => console.log(e))
       .finally(() => al.close());
   });

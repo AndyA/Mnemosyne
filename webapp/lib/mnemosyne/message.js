@@ -16,6 +16,19 @@ class MnemosyneMessage extends MnemosyneData {
     return this._timing = this._timing || new MnemosyneTiming(this.data.timing);
   }
 
+  getCouchStash() {
+    return this._couch = this._couch || (() => {
+      let stash = {
+        _id: this.uuid,
+        type: "event"
+      };
+      for (const s of SECTIONS) {
+        stash[s] = this.data[s];
+      }
+      return stash;
+    })()
+  }
+
   getStash() {
     return this._stash = this._stash || (() => {
       let stash = {
@@ -41,7 +54,7 @@ class MnemosyneMessage extends MnemosyneData {
       return {
         uuid: this.uuid,
         hash: this.index[set],
-        values: JSON.stringify(this.getSetData(set)), 
+        values: JSON.stringify(this.getSetData(set)),
         set
       }
     });

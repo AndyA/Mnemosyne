@@ -13,3 +13,9 @@ db:
   username: root
   password: null
   dialect: mysql
+couch:
+  url: "http://localhost:5984/mnemosyne"
+  options:
+    auth:
+      username: mnemosyne
+      password: "f7a49ad9-a6a8-40d2-9447-8c9697a37312"
