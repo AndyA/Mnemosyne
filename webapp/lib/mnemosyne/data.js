@@ -15,6 +15,16 @@ class MnemosyneData {
     return this.data.index = this.data.index || {};
   }
 
+  get splitIndex() {
+    const index = this.index;
+    const indexKeys = Object.keys(index);
+    const indexValues = indexKeys.map(k => index[k]);
+    return {
+      keys: indexKeys,
+      values: indexValues
+    }
+  }
+
   atPath(path) {
     const keys = path.split(".");
     let obj = this.data;

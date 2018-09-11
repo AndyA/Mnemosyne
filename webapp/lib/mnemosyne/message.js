@@ -22,6 +22,7 @@ class MnemosyneMessage extends MnemosyneData {
         _id: this.uuid,
         type: "event",
         timing: this.timing,
+        index: this.splitIndex, 
       };
       const sections = [
         "event", "identity", "meta", "raw", "target"
