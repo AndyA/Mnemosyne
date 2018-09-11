@@ -20,9 +20,13 @@ class MnemosyneMessage extends MnemosyneData {
     return this._couch = this._couch || (() => {
       let stash = {
         _id: this.uuid,
-        type: "event"
+        type: "event",
+        timing: this.timing,
       };
-      for (const s of SECTIONS) {
+      const sections = [
+        "event", "identity", "meta", "raw", "target"
+      ];
+      for (const s of sections) {
         stash[s] = this.data[s];
       }
       return stash;

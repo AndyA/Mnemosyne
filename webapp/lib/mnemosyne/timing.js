@@ -47,6 +47,19 @@ class MnemosyneTiming {
     return this.busyEnd - this.busyStart
   }
 
+  toJSON() {
+    return {
+      start: this.start,
+      end: this.end,
+      busyStart: this.busyStart,
+      busyEnd: this.busyEnd,
+      busy: {
+        before: this.busyBefore,
+        after: this.busyAfter
+      }
+    };
+  }
+
 }
 
 module.exports = MnemosyneTiming;
