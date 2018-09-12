@@ -6,6 +6,7 @@ const Sequelize = require("sequelize");
 const lazy = require("lazy-eval").default;
 const dns = Promise.promisifyAll(require("dns"));
 const YAML = require("yamljs");
+const moment = require("moment");
 
 class ActivityLog {
   constructor(opts) {
@@ -85,8 +86,8 @@ program
         console.log(["from", "to", "events"].join("\t"));
         for (let run of runs) {
           console.log([
-            run.start.toISOString(),
-            run.end.toISOString(),
+            toSpreadsheetString(run.start),
+            toSpreadsheetString(run.end),
             run.entries.length
           ].join("\t"));
         }
@@ -98,6 +99,10 @@ program.command("help").action(() => program.help());
 program.on('command:*', cmd => die("Unknown command: " + cmd));
 
 program.parse(process.argv);
+
+function toSpreadsheetString(d) {
+  return moment(d).format("YYYY-MM-DD HH:mm:ss");
+}
 
 function die(...args) {
   console.error(...args);
