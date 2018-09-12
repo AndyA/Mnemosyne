@@ -5,6 +5,8 @@ const YAML = require("yamljs");
 const Promise = require("bluebird");
 const fs = Promise.promisifyAll(require('fs'));
 const _ = require("lodash");
+const Benchmark = require('benchmark');
+
 
 const PouchDB = require("pouchdb");
 PouchDB.plugin(require("pouchdb-find"));
@@ -84,6 +86,121 @@ class Mnemosyne {
   async loadCouch(data) {
     const stash = await this.addRev(data.map(ent => ent.getCouchStash()));
     return this.db.bulkDocs(stash).then(resp => console.log(JSON.stringify(resp, null, 2)));
+  }
+
+  get indexes() {
+    return [
+      {
+        ddoc: "_design/049a1ae143c7d112d227fb1d4acc69561d35d7d3",
+        name: "049a1ae143c7d112d227fb1d4acc69561d35d7d3",
+        type: "json",
+        def: {
+          fields: [{
+            "identity.email": "asc"
+          }]
+        }
+      }, {
+        ddoc: "_design/12c1c2de42eaa35abf6105026ef7704f10fb358d",
+        name: "12c1c2de42eaa35abf6105026ef7704f10fb358d",
+        type: "json",
+        def: {
+          fields: [{
+            "timing.start": "asc"
+          }]
+        }
+      }, {
+        ddoc: "_design/877ac93fbecb94fd9825441f99ef7ed06afa9f2c",
+        name: "877ac93fbecb94fd9825441f99ef7ed06afa9f2c",
+        type: "json",
+        def: {
+          fields: [{
+            "index.values": "asc"
+          }]
+        }
+      }, {
+        ddoc: "_design/8f7ee07f0f769c4daa5603b8811316ff84cf0c70",
+        name: "8f7ee07f0f769c4daa5603b8811316ff84cf0c70",
+        type: "json",
+        def: {
+          fields: [{
+            "target.site_url": "asc"
+          }]
+        }
+      }]
+  }
+
+  async deleteIndexes(indexes) {
+    for (const idx of indexes) {
+      await this.db.deleteIndex(idx);
+    }
+  }
+
+  async createIndexes(indexes) {
+    for (const idx of indexes) {
+      await this.db.createIndex(idx);
+    }
+  }
+
+  async allDocs() {
+    const allDocs = await this.db.allDocs({
+      include_docs: true
+    });
+    return allDocs.rows.map(row => row.doc);
+  }
+
+  async benchmark() {
+    const allDocs = await this.allDocs();
+    const suite = new Benchmark.Suite;
+    const db = this.db;
+
+    function someDocs(n) {
+      const docIndex = _.shuffle(Array.from(allDocs.keys())).slice(0, n);
+      return docIndex.map(idx => allDocs[idx]);
+    }
+
+    async function runQueries(queries) {
+      for (const q of queries) {
+        await db.find(q);
+      }
+    }
+
+    function hashIndexTest(n, dims) {
+      const queries = _.flatten(someDocs(n).map(doc => {
+        const hashes = _.shuffle((doc.index || {}).values || []).slice(0, dims);
+        if (hashes.length < dims) return [];
+
+        return [{
+          selector: {
+            "index.values": {
+              "$in": hashes
+            }
+          }
+        }];
+      }));
+
+      suite.add('hashIndexTest(' + n + ', ' + dims + ')', {
+        defer: true,
+        fn: deferred => {
+          runQueries(queries).then(() => deferred.resolve());
+        }
+      });
+    }
+
+    //    const docs = someDocs(3);
+    //    console.log(JSON.stringify(docs, null, 2));
+
+    hashIndexTest(10, 2);
+
+    suite
+      .on('cycle', function(event) {
+        console.log(String(event.target));
+      })
+      .on('complete', function() {
+        console.log('Fastest is ' + this.filter('fastest').map('name'));
+      })
+      .run({
+        async: true
+      });
   }
 
   pickKeys(obj, keyMap) {
@@ -241,6 +358,27 @@ program
     const al = new Mnemosyne(program);
     al.convertLog()
       .then(data => al.loadCouch(data))
+      .catch(e => console.log(e))
+      .finally(() => al.close());
+  });
+
+program
+  .command("index")
+  .description("Dump Couch indexes")
+  .action((env, options) => {
+    const al = new Mnemosyne(program);
+    al.db.getIndexes()
+      .then(idx => console.log(JSON.stringify(idx.indexes, null, 2)))
+      .catch(e => console.log(e))
+      .finally(() => al.close());
+  });
+
+program
+  .command("benchmark")
+  .description("Run benchmarks")
+  .action((env, options) => {
+    const al = new Mnemosyne(program);
+    al.benchmark()
       .catch(e => console.log(e))
       .finally(() => al.close());
   });
