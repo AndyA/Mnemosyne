@@ -10,6 +10,7 @@ const Benchmark = require('benchmark');
 
 const PouchDB = require("pouchdb");
 PouchDB.plugin(require("pouchdb-find"));
+PouchDB.plugin(require("pouchdb-debug"));
 
 const MnemosyneHash = require("../webapp/lib/mnemosyne/hash.js");
 const MnemosyneMessage = require("../webapp/lib/mnemosyne/message.js");
@@ -42,8 +43,9 @@ class Mnemosyne {
     this.db = new PouchDB(dbConfig.url, dbConfig.options);
   }
 
-  close() {
+  async close() {
     this.sequelize.close();
+    await this.db.close();
   }
 
   async loadLog(data) {
@@ -91,37 +93,37 @@ class Mnemosyne {
   get indexes() {
     return [
       {
-        ddoc: "_design/049a1ae143c7d112d227fb1d4acc69561d35d7d3",
-        name: "049a1ae143c7d112d227fb1d4acc69561d35d7d3",
-        type: "json",
-        def: {
+        index: {
+          ddoc: "_design/049a1ae143c7d112d227fb1d4acc69561d35d7d3",
+          name: "049a1ae143c7d112d227fb1d4acc69561d35d7d3",
+          type: "json",
           fields: [{
             "identity.email": "asc"
           }]
         }
       }, {
-        ddoc: "_design/12c1c2de42eaa35abf6105026ef7704f10fb358d",
-        name: "12c1c2de42eaa35abf6105026ef7704f10fb358d",
-        type: "json",
-        def: {
+        index: {
+          ddoc: "_design/12c1c2de42eaa35abf6105026ef7704f10fb358d",
+          name: "12c1c2de42eaa35abf6105026ef7704f10fb358d",
+          type: "json",
           fields: [{
             "timing.start": "asc"
           }]
         }
       }, {
-        ddoc: "_design/877ac93fbecb94fd9825441f99ef7ed06afa9f2c",
-        name: "877ac93fbecb94fd9825441f99ef7ed06afa9f2c",
-        type: "json",
-        def: {
+        index: {
+          ddoc: "_design/877ac93fbecb94fd9825441f99ef7ed06afa9f2c",
+          name: "877ac93fbecb94fd9825441f99ef7ed06afa9f2c",
+          type: "json",
           fields: [{
             "index.values": "asc"
           }]
         }
       }, {
-        ddoc: "_design/8f7ee07f0f769c4daa5603b8811316ff84cf0c70",
-        name: "8f7ee07f0f769c4daa5603b8811316ff84cf0c70",
-        type: "json",
-        def: {
+        index: {
+          ddoc: "_design/8f7ee07f0f769c4daa5603b8811316ff84cf0c70",
+          name: "8f7ee07f0f769c4daa5603b8811316ff84cf0c70",
+          type: "json",
           fields: [{
             "target.site_url": "asc"
           }]
@@ -129,8 +131,12 @@ class Mnemosyne {
       }]
   }
 
-  async deleteIndexes(indexes) {
-    for (const idx of indexes) {
+  async deleteIndexes() {
+
+    let resp = await this.db.getIndexes();
+    resp.indexes.shift();
+
+    for (const idx of resp.indexes) {
       await this.db.deleteIndex(idx);
     }
   }
@@ -158,10 +164,26 @@ class Mnemosyne {
       return docIndex.map(idx => allDocs[idx]);
     }
 
-    async function runQueries(queries) {
+    async function runQueriesSeq(queries) {
       for (const q of queries) {
+        //        console.log(JSON.stringify(q));
         await db.find(q);
       }
+    }
+
+    async function runQueriesPar(queries) {
+      return Promise.all(queries.map(q => {
+        //        console.log(JSON.stringify(q));
+        return db.find(q);
+      }));
+    }
+
+    async function runSuite(suite) {
+      return new Promise((resolve, reject) => {
+        suite.on('complete', ev => resolve(ev)).run({
+          async: true
+        });
+      });
     }
 
     function hashIndexTest(n, dims) {
@@ -181,7 +203,7 @@ class Mnemosyne {
       suite.add('hashIndexTest(' + n + ', ' + dims + ')', {
         defer: true,
         fn: deferred => {
-          runQueries(queries).then(() => deferred.resolve());
+          runQueriesSeq(queries).then(() => deferred.resolve());
         }
       });
     }
@@ -189,18 +211,31 @@ class Mnemosyne {
     //    const docs = someDocs(3);
     //    console.log(JSON.stringify(docs, null, 2));
 
-    hashIndexTest(10, 2);
+    const count = 20;
+    hashIndexTest(count, 1);
+    hashIndexTest(count, 2);
+    hashIndexTest(count, 3);
 
     suite
-      .on('cycle', function(event) {
+      .on('cycle', event => {
         console.log(String(event.target));
-      })
-      .on('complete', function() {
-        console.log('Fastest is ' + this.filter('fastest').map('name'));
-      })
-      .run({
-        async: true
       });
+
+    console.log("Drop indexes");
+    await this.deleteIndexes();
+    console.log("Running benchmarks");
+    await runSuite(suite);
+    await runSuite(suite);
+
+    console.log("Create indexes");
+    await this.createIndexes(this.indexes);
+    console.log("Waiting for index build");
+    await Promise.delay(5000);
+    console.log("Running benchmarks");
+    await runSuite(suite);
+    await runSuite(suite);
+
+    console.log("Done");
   }
 
   pickKeys(obj, keyMap) {

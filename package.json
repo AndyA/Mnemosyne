@@ -17,6 +17,7 @@
       "mysql" : "^2.16.0",
       "mysql2" : "^1.6.1",
       "pouchdb" : "^7.0.0",
+      "pouchdb-debug" : "^7.0.0",
       "pouchdb-find" : "^7.0.0",
       "sequelize" : "^4.38.0"
    },
