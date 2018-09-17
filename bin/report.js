@@ -101,7 +101,7 @@ program.on('command:*', cmd => die("Unknown command: " + cmd));
 program.parse(process.argv);
 
 function toSpreadsheetString(d) {
-  return moment(d).format("YYYY-MM-DD HH:mm:ss");
+  return moment.utc(d).format("YYYY-MM-DD HH:mm:ss");
 }
 
 function die(...args) {
