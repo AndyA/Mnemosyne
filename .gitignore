@@ -1,3 +1,6 @@
 .*.sw?
+/*.sql
+/TTH-Reports/
+/mbox/
 /node_modules/
 Session.vim
