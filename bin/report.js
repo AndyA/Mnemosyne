@@ -32,6 +32,8 @@ class ActivityLog {
   }
 
   makeWhere(field, dbs) {
+    if (dbs.includes("*"))
+      return ["1 = 1", []]
     let inBind = [];
     let wildBind = [];
     for (const db of dbs) {
