@@ -8,6 +8,9 @@ const dns = Promise.promisifyAll(require("dns"));
 const YAML = require("yamljs");
 const moment = require("moment");
 
+const BEFORE = 5;
+const AFTER = 1;
+
 class ActivityLog {
   constructor(opts) {
     this.opts = opts;
@@ -155,7 +158,7 @@ program
     const al = new ActivityLog(program);
     al.findByDatabase(database)
       .then(log => {
-        const users = al.mergeWorkRuns(log, 15, 15);
+        const users = al.mergeWorkRuns(log, BEFORE, AFTER);
         console.log(["email", "database", "from", "to", "events"].join("\t"));
         for (const email of Object.keys(users)) {
           for (let run of users[email]) {
