@@ -3,7 +3,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-require("../../pips-fetcher/use.js");
+require("../../webapp/use.js");
 
 const UUID = require("lib/tools/uuid.js");
 
