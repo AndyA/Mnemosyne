@@ -5,8 +5,8 @@ const expect = chai.expect;
 
 require("../../webapp/use.js");
 
-const UUID = require("lib/tools/uuid.js");
-const UUIDMaker = require("lib/tools/uuidmaker.js");
+const UUID = require("lib/js/tools/uuid.js");
+const UUIDMaker = require("lib/js/tools/uuidmaker.js");
 
 describe("UUIDMaker", () => {
   const td = [
