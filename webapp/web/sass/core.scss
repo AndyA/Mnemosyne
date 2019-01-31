@@ -1,0 +1,111 @@
+body {
+  font-family: ReithSans, Arial, Helvetica, freesans, sans-serif;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      color: black;
+    }
+  }
+
+  a.reveal:hover {
+    text-decoration: none;
+  }
+}
+
+header {
+  @include mnemosyne-brand();
+
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  > *, form > * {
+    @include clearfix();
+  }
+
+  h1 {
+    font-weight: normal;
+    font-size: 30px;
+  }
+
+  nav {
+    float: right;
+    margin-top: 14px;
+  }
+
+  .top-nav {
+    h1 {
+      float: left;
+    }
+  }
+
+  .search {
+    border-top: 1px solid $mnemosyne-blue-light;
+
+    .search-box {
+      background: white;
+      float: left;
+
+      margin: {
+        top: 20px;
+        bottom: 20px;
+      }
+
+      padding: {
+        left: 6px;
+        top: 3px;
+        bottom: 3px;
+      }
+
+      input {
+        font-size: 18px;
+        &::placeholder {
+          color: $light-grey;
+        }
+        width: 300px;
+      }
+
+      button, input {
+        border: none;
+        background: white;
+      }
+
+      button:after {
+        font-family: FontAwesome;
+        font-size: 18px;
+        color: $dark-grey;
+        content: "\f002";
+      }
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+  }
+}
+
+ul.horizontal-menu {
+  li {
+    display: inline;
+    list-style: none;
+    padding-left: 8px;
+    padding-right: 13px;
+    border-right: 1px solid $mnemosyne-blue-light;
+  }
+
+  li:last-of-type {
+    border-right: none;
+  }
+}
+
+
+

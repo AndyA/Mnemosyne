@@ -1,0 +1,36 @@
+$content-width: 800px;
+$mnemosyne-blue: #2f7ab9;
+$mnemosyne-blue-light: lighten($mnemosyne-blue, 30%);
+$light-grey: #ccc;
+$dark-grey: #555;
+
+@mixin clearfix() {
+  *zoom: 1;
+
+  &:before, &:after {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin mnemosyne-brand() {
+  background: $mnemosyne-blue;
+  color: white;
+}
+
+@mixin content-width() {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $content-width;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.content-width {
+  @include content-width();
+}

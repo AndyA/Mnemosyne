@@ -1,0 +1,8 @@
+{
+   "dev" : {
+      "database" : "g2",
+      "driver" : "mysql",
+      "password" : "",
+      "user" : "root"
+   }
+}
