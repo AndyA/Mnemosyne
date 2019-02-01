@@ -47,7 +47,7 @@ describe("jpAttr", () => {
     parser: function(v, name) {
       return [v, this.name, name].join(", ");
     },
-    paths: ["$.title"]
+    paths: "$.title"
   });
 
   jpAttr(TestClass, "named", {

@@ -5,7 +5,7 @@ const jp = require("jsonpath");
 const _ = require("lodash");
 
 function parseOptions(opt) {
-  if (_.isArray(opt))
+  if (_.isString(opt) || _.isArray(opt))
     return parseOptions({
       paths: opt
     });
@@ -19,10 +19,11 @@ function parseOptions(opt) {
 
 function jpAttr(cl, name, opt) {
   const o = parseOptions(opt);
+  const paths = _.castArray(o.paths);
 
   lazyAttr(cl, name, function() {
     let vals = [];
-    for (const path of o.paths) {
+    for (const path of paths) {
       if (_.isFunction(path))
         vals.push(path.call(this, name));
       else
