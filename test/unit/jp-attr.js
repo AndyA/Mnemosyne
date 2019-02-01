@@ -21,7 +21,8 @@ describe("jpAttr", () => {
     "$.data.title",
     "$.data.display.title",
     "$.data.display.alt.title",
-    "$.data.display.short_title"
+    "$.data.display.short_title",
+    "$.name"
   ]);
 
   jpAttr(TestClass, "short_title", [
@@ -61,6 +62,8 @@ describe("jpAttr", () => {
       }
     });
 
+    const o3 = new TestClass("Three", {});
+
     expect(o1.status).to.equal("pending");
     expect(o1.title).to.equal("Fish in space");
     expect(o1.short_title).to.equal("Fish in space");
@@ -70,6 +73,11 @@ describe("jpAttr", () => {
     expect(o2.title).to.equal("Ant Caviar Haggis");
     expect(o2.short_title).to.equal("The Glamour Egg");
     expect(o2.titles).to.deep.equal(["Ant Caviar Haggis", "The Glamour Egg"]);
+
+    expect(o3.status).to.equal(undefined);
+    expect(o3.title).to.equal("Three");
+    expect(o3.short_title).to.equal("Three");
+    expect(o3.titles).to.deep.equal([]);
 
   });
 });
