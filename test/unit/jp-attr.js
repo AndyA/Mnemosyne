@@ -15,7 +15,10 @@ describe("jpAttr", () => {
     }
   }
 
-  jpAttr(TestClass, "status", ["$.data.status"]);
+  jpAttr(TestClass, "status", [
+    "$.data.status",
+    () => "unknown"
+  ]);
 
   jpAttr(TestClass, "title", [
     "$.data.title",
@@ -40,29 +43,49 @@ describe("jpAttr", () => {
     ]
   });
 
+  jpAttr(TestClass, "parsed", {
+    parser: function(v, name) {
+      return [v, this.name, name].join(", ");
+    },
+    paths: ["$.title"]
+  });
+
+  jpAttr(TestClass, "named", {
+    parser: function(v, name) {
+      return [v, this.name, name].join(", ");
+    },
+    array: true,
+    paths: [
+      "$.data.title",
+      "$.data.display.title",
+      "$.data.display.alt.title",
+      "$.data.display.short_title"
+    ]
+  });
+
+  const o1 = new TestClass("One", {
+    status: "pending",
+    display: {
+      title: "Fish in space",
+      alt: {
+        title: "Herring in a vacuum"
+      }
+    }
+  });
+
+  const o2 = new TestClass("Two", {
+    status: "approved",
+    display: {
+      short_title: "The Glamour Egg",
+      alt: {
+        title: "Ant Caviar Haggis"
+      }
+    }
+  });
+
+  const o3 = new TestClass("Three", {});
+
   it("should provide a jsonpath attr", () => {
-
-    const o1 = new TestClass("One", {
-      status: "pending",
-      display: {
-        title: "Fish in space",
-        alt: {
-          title: "Herring in a vacuum"
-        }
-      }
-    });
-
-    const o2 = new TestClass("Two", {
-      status: "approved",
-      display: {
-        short_title: "The Glamour Egg",
-        alt: {
-          title: "Ant Caviar Haggis"
-        }
-      }
-    });
-
-    const o3 = new TestClass("Three", {});
 
     expect(o1.status).to.equal("pending");
     expect(o1.title).to.equal("Fish in space");
@@ -74,10 +97,22 @@ describe("jpAttr", () => {
     expect(o2.short_title).to.equal("The Glamour Egg");
     expect(o2.titles).to.deep.equal(["Ant Caviar Haggis", "The Glamour Egg"]);
 
-    expect(o3.status).to.equal(undefined);
+    expect(o3.status).to.equal("unknown");
     expect(o3.title).to.equal("Three");
     expect(o3.short_title).to.equal("Three");
     expect(o3.titles).to.deep.equal([]);
 
   });
+
+  it("should parse the computed value", () => {
+    expect(o1.parsed).to.equal("Fish in space, One, parsed");
+    expect(o1.named).to.deep.equal([
+      "Fish in space, One, named",
+      "Herring in a vacuum, One, named"
+    ]);
+
+    expect(o2.parsed).to.equal("Ant Caviar Haggis, Two, parsed");
+    expect(o3.parsed).to.equal("Three, Three, parsed");
+  });
 });
+
