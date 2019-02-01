@@ -5,7 +5,9 @@ function lazyAttr(cl, name, vf) {
     get: function() {
       if (!this._lazy)
         this._lazy = {};
-      return this._lazy[name] = this._lazy[name] || vf.apply(this);
+      if (this._lazy.hasOwnProperty(name))
+        return this._lazy[name];
+      return this._lazy[name] = vf.call(this, name);
     }
   });
 }
