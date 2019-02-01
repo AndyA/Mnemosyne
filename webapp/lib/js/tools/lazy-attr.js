@@ -3,9 +3,9 @@
 function lazyAttr(cl, name, vf) {
   Object.defineProperty(cl.prototype, name, {
     get: function() {
-      if (!this.__lazy)
-        this.__lazy = {};
-      return this.__lazy[name] = this.__lazy[name] || vf.apply(this);
+      if (!this._lazy)
+        this._lazy = {};
+      return this._lazy[name] = this._lazy[name] || vf.apply(this);
     }
   });
 }
