@@ -51,7 +51,7 @@ describe("jpAttr", () => {
       }
     });
 
-    const o2 = new TestClass("One", {
+    const o2 = new TestClass("Two", {
       status: "approved",
       display: {
         short_title: "The Glamour Egg",
