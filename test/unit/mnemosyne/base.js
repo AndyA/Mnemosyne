@@ -32,4 +32,20 @@ describe("MnemosyneBase", () => {
       }
     });
   });
+
+  it("should allow structured data", () => {
+    let obj = new MnemosyneBase({
+      foo: 2,
+      raw: {
+        bar: 1
+      }
+    });
+
+    expect(obj.data).to.deep.equal({
+      foo: 2,
+      raw: {
+        bar: 1
+      }
+    });
+  });
 });
