@@ -3,7 +3,7 @@
 class MnemosyneBase {
   constructor(rec) {
     this.data = Object.assign({}, rec, {
-      raw: JSON.parse(rec.raw),
+      raw: JSON.parse(rec.raw || "null"),
     });
   }
 }
