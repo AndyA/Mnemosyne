@@ -17,14 +17,23 @@ class TestData {
   }
 
   loadAll(dir) {
-    const dirName = path.join(this.root, dir);
-    return fs.readdirAsync(dirName).then(files => {
+    return fs.readdirAsync(path.join(this.root, dir)).then(files => {
       return Promise.all(
         files
           .filter(fn => /\.json$/i.test(fn))
           .map(fn => this.loadData(path.join(dir, fn)))
       );
     });
+  }
+
+  loadDataSync(file) {
+    return JSON.parse(fs.readFileSync(path.join(this.root, file)));
+  }
+
+  loadAllSync(dir) {
+    return fs.readdirSync(path.join(this.root, dir))
+      .filter(fn => /\.json$/i.test(fn))
+      .map(fn => this.loadDataSync(path.join(dir, fn)))
   }
 }
 
