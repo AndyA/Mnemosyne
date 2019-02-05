@@ -48,4 +48,14 @@ describe("MnemosyneBase", () => {
       }
     });
   });
+
+  it("should find ID, uuid", () => {
+    let obj = new MnemosyneBase({
+      ID: "the_id",
+      uuid: "f5171a00-4224-44c8-9474-c2148e5e4d97"
+    });
+
+    expect(obj.ID).to.equal("the_id");
+    expect(obj.uuid).to.equal("f5171a00-4224-44c8-9474-c2148e5e4d97");
+  });
 });

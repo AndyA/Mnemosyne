@@ -1,6 +1,7 @@
 "use strict";
 
 const _ = require("lodash");
+const jpAttr = require("lib/js/tools/jp-attr");
 
 class MnemosyneBase {
   constructor(rec) {
@@ -12,5 +13,8 @@ class MnemosyneBase {
       this.data.raw = JSON.parse(rec.raw);
   }
 }
+
+jpAttr(MnemosyneBase, "ID", "$.data.ID");
+jpAttr(MnemosyneBase, "uuid", "$.data.uuid");
 
 module.exports = MnemosyneBase;
