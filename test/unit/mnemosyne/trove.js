@@ -8,24 +8,19 @@ require("../../../webapp/use.js");
 const Trove = require("lib/js/tools/trove");
 
 describe("Trove", () => {
-  const rows = [
-    {
-      ID: 1,
-      name: "Sam"
-    },
-    {
-      ID: 2,
-      name: "Andy"
-    },
-    {
-      ID: 3,
-      name: "Monda"
-    },
-    {
-      ID: 4,
-      name: "Andy"
-    }
-  ];
+  const rows = [{
+    ID: 1,
+    name: "Sam"
+  }, {
+    ID: 2,
+    name: "Andy"
+  }, {
+    ID: 3,
+    name: "Monda"
+  }, {
+    ID: 4,
+    name: "Andy"
+  }];
 
   const t = new Trove(rows);
 
@@ -38,5 +33,11 @@ describe("Trove", () => {
     expect(t.findAll("name", "Pizzo")).to.deep.equal([]);
     expect(t.findAll("name", "Andy")).to.deep.equal([rows[1], rows[3]]);
     expect(t.findAll("ID", 1)).to.deep.equal([rows[0]]);
+  });
+
+  it("should sort", () => {
+    const st = t.sorted("name", "-#ID");
+    expect(st.rows).to.deep.equal([rows[3], rows[1], rows[2], rows[0]]);
+    expect(st.findAll("name", "Andy")).to.deep.equal([rows[3], rows[1]]);
   });
 });
