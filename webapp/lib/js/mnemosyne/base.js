@@ -6,9 +6,7 @@ const jpAttr = require("lib/js/tools/jp-attr");
 
 class MnemosyneBase {
   constructor(rec) {
-    Object.assign(this, {
-      raw: null
-    }, rec);
+    Object.assign(this, rec);
 
     if (rec.hasOwnProperty("raw") && _.isString(rec.raw))
       this.raw = JSON.parse(rec.raw);

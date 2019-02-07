@@ -14,8 +14,7 @@ describe("MnemosyneBase", () => {
     });
 
     expect(obj).to.deep.equal({
-      foo: 1,
-      raw: null
+      foo: 1
     });
   });
 
