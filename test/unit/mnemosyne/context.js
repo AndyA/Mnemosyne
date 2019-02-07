@@ -23,8 +23,10 @@ describe("MnemosyneContext", () => {
   const ctx = new MnemosyneContext();
 
   it("should lazy load services, masterBrands", () => {
-    expect(ctx.services).to.eventually.be.an.instanceof(Trove);
-    expect(ctx.masterBrands).to.eventually.be.an.instanceof(Trove);
+    expect(ctx.services)
+      .to.eventually.be.an.instanceof(Trove);
+    expect(ctx.masterBrands)
+      .to.eventually.be.an.instanceof(Trove);
   });
 });
 
