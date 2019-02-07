@@ -13,7 +13,7 @@ describe("MnemosyneBase", () => {
       foo: 1
     });
 
-    expect(obj.data).to.deep.equal({
+    expect(obj).to.deep.equal({
       foo: 1,
       raw: null
     });
@@ -25,7 +25,7 @@ describe("MnemosyneBase", () => {
       raw: "{\"bar\":1}"
     });
 
-    expect(obj.data).to.deep.equal({
+    expect(obj).to.deep.equal({
       foo: 2,
       raw: {
         bar: 1
@@ -41,7 +41,7 @@ describe("MnemosyneBase", () => {
       }
     });
 
-    expect(obj.data).to.deep.equal({
+    expect(obj).to.deep.equal({
       foo: 2,
       raw: {
         bar: 1

@@ -7,6 +7,7 @@ class MnemosyneService extends MnemosyneBase {
 
 }
 
-jpAttr(MnemosyneService, "name", "$.data.raw.name[0]");
+jpAttr(MnemosyneService, "name", "$.raw.name[0]");
+jpAttr(MnemosyneService, "description", "$.raw.description[0]");
 
 module.exports = MnemosyneService;
