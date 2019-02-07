@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 require("../../../webapp/use.js");
 
-const Trove = require("lib/js/mnemosyne/trove");
+const Trove = require("lib/js/tools/trove");
 
 describe("Trove", () => {
   const rows = [
