@@ -37,7 +37,6 @@ class Trove {
   sort(...keys) {
     // Clear MV indexes because their ordering depends on sort. Unique
     // indexes are fine - they are ignorant of ordering
-
     this.indexes = {};
     this.rows.sort(sorter(keys));
     return this;
