@@ -44,4 +44,11 @@ describe("lazyAttr", () => {
       fruitLength: 2
     });
   });
+
+  it("should throw on non-bindable function", () => {
+    expect(() => {
+      lazyAttr(TestClass, "nb", () => {
+      })
+    }).to.throw(/bindable/);
+  });
 });
