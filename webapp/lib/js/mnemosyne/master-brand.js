@@ -1,7 +1,6 @@
 "use strict";
 
 const MnemosyneBase = require("./base");
-const jpAttr = require("lib/js/tools/jp-attr");
 
 class MnemosyneMasterBrand extends MnemosyneBase {
   static get table() {
