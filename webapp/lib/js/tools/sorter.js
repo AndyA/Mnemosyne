@@ -10,7 +10,7 @@ function sorter(...keys) {
   }
 
   function compareString(a, b) {
-    return a.localeCompare(b);
+    return a.toString().localeCompare(b);
   }
 
   function makeTerm(key) {
