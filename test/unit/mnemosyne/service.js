@@ -16,7 +16,7 @@ describe("MnemosyneService", () => {
 
   const trove = new Trove(MnemosyneService.makeSet(services));
 
-  it("should expose name attribute", () => {
+  it("should expose name, description attributes", () => {
     const r1x = trove.find("ID", "bbc_1xtra");
     expect(r1x.name)
       .to.equal("BBC Radio 1Xtra");
