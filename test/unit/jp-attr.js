@@ -63,6 +63,11 @@ describe("jpAttr", () => {
     ]
   });
 
+  jpAttr(TestClass, "attr", {
+    paths: "$.data.attr[*].a[*]",
+    array: true
+  });
+
   const o1 = new TestClass("One", {
     status: "pending",
     display: {
@@ -70,7 +75,28 @@ describe("jpAttr", () => {
       alt: {
         title: "Herring in a vacuum"
       }
-    }
+    },
+    attr: [
+      {
+        a: [
+          {
+            name: "foo",
+            value: "Antique"
+          },
+          {
+            name: "bar",
+            value: "Modern"
+          }
+        ]
+      }, {
+        a: [
+          {
+            name: "baz",
+            value: "Ancient"
+          }
+        ]
+      }
+    ]
   });
 
   const o2 = new TestClass("Two", {
@@ -102,6 +128,23 @@ describe("jpAttr", () => {
     expect(o3.short_title).to.equal("Three");
     expect(o3.titles).to.deep.equal([]);
 
+  });
+
+  it("should handle complex arrays", () => {
+    expect(o1.attr).to.deep.equal([
+      {
+        name: "foo",
+        value: "Antique"
+      },
+      {
+        name: "bar",
+        value: "Modern"
+      },
+      {
+        name: "baz",
+        value: "Ancient"
+      }
+    ]);
   });
 
   it("should parse the computed value", () => {
