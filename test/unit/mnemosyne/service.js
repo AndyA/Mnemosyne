@@ -14,11 +14,14 @@ const td = new TestData("test/data");
 describe("MnemosyneService", () => {
   const services = td.loadAllSync("service");
 
-  const trove = new Trove(services.map(s => new MnemosyneService(s)));
+  const trove = new Trove(MnemosyneService.makeSet(services));
 
   it("should expose name attribute", () => {
     const r1x = trove.find("ID", "bbc_1xtra");
-    expect(r1x.name).to.equal("BBC Radio 1Xtra");
+    expect(r1x.name)
+      .to.equal("BBC Radio 1Xtra");
+    expect(r1x.description)
+      .to.equal("The biggest tunes, talent and mixes in new Black music");
   });
 
   it("should be searchable by name", () => {
