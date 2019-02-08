@@ -8,6 +8,8 @@ const moment = require("moment");
 const lazyAttr = require("lib/js/tools/lazy-attr");
 const Trove = require("lib/js/tools/trove");
 
+const MnemosyneMapper = require("lib/js/mnemosyne/mapper");
+
 const MnemosyneBroadcast = require("lib/js/mnemosyne/broadcast");
 const MnemosyneEpisode = require("lib/js/mnemosyne/episode");
 const MnemosyneService = require("lib/js/mnemosyne/service");
@@ -15,6 +17,10 @@ const MnemosyneMasterBrand = require("lib/js/mnemosyne/master-brand");
 const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
 
 class MnemosyneContext {
+  constructor() {
+    this.mapper = new MnemosyneMapper();
+  }
+
   async loadQuery(cl, ...args) {
     let [rows, fields] = await db.query(...args);
     return new Trove(cl.makeSet(rows));
