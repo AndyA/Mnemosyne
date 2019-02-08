@@ -27,6 +27,9 @@ class MnemosyneContext {
   async makeProgrammes(broadcasts) {
     const ep = _.uniq(broadcasts.rows.map(b => b.episode));
 
+    if (ep.length === 0)
+      return new Trove([]);
+
     const [services, masterBrands, episodes] = await Promise.all([
       this.services,
       this.masterBrands,
@@ -57,6 +60,16 @@ class MnemosyneContext {
       MnemosyneBroadcast,
       "SELECT * FROM `" + MnemosyneBroadcast.table + "` WHERE `uuid` IN (?)",
       [ids]
+    );
+
+    return this.makeProgrammes(broadcasts);
+  }
+
+  async loadServiceDay(service, day) {
+    const broadcasts = await this.loadQuery(
+      MnemosyneBroadcast,
+      "SELECT * FROM `" + MnemosyneBroadcast.table + "` WHERE `day` = ? AND `service_id` = ?",
+      [day, service]
     );
 
     return this.makeProgrammes(broadcasts);
