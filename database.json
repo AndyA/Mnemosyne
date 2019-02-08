@@ -1,7 +1,8 @@
 {
    "dev" : {
-      "database" : "g2",
+      "database" : "mnemosyne4",
       "driver" : "mysql",
+      "multipleStatements" : true,
       "password" : "",
       "user" : "root"
    }
