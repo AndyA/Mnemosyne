@@ -10,6 +10,7 @@ class MnemosyneProgramme extends MnemosyneBase {
 }
 
 MnemosyneProgramme
+  .jpAttr("link", "$.broadcast.link")
   .jpAttr("txTime", "$.broadcast.txTime");
 
 module.exports = MnemosyneProgramme;

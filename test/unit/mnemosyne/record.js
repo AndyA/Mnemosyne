@@ -60,8 +60,8 @@ describe("MnemosyneRecord", () => {
 
     expect(obj.ID).to.equal("the_id");
     expect(obj.uuid).to.equal("f5171a00-4224-44c8-9474-c2148e5e4d97");
-    expect(obj.link).to.equal("the_id");
+    expect(obj.link).to.equal("/the_id");
 
-    expect(obj2.link).to.equal("f5171a00422444c89474c2148e5e4d97");
+    expect(obj2.link).to.equal("/f5171a00422444c89474c2148e5e4d97");
   });
 });

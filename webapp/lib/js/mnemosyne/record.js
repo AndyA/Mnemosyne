@@ -24,7 +24,7 @@ class MnemosyneRecord extends MnemosyneBase {
 
 MnemosyneRecord
   .lazyAttr("link", function() {
-    return this.ID || UUID.hash(this.uuid);
+    return "/" + (this.ID || UUID.hash(this.uuid));
   });
 
 module.exports = MnemosyneRecord;

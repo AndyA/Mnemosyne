@@ -7,7 +7,7 @@ require("../../../webapp/use.js");
 
 const MnemosyneBase = require("lib/js/mnemosyne/base");
 
-describe.only("MnemosyneBase", () => {
+describe("MnemosyneBase", () => {
   it("should handle lazyAttr", () => {
     class Test extends MnemosyneBase {
       constructor(data) {

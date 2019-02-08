@@ -19,7 +19,7 @@ describe("MnemosyneEpisode", () => {
   it("should have some attributes", () => {
     const ep = trove.find("ID", "b008gdwj");
     expect(ep.link)
-    .to.equal("b008gdwj");
+    .to.equal("/b008gdwj");
     expect(ep.title)
       .to.equal("A Vision of the World");
     expect(ep.containersTitle)
