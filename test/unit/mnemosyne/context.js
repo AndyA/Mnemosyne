@@ -40,7 +40,7 @@ describe("MnemosyneContext", () => {
         "72c3c2c3-a3e8-0655-bdeb-99cfe457a82a",
         "b08d9182-1da5-3ae6-f211-b5ebbbc99cb9"
       ];
-      ctx.loadProgramme(uuid).then(progs => console.log(progs));
+//      ctx.loadProgramme(uuid).then(progs => console.log(progs));
 
     });
   });
