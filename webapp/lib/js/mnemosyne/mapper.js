@@ -22,11 +22,25 @@ class MnemosyneMapper {
   async lookupKind(ids) {
     if (_.isString(ids)) {
       const k = await this.lookupKind([ids]);
-      return k[0];
+      return k[ids];
     }
 
     if (!_.isArray(ids))
       throw new Error("lookupKind needs a string or an array");
+
+    const [rows, fields] = await db.query(
+      [
+        "SELECT `uuid`, `ID`, `table`, ? AS `key` FROM `mnemosyne_pips_id_map` WHERE `uuid` IN (?)",
+        "SELECT `uuid`, `ID`, `table`, ? AS `key` FROM `mnemosyne_pips_id_map` WHERE `ID` IN (?)"
+      ].join(" UNION "),
+      ["uuid", ids, "ID", ids]
+    );
+
+    let kindMap = {};
+    for (const row of rows)
+      kindMap[row[row.key]] = row;
+
+    return kindMap;
   }
 }
 
