@@ -6,6 +6,7 @@ const Indexer = require("lib/js/tools/indexer");
 const Pluck = require("lib/js/tools/pluck");
 
 class MnemosyneMapper {
+  // TODO: normalize UUIDs here
   async redirect(from) {
     if (_.isString(from)) {
       const r = await this.redirect([from]);
