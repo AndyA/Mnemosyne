@@ -1,8 +1,6 @@
 "use strict";
 
 const _ = require("lodash");
-const lazyAttr = require("lib/js/tools/lazy-attr");
-const jpAttr = require("lib/js/tools/jp-attr");
 const UUID = require("lib/js/tools/uuid.js");
 
 const MnemosyneBase = require("./base");
