@@ -22,13 +22,13 @@ describe("MnemosyneEpisode", () => {
     .to.equal("b008gdwj");
     expect(ep.title)
       .to.equal("A Vision of the World");
-    expect(ep.containers_title)
+    expect(ep.containersTitle)
       .to.equal("Edwardians in Colour: The Wonderful World of Albert Kahn: Reversioned Series");
     expect(ep.synopsis.short)
       .to.equal("This episode documents Albert Kahn\'s first voyage.");
-    expect(ep.short_synopsis)
+    expect(ep.shortSynopsis)
       .to.equal("This episode documents Albert Kahn\'s first voyage.");
-    expect(ep.presentation_title)
+    expect(ep.presentationTitle)
     .to.equal("Episode 1");
   });
 

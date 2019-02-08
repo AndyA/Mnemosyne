@@ -18,7 +18,7 @@ describe("MnemosyneBroadcast", () => {
 
   it("should have some attributes", () => {
     const bc = trove.find("ID", "p006f1hm");
-    expect(bc.tx_time.format("YYYY-MM-DD HH:mm:ss"))
+    expect(bc.txTime.format("YYYY-MM-DD HH:mm:ss"))
     .to.equal("2010-02-20 01:15:00");
   });
 

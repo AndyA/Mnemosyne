@@ -12,8 +12,8 @@ class MnemosyneEpisode extends MnemosyneBase {
 
 MnemosyneEpisode
   .jpAttr("title", "$.raw.episode.title['$']")
-  .jpAttr("containers_title", "$.raw.episode.containers_title['$']")
-  .jpAttr("presentation_title", "$.raw.episode.presentation_title['$']")
+  .jpAttr("containersTitle", "$.raw.episode.containers_title['$']")
+  .jpAttr("presentationTitle", "$.raw.episode.presentation_title['$']")
   .jpAttr("synopses", {
     paths: "$.raw.episode.synopses.synopsis[*]",
     array: true
@@ -21,12 +21,12 @@ MnemosyneEpisode
   .lazyAttr("synopsis", function() {
     return Pluck.pluckValues(Indexer.uniqueByKey(this.synopses, "length"), "$['$']");
   })
-  .jpAttr("short_synopsis", [
+  .jpAttr("shortSynopsis", [
     "$.synopsis.short",
     "$.synopsis.medium",
     "$.synopsis.long"
   ])
-  .jpAttr("long_synopsis", [
+  .jpAttr("longSynopsis", [
     "$.synopsis.long",
     "$.synopsis.medium",
     "$.synopsis.short"
