@@ -11,7 +11,7 @@ class MnemosyneEpisode extends MnemosyneBase {
 }
 
 MnemosyneEpisode
-  .jpAttr("title", "$.raw.episode.title['$']")
+  .jpAttr("title", ["$.raw.episode.title['$']", "$.containersTitle"])
   .jpAttr("containersTitle", "$.raw.episode.containers_title['$']")
   .jpAttr("presentationTitle", "$.raw.episode.presentation_title['$']")
   .jpAttr("synopses", {
