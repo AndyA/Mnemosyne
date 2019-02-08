@@ -1,18 +1,15 @@
 "use strict";
 
-const jpAttr = require("lib/js/tools/jp-attr");
-const lazyAttr = require("lib/js/tools/lazy-attr");
+const MnemosyneBase = require("./base");
 
-class MnemosyneProgramme {
+class MnemosyneProgramme extends MnemosyneBase {
   constructor(data) {
+    super(data);
     Object.assign(this, data);
   }
 }
 
-jpAttr(MnemosyneProgramme, "txTime", "$.broadcast.txTime");
-
-lazyAttr(MnemosyneProgramme, "displayTime", function() {
-  return this.txTime.format("HH:mm");
-});
+MnemosyneProgramme
+  .jpAttr("txTime", "$.broadcast.txTime");
 
 module.exports = MnemosyneProgramme;

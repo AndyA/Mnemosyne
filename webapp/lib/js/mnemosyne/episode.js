@@ -1,10 +1,10 @@
 "use strict";
 
-const MnemosyneBase = require("./base");
+const MnemosyneRecord = require("./record");
 const Pluck = require("lib/js/tools/pluck");
 const Indexer = require("lib/js/tools/indexer");
 
-class MnemosyneEpisode extends MnemosyneBase {
+class MnemosyneEpisode extends MnemosyneRecord {
   static get table() {
     return "mnemosyne_episode";
   }
@@ -24,6 +24,11 @@ MnemosyneEpisode
   .jpAttr("shortSynopsis", [
     "$.synopsis.short",
     "$.synopsis.medium",
+    "$.synopsis.long"
+  ])
+  .jpAttr("mediumSynopsis", [
+    "$.synopsis.medium",
+    "$.synopsis.short",
     "$.synopsis.long"
   ])
   .jpAttr("longSynopsis", [
