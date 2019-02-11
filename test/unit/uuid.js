@@ -21,13 +21,13 @@ describe.only("UUID", () => {
     });
   });
 
-  describe("valid_hash", () => {
+  describe("validHash", () => {
     it("should validate", () => {
-      expect(UUID.valid_hash("f26d77dd24ab406d85403b386c77ba45")).to.be.true;
-      expect(UUID.valid_hash("f26d77dd24ab406d85403b386c77ba4")).to.be.false;
-      expect(UUID.valid_hash("f26d77dd24ab406d85403b386c77ba45a")).to.be.false;
-      expect(UUID.valid_hash("F26D77DD24AB406D85403B386C77BA45")).to.be.false;
-      expect(UUID.valid_hash(null)).to.be.false;
+      expect(UUID.validHash("f26d77dd24ab406d85403b386c77ba45")).to.be.true;
+      expect(UUID.validHash("f26d77dd24ab406d85403b386c77ba4")).to.be.false;
+      expect(UUID.validHash("f26d77dd24ab406d85403b386c77ba45a")).to.be.false;
+      expect(UUID.validHash("F26D77DD24AB406D85403B386C77BA45")).to.be.false;
+      expect(UUID.validHash(null)).to.be.false;
     });
   });
 

@@ -4,7 +4,7 @@ const _ = require("lodash");
 const md5 = require("md5");
 
 class UUID {
-  static valid_hash(hash) {
+  static validHash(hash) {
     return /^[0-9a-f]{32}$/.test(hash);
   }
 
@@ -14,21 +14,21 @@ class UUID {
   }
 
   static _hash(uuid) {
-    if (UUID.valid(uuid) || UUID.valid_hash(uuid))
+    if (this.valid(uuid) || this.validHash(uuid))
       return uuid.replace(/-/g, "");
 
     throw new Error("Invalid UUID");
   }
 
   static hash(uuid) {
-    return UUID._hash(uuid.toLowerCase());
+    return this._hash(uuid.toLowerCase());
   }
 
   static _format(hash) {
-    if (UUID.valid(hash))
+    if (this.valid(hash))
       return hash;
 
-    if (UUID.valid_hash(hash))
+    if (this.validHash(hash))
       return [
         hash.substr(0, 8),
         hash.substr(8, 4),
@@ -41,7 +41,7 @@ class UUID {
   }
 
   static format(hash) {
-    return UUID._format(hash.toLowerCase());
+    return this._format(hash.toLowerCase());
   }
 
   static toHash(id) {
@@ -58,7 +58,7 @@ class UUID {
     if (_.isArray(id))
       return id.map(i => this.toUUID(i));
 
-    if (this.valid_hash(id))
+    if (this.validHash(id))
       return this.format(id);
 
     return id;
@@ -68,12 +68,13 @@ class UUID {
     if (info.length == 0)
       throw new Error("Missing hash info");
 
-    return UUID.format(md5([kind, ...info].join(":")));
+    return this.format(md5([kind, ...info].join(":")));
   }
 
   constructor(hash) {
-    this._hash = UUID.hash(hash);
-    this._uuid = UUID.format(hash);
+    const me = this.constructor;
+    this._hash = me.hash(hash);
+    this._uuid = me.format(hash);
   }
 
   get hash() {
