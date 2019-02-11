@@ -23,14 +23,19 @@ describe("MnemosyneMapper", () => {
   const redir = new MnemosyneMapper();
 
   it("should redirect", () => {
-    expect(redir.redirect(["test_from_1", "test_from_2", "test_from_3"]))
+    expect(redir.redirect([
+      "test_from_1", "test_from_2", "test_from_3", "test_from_4"
+    ]))
       .to.eventually.deep.equal({
       test_from_1: "test_to",
-      test_from_2: "test_to"
+      test_from_2: "test_to",
+      test_from_3: "p005tg94"
     });
     expect(redir.redirect("test_from_1"))
       .to.eventually.equal("test_to");
     expect(redir.redirect("test_from_3"))
+      .to.eventually.equal("p005tg94");
+    expect(redir.redirect("test_from_4"))
       .to.eventually.be.undefined;
   });
 

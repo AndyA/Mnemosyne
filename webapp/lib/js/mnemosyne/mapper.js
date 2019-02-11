@@ -7,6 +7,7 @@ const Pluck = require("lib/js/tools/pluck");
 
 class MnemosyneMapper {
   // TODO: normalize UUIDs here
+  // TODO: redirect UUID to ID here
   async redirect(from) {
     if (_.isString(from)) {
       const r = await this.redirect([from]);
@@ -16,7 +17,16 @@ class MnemosyneMapper {
     if (!_.isArray(from))
       throw new Error("redirect needs a string or an array");
 
-    const [rows, fields] = await db.query("SELECT * FROM `mnemosyne_redirect` WHERE `from` IN (?)", [from]);
+    const [rows, fields] = await db.query([
+      "SELECT `r`.`from`, IFNULL(`m`.`ID`, `r`.`to`) AS `to`" +
+      "  FROM `mnemosyne_redirect` AS `r`" +
+      "  LEFT JOIN `mnemosyne_pips_id_map` AS `m` ON `r`.`to` = `m`.`uuid`" +
+      " WHERE `r`.`from` IN (?)",
+      "SELECT `uuid` AS `from`, `ID` AS `to`" +
+      "  FROM `mnemosyne_pips_id_map`" +
+      " WHERE `uuid` IN  (?)"
+    ].join(" UNION "), [from, from]);
+
     return Pluck.pluckValues(Indexer.uniqueByKey(rows, "from"), "$.to");
   }
 
