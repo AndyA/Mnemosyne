@@ -1,5 +1,6 @@
 "use strict";
 
+const _ = require("lodash");
 const md5 = require("md5");
 
 class UUID {
@@ -41,6 +42,26 @@ class UUID {
 
   static format(hash) {
     return UUID._format(hash.toLowerCase());
+  }
+
+  static toHash(id) {
+    if (_.isArray(id))
+      return id.map(i => this.toHash(i));
+
+    if (this.valid(id))
+      return this.hash(id);
+
+    return id;
+  }
+
+  static toUUID(id) {
+    if (_.isArray(id))
+      return id.map(i => this.toUUID(i));
+
+    if (this.valid_hash(id))
+      return this.format(id);
+
+    return id;
   }
 
   static make(kind, ...info) {

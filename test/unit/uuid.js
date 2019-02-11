@@ -7,7 +7,7 @@ require("../../webapp/use.js");
 
 const UUID = require("lib/js/tools/uuid.js");
 
-describe("UUID", () => {
+describe.only("UUID", () => {
 
   describe("hash", () => {
     it("should strip hyphens", () => {
@@ -63,6 +63,40 @@ describe("UUID", () => {
 
     it("should throw an error for invalid input", () => {
       expect(() => UUID.format("f26d77dd24ab406d85403b386c77ba4")).to.throw(/Invalid/);
+    });
+  });
+
+  describe("toHash", () => {
+    it("should convert to hashes", () => {
+      expect(UUID.toHash("f26d77dd-24ab-406d-8540-3b386c77ba45"))
+        .to.equal("f26d77dd24ab406d85403b386c77ba45");
+      expect(UUID.toHash("f26d77dd24ab406d85403b386c77ba45"))
+        .to.equal("f26d77dd24ab406d85403b386c77ba45");
+      expect(UUID.toHash("x000pghu"))
+        .to.equal("x000pghu");
+      expect(UUID.toHash([
+        "f26d77dd-24ab-406d-8540-3b386c77ba45", "f26d77dd24ab406d85403b386c77ba45", "x000pghu"
+      ]))
+        .to.deep.equal([
+        "f26d77dd24ab406d85403b386c77ba45", "f26d77dd24ab406d85403b386c77ba45", "x000pghu"
+      ]);
+    });
+  });
+
+  describe("toUUID", () => {
+    it("should convert to hashes", () => {
+      expect(UUID.toUUID("f26d77dd-24ab-406d-8540-3b386c77ba45"))
+        .to.equal("f26d77dd-24ab-406d-8540-3b386c77ba45");
+      expect(UUID.toUUID("f26d77dd24ab406d85403b386c77ba45"))
+        .to.equal("f26d77dd-24ab-406d-8540-3b386c77ba45");
+      expect(UUID.toUUID("x000pghu"))
+        .to.equal("x000pghu");
+      expect(UUID.toUUID([
+        "f26d77dd-24ab-406d-8540-3b386c77ba45", "f26d77dd24ab406d85403b386c77ba45", "x000pghu"
+      ]))
+        .to.deep.equal([
+        "f26d77dd-24ab-406d-8540-3b386c77ba45", "f26d77dd-24ab-406d-8540-3b386c77ba45", "x000pghu"
+      ]);
     });
   });
 
