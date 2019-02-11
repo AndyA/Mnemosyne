@@ -7,7 +7,7 @@ require("../../webapp/use.js");
 
 const UUID = require("lib/js/tools/uuid.js");
 
-describe.only("UUID", () => {
+describe("UUID", () => {
 
   describe("hash", () => {
     it("should strip hyphens", () => {
