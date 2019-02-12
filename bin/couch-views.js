@@ -7,13 +7,46 @@ const design = {
   main: {
     language: 'javascript',
     views: {
+      broadcastsByEpisode: {
+        map: function(doc) {
+          if (doc.episodeID)
+            emit(doc.episodeID, null);
+        },
+        reduce: function(keys, values) {
+          return true;
+        }
+      },
       broadcastsByServiceDate: {
         map: function(doc) {
-          if (doc.broadcast)
+          if (doc.broadcast) {
             emit([
               doc.broadcast.service[0].$.sid,
               doc.broadcast.published_time[0].$.start,
-            ], 1)
+              0
+            ], null);
+
+            if (doc.episodeID) {
+              emit([
+                doc.broadcast.service[0].$.sid,
+                doc.broadcast.published_time[0].$.start,
+                1
+              ], {
+                _id: doc.episodeID
+              });
+            }
+          }
+        }
+      },
+      services: {
+        map: function(doc) {
+          if (doc.service)
+            emit(doc._id, null);
+        }
+      },
+      masterBrands: {
+        map: function(doc) {
+          if (doc.masterBrand)
+            emit(doc._id, null);
         }
       }
     }
