@@ -5,11 +5,11 @@ const expect = chai.expect;
 
 require("../../../webapp/use.js");
 
-const MnemosyneRecord = require("lib/js/mnemosyne/record");
+const MnemosyneDocument = require("lib/js/mnemosyne/document");
 
-describe("MnemosyneRecord", () => {
+describe("MnemosyneDocument", () => {
   it("should handle missing raw data", () => {
-    let obj = new MnemosyneRecord({
+    let obj = new MnemosyneDocument({
       foo: 1
     });
 
@@ -19,7 +19,7 @@ describe("MnemosyneRecord", () => {
   });
 
   it("should parse raw JSON", () => {
-    let obj = new MnemosyneRecord({
+    let obj = new MnemosyneDocument({
       foo: 2,
       raw: "{\"bar\":1}"
     });
@@ -33,7 +33,7 @@ describe("MnemosyneRecord", () => {
   });
 
   it("should allow structured data", () => {
-    let obj = new MnemosyneRecord({
+    let obj = new MnemosyneDocument({
       foo: 2,
       raw: {
         bar: 1
@@ -49,12 +49,12 @@ describe("MnemosyneRecord", () => {
   });
 
   it("should find ID, uuid", () => {
-    let obj = new MnemosyneRecord({
+    let obj = new MnemosyneDocument({
       ID: "the_id",
       uuid: "f5171a00-4224-44c8-9474-c2148e5e4d97"
     });
 
-    let obj2 = new MnemosyneRecord({
+    let obj2 = new MnemosyneDocument({
       uuid: "f5171a00-4224-44c8-9474-c2148e5e4d97"
     });
 

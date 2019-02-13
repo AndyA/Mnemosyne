@@ -5,7 +5,7 @@ const UUID = require("lib/js/tools/uuid.js");
 
 const MnemosyneBase = require("./base");
 
-class MnemosyneRecord extends MnemosyneBase {
+class MnemosyneDocument extends MnemosyneBase {
   constructor(rec) {
     super(rec);
     Object.assign(this, rec);
@@ -20,9 +20,9 @@ class MnemosyneRecord extends MnemosyneBase {
 
 }
 
-MnemosyneRecord
+MnemosyneDocument
   .lazyAttr("link", function() {
     return "/" + (this.ID || UUID.hash(this.uuid));
   });
 
-module.exports = MnemosyneRecord;
+module.exports = MnemosyneDocument;

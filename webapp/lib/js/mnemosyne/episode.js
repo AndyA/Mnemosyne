@@ -1,10 +1,10 @@
 "use strict";
 
-const MnemosyneRecord = require("./record");
+const MnemosyneDocument = require("./document");
 const Pluck = require("lib/js/tools/pluck");
 const Indexer = require("lib/js/tools/indexer");
 
-class MnemosyneEpisode extends MnemosyneRecord {
+class MnemosyneEpisode extends MnemosyneDocument {
   static get table() {
     return "mnemosyne_episode";
   }

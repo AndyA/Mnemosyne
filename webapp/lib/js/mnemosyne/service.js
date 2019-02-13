@@ -1,8 +1,8 @@
 "use strict";
 
-const MnemosyneRecord = require("./record");
+const MnemosyneDocument = require("./document");
 
-class MnemosyneService extends MnemosyneRecord {
+class MnemosyneService extends MnemosyneDocument {
   static get table() {
     return "mnemosyne_pips_service";
   }

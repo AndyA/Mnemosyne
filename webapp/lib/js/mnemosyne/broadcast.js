@@ -1,9 +1,9 @@
 "use strict";
 
-const MnemosyneRecord = require("./record");
+const MnemosyneDocument = require("./document");
 const moment = require("moment");
 
-class MnemosyneBroadcast extends MnemosyneRecord {
+class MnemosyneBroadcast extends MnemosyneDocument {
   static get table() {
     return "mnemosyne_broadcast";
   }
