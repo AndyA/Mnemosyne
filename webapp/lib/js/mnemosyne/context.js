@@ -21,8 +21,19 @@ const db = new PouchDB("http://localhost:5984/mnemosyne");
 class MnemosyneContext {
   constructor() {}
 
-  static keyTail(key) {
-    return key[key.length - 1];
+  static foldView(res) {
+    let out = [];
+    for (let row of res.rows) {
+      const key = row.key;
+      const index = key[key.length - 1];
+      if (index === 0) {
+        row._fold = [];
+        out.push(row);
+      } else {
+        out[out.length - 1]._fold.push(row);
+      }
+    }
+    return out;
   }
 
   static makeDocument(doc) {
@@ -45,8 +56,36 @@ class MnemosyneContext {
     return new Trove(cl.makeSet(res.rows.map(r => r.doc)));
   }
 
-  async loadServiceDay(service, day) {
+  async makeProgrammes(res) {
     const me = this.constructor;
+    const [services, masterBrands] = await Promise.all(
+      [this.services, this.masterBrands]
+    );
+
+    let progs = [];
+    for (const row of me.foldView(res)) {
+      let prog = {
+        broadcast: me.makeDocument(row.doc)
+      };
+
+      const foldDocs = row._fold.map(r => me.makeDocument(r.doc));
+      for (const fd of foldDocs) {
+        const key = fd.constructor.key;
+        if (prog.hasOwnProperty(key))
+          throw new Error("Duplicate entry for " + key);
+        prog[key] = fd;
+      }
+
+      prog.service = services.find("_id", prog.broadcast.serviceID);
+      prog.masterBrand = masterBrands.find("_id", prog.service.masterBrandID);
+
+      progs.push(new MnemosyneProgramme(prog));
+    }
+
+    return new Trove(progs);
+  }
+
+  async loadServiceDay(service, day) {
     const m = moment.utc(day);
     const start = m.startOf("day").dbFormat();
     const end = m.add(1, "day").dbFormat();
@@ -60,34 +99,7 @@ class MnemosyneContext {
       stale: "update_after"
     })
 
-    const [services, masterBrands] = await Promise.all(
-      [this.services, this.masterBrands]
-    );
-
-    let rows = res.rows.slice(0);
-    let progs = [];
-    while (rows.length) {
-      const broadcastRow = rows.shift();
-
-      if (me.keyTail(broadcastRow.key) !== 0)
-        throw new Exception("Expected a new document group");
-
-      let prog = {
-        broadcast: me.makeDocument(broadcastRow.doc)
-      };
-
-      if (rows.length && me.keyTail(rows[0].key) === 1) {
-        prog.episode = me.makeDocument(rows.shift().doc);
-      }
-
-      prog.service = services.find("_id", prog.broadcast.serviceID);
-      if (prog.service.masterBrandID)
-        prog.masterBrand = masterBrands.find("_id", prog.service.masterBrandID);
-
-      progs.push(new MnemosyneProgramme(prog));
-    }
-
-    return new Trove(progs);
+    return this.makeProgrammes(res);
   }
 }
 
