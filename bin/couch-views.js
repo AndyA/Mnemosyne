@@ -64,23 +64,17 @@ const design = {
       },
       pidOrID: {
         map: function(doc) {
-          // Index by uuid
-          emit([doc._id, 0], null);
-          if (doc.episodeID) {
-            emit([doc._id, 1], {
-              _id: doc.episodeID
-            });
-          }
-
-          // Index by pid
-          if (doc.pid) {
-            emit(doc.pid, null);
+          function emitWithEpisode(id) {
+            emit([id, 0], null);
             if (doc.episodeID) {
-              emit([doc.pid, 1], {
+              emit([id, 1], {
                 _id: doc.episodeID
               });
             }
           }
+          emitWithEpisode(doc._id);
+          if (doc.pid)
+            emitWithEpisode(doc.pid);
         }
       }
     }
