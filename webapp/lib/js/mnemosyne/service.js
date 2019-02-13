@@ -3,8 +3,8 @@
 const MnemosyneDocument = require("./document");
 
 class MnemosyneService extends MnemosyneDocument {
-  static get table() {
-    return "mnemosyne_pips_service";
+  static get key() {
+    return "service";
   }
 }
 

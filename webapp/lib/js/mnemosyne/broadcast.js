@@ -5,8 +5,8 @@ const moment = require("moment");
 require("lib/js/mnemosyne/time");
 
 class MnemosyneBroadcast extends MnemosyneDocument {
-  static get table() {
-    return "mnemosyne_broadcast";
+  static get key() {
+    return "broadcast";
   }
 }
 
