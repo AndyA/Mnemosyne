@@ -61,6 +61,13 @@ const design = {
           if (doc.masterBrand)
             emit(doc._id, null);
         }
+      }, 
+      pidOrID: {
+        map: function(doc) {
+          emit(doc._id, null);
+          if (doc.pid)
+            emit(doc.pid, null);
+        }
       }
     }
   }
