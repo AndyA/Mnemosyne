@@ -37,6 +37,19 @@ const design = {
           }
         }
       },
+      genres: {
+        map: function(doc) {
+          if (doc.episode && doc.episode.genres) {
+            var gg = doc.episode.genres.genre_group;
+            for (var i = 0; i < gg.length; i++) {
+              emit(gg[i].genre_id, null);
+            }
+          }
+        },
+        reduce: function(keys, values) {
+          return true;
+        }
+      },
       services: {
         map: function(doc) {
           if (doc.service)
