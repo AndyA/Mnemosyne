@@ -3,5 +3,5 @@
 const Handlebars = require("handlebars");
 
 Handlebars.registerHelper("shortTime", function(m) {
-  return m.format("HH:mm");
+  return m.shortTime();
 });
