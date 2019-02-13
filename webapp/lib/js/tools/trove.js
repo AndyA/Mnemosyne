@@ -45,6 +45,12 @@ class Trove {
   sorted(...keys) {
     return this.clone().sort(...keys);
   }
+
+  get singleton() {
+    if (this.rows.length > 1)
+      throw new Error("Trove is not a singleton");
+    return this.rows[0];
+  }
 }
 
 module.exports = Trove;

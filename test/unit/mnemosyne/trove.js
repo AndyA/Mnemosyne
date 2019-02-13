@@ -40,4 +40,24 @@ describe("Trove", () => {
     expect(st.rows).to.deep.equal([rows[3], rows[1], rows[2], rows[0]]);
     expect(st.findAll("name", "Andy")).to.deep.equal([rows[3], rows[1]]);
   });
+
+  it("should handle singletons", () => {
+    const ts = new Trove([{
+      id: 1
+    }]);
+    const te = new Trove([]);
+    const tm = new Trove([{
+      id: 1
+    }, {
+      id: 2
+    }]);
+
+    expect(ts.singleton).to.deep.equal({
+      id: 1
+    });
+    expect(te.singleton).to.be.undefined;
+    expect(() => {
+      tm.singleton
+    }).to.throw(/not a singleton/);
+  });
 });
