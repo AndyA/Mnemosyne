@@ -1,7 +1,8 @@
 "use strict";
 
 const _ = require("lodash");
-const UUID = require("lib/js/tools/uuid.js");
+const UUID = require("lib/js/tools/uuid");
+const ObjectTools = require("lib/js/tools/object-tools");
 
 const MnemosyneBase = require("./base");
 
@@ -18,6 +19,13 @@ class MnemosyneDocument extends MnemosyneBase {
     return rows.map(r => new this(r));
   }
 
+  toJSON() {
+    const props = ObjectTools.getReadable(this);
+    let out = {};
+    for (const prop of props)
+      out[prop] = this[prop];
+    return out;
+  }
 }
 
 MnemosyneDocument

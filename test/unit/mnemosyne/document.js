@@ -24,4 +24,16 @@ describe("MnemosyneDocument", () => {
     });
     expect(obj.link).to.equal("/f5171a00422444c89474c2148e5e4d97");
   });
+
+  it("should serialize", () => {
+    let obj = new MnemosyneDocument({
+      _id: "f5171a00422444c89474c2148e5e4d97"
+    });
+
+    expect(JSON.parse(JSON.stringify(obj))).to.deep.equal({
+      _id: "f5171a00422444c89474c2148e5e4d97", 
+      link: "/f5171a00422444c89474c2148e5e4d97"
+    });
+
+  });
 });
