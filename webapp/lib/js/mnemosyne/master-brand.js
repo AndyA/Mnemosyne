@@ -9,10 +9,10 @@ class MnemosyneMasterBrand extends MnemosyneDocument {
 }
 
 MnemosyneMasterBrand
-  .jpAttr("name", "$.raw.name[0]")
-  .jpAttr("title", "$.raw.title[0]")
+  .jpAttr("name", "$.masterBrand.name[0]")
+  .jpAttr("title", "$.masterBrand.title[0]")
   .jpAttr("images", {
-    paths: "$.raw.images[*].image[*]['$']",
+    paths: "$.masterBrand.images[*].image[*]['$']",
     array: true
   });
 

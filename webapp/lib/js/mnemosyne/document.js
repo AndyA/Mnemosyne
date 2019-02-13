@@ -6,12 +6,12 @@ const UUID = require("lib/js/tools/uuid.js");
 const MnemosyneBase = require("./base");
 
 class MnemosyneDocument extends MnemosyneBase {
-  constructor(rec) {
-    super(rec);
-    Object.assign(this, rec);
+  constructor(doc) {
+    super(doc);
+    Object.assign(this, doc);
 
-    if (rec.hasOwnProperty("raw") && _.isString(rec.raw))
-      this.raw = JSON.parse(rec.raw);
+    if (doc.hasOwnProperty("raw") && _.isString(doc.raw))
+      this.raw = JSON.parse(doc.raw);
   }
 
   static makeSet(rows) {
@@ -22,7 +22,7 @@ class MnemosyneDocument extends MnemosyneBase {
 
 MnemosyneDocument
   .lazyAttr("link", function() {
-    return "/" + (this.ID || UUID.hash(this.uuid));
+    return "/" + this._id;
   });
 
 module.exports = MnemosyneDocument;

@@ -17,7 +17,8 @@ describe("MnemosyneMasterBrand", () => {
   const trove = new Trove(MnemosyneMasterBrand.makeSet(masterBrands));
 
   it("should expose name, images attributes", () => {
-    const r1x = trove.find("ID", "bbc_1xtra");
+    const r1x = trove.find("pid", "bbc_1xtra");
+
     expect(r1x.name)
       .to.equal("BBC Radio 1Xtra");
     expect(r1x.images)
@@ -32,7 +33,7 @@ describe("MnemosyneMasterBrand", () => {
 
   it("should be searchable by name", () => {
     // master-brand name is not unique - hence findAll
-    expect(trove.findAll("name", "BBC Radio 1Xtra").map(s => s.ID))
+    expect(trove.findAll("name", "BBC Radio 1Xtra").map(s => s.pid))
       .to.deep.equal(["bbc_1xtra"]);
   });
 

@@ -9,7 +9,7 @@ class MnemosyneService extends MnemosyneDocument {
 }
 
 MnemosyneService
-  .jpAttr("name", "$.raw.name[0]")
-  .jpAttr("description", "$.raw.description[0]");
+  .jpAttr("name", "$.service.name[0]")
+  .jpAttr("description", "$.service.description[0]");
 
 module.exports = MnemosyneService;

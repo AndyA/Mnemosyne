@@ -11,11 +11,11 @@ class MnemosyneEpisode extends MnemosyneDocument {
 }
 
 MnemosyneEpisode
-  .jpAttr("title", ["$.raw.episode.title['$']", "$.containersTitle"])
-  .jpAttr("containersTitle", "$.raw.episode.containers_title['$']")
-  .jpAttr("presentationTitle", "$.raw.episode.presentation_title['$']")
+  .jpAttr("title", ["$.episode.title['$']", "$.containersTitle"])
+  .jpAttr("containersTitle", "$.episode.containers_title['$']")
+  .jpAttr("presentationTitle", "$.episode.presentation_title['$']")
   .jpAttr("synopses", {
-    paths: "$.raw.episode.synopses.synopsis[*]",
+    paths: "$.episode.synopses.synopsis[*]",
     array: true
   })
   .lazyAttr("synopsis", function() {

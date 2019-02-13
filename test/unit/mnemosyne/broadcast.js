@@ -17,7 +17,7 @@ describe("MnemosyneBroadcast", () => {
   const trove = new Trove(MnemosyneBroadcast.makeSet(broadcasts));
 
   it("should have some attributes", () => {
-    const bc = trove.find("ID", "p006f1hm");
+    const bc = trove.find("pid", "p006f1hm");
     expect(bc.txTime.format("YYYY-MM-DD HH:mm:ss"))
     .to.equal("2010-02-20 01:15:00");
   });
