@@ -1,15 +1,10 @@
 "use strict";
 
-const MnemosyneBase = require("./base");
+const MnemosyneDocument = require("./document");
 
-class MnemosyneProgramme extends MnemosyneBase {
+class MnemosyneProgramme extends MnemosyneDocument {
   static get key() {
     return "programme";
-  }
-
-  constructor(data) {
-    super(data);
-    Object.assign(this, data);
   }
 }
 

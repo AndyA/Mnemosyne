@@ -10,9 +10,6 @@ class MnemosyneDocument extends MnemosyneBase {
   constructor(doc) {
     super(doc);
     Object.assign(this, doc);
-
-    if (doc.hasOwnProperty("raw") && _.isString(doc.raw))
-      this.raw = JSON.parse(doc.raw);
   }
 
   static makeSet(rows) {
