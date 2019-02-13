@@ -16,10 +16,10 @@ const MnemosyneService = require("lib/js/mnemosyne/service");
 const MnemosyneMasterBrand = require("lib/js/mnemosyne/master-brand");
 const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
 
-const db = new PouchDB("http://localhost:5984/mnemosyne");
-
 class MnemosyneContext {
-  constructor() {}
+  constructor() {
+    this.db = new PouchDB("http://localhost:5984/mnemosyne");
+  }
 
   static foldView(res) {
     let out = [];
@@ -59,7 +59,7 @@ class MnemosyneContext {
   }
 
   async loadQuery(...args) {
-    let res = await db.query(...args);
+    let res = await this.db.query(...args);
     return this.makeThings(res);
   }
 
@@ -104,6 +104,19 @@ class MnemosyneContext {
   async makeThings(res) {
     const me = this.constructor;
     return new Trove(await Promise.all(me.foldView(res).map(r => this.makeThing(r))));
+  }
+
+  async loadThing(id) {
+    const trove = await this.loadQuery("main/pidOrID", {
+      startkey: [id, 0],
+      endkey: [id, 999],
+      inclusive_end: false,
+      reduce: false,
+      include_docs: true,
+      reduce: false,
+      stale: "update_after"
+    });
+    return trove.singleton;
   }
 
   async loadServiceDay(service, day) {

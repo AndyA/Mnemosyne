@@ -1,5 +1,5 @@
 <div class="content-width">
-  {{#each progs.rows}}
+  {{#with thing}}
     <h2>
       <span class="time">{{shortTime txTime}}</span>
       <a href="{{link}}">{{title}}</a>
@@ -7,5 +7,6 @@
     <p class="synopsis short">{{episode.shortSynopsis}}</p>
     <p class="synopsis medium">{{episode.mediumSynopsis}}</p>
     <p class="synopsis long">{{episode.longSynopsis}}</p>
-  {{/each}}
+  {{/with}}
 </div>
+
