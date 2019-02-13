@@ -61,12 +61,26 @@ const design = {
           if (doc.masterBrand)
             emit(doc._id, null);
         }
-      }, 
+      },
       pidOrID: {
         map: function(doc) {
-          emit(doc._id, null);
-          if (doc.pid)
+          // Index by uuid
+          emit([doc._id, 0], null);
+          if (doc.episodeID) {
+            emit([doc._id, 1], {
+              _id: doc.episodeID
+            });
+          }
+
+          // Index by pid
+          if (doc.pid) {
             emit(doc.pid, null);
+            if (doc.episodeID) {
+              emit([doc.pid, 1], {
+                _id: doc.episodeID
+              });
+            }
+          }
         }
       }
     }
