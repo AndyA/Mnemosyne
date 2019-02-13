@@ -20,16 +20,14 @@ class MnemosyneDocument extends MnemosyneBase {
   }
 
   toJSON() {
-    const props = ObjectTools.getReadable(this);
-    let out = {};
-    for (const prop of props)
-      out[prop] = this[prop];
-    return out;
+    return ObjectTools.getJSON(this);
   }
 }
 
 MnemosyneDocument
   .lazyAttr("link", function() {
+    if (this.hasOwnProperty("pid"))
+      return "/" + this.pid;
     return "/" + this._id;
   });
 

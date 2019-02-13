@@ -22,6 +22,14 @@ class ObjectTools {
     return readable;
   }
 
+  static getJSON(obj) {
+    const props = this.getReadable(obj);
+    let out = {};
+    for (const prop of props)
+      out[prop] = obj[prop];
+    return out;
+  }
+
 }
 
 module.exports = ObjectTools;
