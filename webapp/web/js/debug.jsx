@@ -10,7 +10,7 @@ class Debugger extends React.Component {
   render() {
     return (
       <div>
-        <ReactJson src={STASH} theme="monokai" collapsed="true" sortKeys="true" />
+        <ReactJson src={STASH} theme="monokai" collapsed="true" />
       </div>
     );
   }
