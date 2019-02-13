@@ -2,6 +2,7 @@
 
 const MnemosyneDocument = require("./document");
 const moment = require("moment");
+require("lib/js/mnemosyne/time");
 
 class MnemosyneBroadcast extends MnemosyneDocument {
   static get table() {
@@ -12,7 +13,7 @@ class MnemosyneBroadcast extends MnemosyneDocument {
 MnemosyneBroadcast
   .jpAttr("txTime", {
     paths: "$.broadcast.published_time[*]['$'].start",
-    parser: v => moment(v)
+    parser: v => moment.utc(v)
   });
 
 module.exports = MnemosyneBroadcast;
