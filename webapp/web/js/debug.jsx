@@ -16,8 +16,6 @@ class Debugger extends React.Component {
   }
 }
 
-console.log({Debugger, ReactJson});
-
 ReactDOM.render(
   <Debugger />,
   document.getElementById("debug")
