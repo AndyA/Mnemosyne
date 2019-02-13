@@ -3,7 +3,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-require("../../webapp/use.js");
+require("../../../webapp/use");
 
 const UUID = require("lib/js/tools/uuid.js");
 

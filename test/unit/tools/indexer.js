@@ -4,7 +4,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-require("../../webapp/use.js");
+require("../../../webapp/use");
 
 const Indexer = require("lib/js/tools/indexer");
 

@@ -3,7 +3,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-require("../../webapp/use.js");
+require("../../../webapp/use");
 
 const jpAttr = require("lib/js/tools/jp-attr");
 
