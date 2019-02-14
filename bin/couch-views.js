@@ -12,9 +12,7 @@ const design = {
           if (doc.episodeID)
             emit(doc.episodeID, null);
         },
-        reduce: function(keys, values) {
-          return true;
-        }
+        reduce: "_count"
       },
       broadcastsByServiceDate: {
         map: function(doc) {
@@ -46,9 +44,14 @@ const design = {
             }
           }
         },
-        reduce: function(keys, values) {
-          return true;
-        }
+        reduce: "_count"
+      },
+      kinds: {
+        map: function(doc) {
+          if (doc.kind)
+            emit(doc.kind, null);
+        },
+        reduce: "_count"
       },
       services: {
         map: function(doc) {
