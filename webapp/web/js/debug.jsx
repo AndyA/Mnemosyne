@@ -11,7 +11,13 @@ class Debugger extends React.Component {
     return (
       <div>
         <h3>Developer Stuff</h3>
-        <ReactJSON src={STASH} name="this" theme="monokai" collapsed="true" />
+        <ReactJSON 
+          src={STASH} 
+          name="this" 
+          theme="monokai" 
+          collapsed="true" 
+          collapseStringsAfterLength={100}
+        />
       </div>
     );
   }
