@@ -28,9 +28,11 @@ class Base {
 }
 
 class Derived extends Base {
-  constructor(id, seq) {
+  constructor(id, seq, obj) {
     super(seq);
-    this._id = id;
+    Object.assign(this, obj || {}, {
+      _id: id
+    });
   }
 
   static get ident() {
