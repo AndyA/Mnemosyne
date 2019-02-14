@@ -20,15 +20,17 @@ function parseOptions(opt) {
 
 function jpAttr(cl, name, opt) {
   const o = parseOptions(opt);
-  const paths = _.castArray(o.paths);
+  const paths = _.flattenDeep([o.paths]);
 
   lazyAttr(cl, name, function() {
     let vals = [];
     for (const path of paths) {
       if (_.isFunction(path))
         vals.push(path.call(this, name));
-      else
+      else if (path[0] === "$")
         Array.prototype.push.apply(vals, jp.query(this, path));
+      else 
+        vals.push(path);
 
       if (vals.length && !o.array)
         return o.transform.call(

@@ -76,6 +76,7 @@ describe("jpAttr", () => {
     ]
   });
 
+  jpAttr(TestClass, "defaultMatch", ["$.I.do.not.exist", "Not here!"]);
 
   jpAttr(TestClass, "attr", {
     paths: "$.data.attr[*].a[*]",
@@ -141,6 +142,8 @@ describe("jpAttr", () => {
     expect(o3.title).to.equal("Three");
     expect(o3.short_title).to.equal("Three");
     expect(o3.titles).to.deep.equal([]);
+
+    expect(o1.defaultMatch).to.equal("Not here!");
 
   });
 
