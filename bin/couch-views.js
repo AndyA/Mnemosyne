@@ -53,18 +53,6 @@ const design = {
         },
         reduce: "_count"
       },
-      services: {
-        map: function(doc) {
-          if (doc.service)
-            emit(doc._id, null);
-        }
-      },
-      masterBrands: {
-        map: function(doc) {
-          if (doc.masterBrand)
-            emit(doc._id, null);
-        }
-      },
       pidOrID: {
         map: function(doc) {
           function emitWithEpisode(id) {

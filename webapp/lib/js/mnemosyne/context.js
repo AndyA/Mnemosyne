@@ -136,7 +136,8 @@ class MnemosyneContext {
 }
 
 lazyAttr(MnemosyneContext, "services", function() {
-  return this.loadQuery("main/services", {
+  return this.loadQuery("main/kinds", {
+    key: "service",
     include_docs: true,
     reduce: false,
     stale: "update_after"
@@ -144,7 +145,8 @@ lazyAttr(MnemosyneContext, "services", function() {
 });
 
 lazyAttr(MnemosyneContext, "masterBrands", function() {
-  return this.loadQuery("main/masterBrands", {
+  return this.loadQuery("main/kinds", {
+    key: "masterBrand",
     include_docs: true,
     reduce: false,
     stale: "update_after"
