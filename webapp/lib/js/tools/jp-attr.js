@@ -13,7 +13,8 @@ function parseOptions(opt) {
   return Object.assign({}, {
     paths: [],
     array: false,
-    parser: v => v
+    parser: v => v,
+    transform: v => v
   }, opt);
 }
 
@@ -30,11 +31,19 @@ function jpAttr(cl, name, opt) {
         Array.prototype.push.apply(vals, jp.query(this, path));
 
       if (vals.length && !o.array)
-        return o.parser.call(this, vals[0], name);
+        return o.transform.call(
+          this,
+          o.parser.call(this, vals[0], name),
+          name
+        );
     }
 
     if (o.array)
-      return vals.map(v => o.parser.call(this, v, name));
+      return o.transform.call(
+        this,
+        vals.map(v => o.parser.call(this, v, name)),
+        name
+      );
   });
 }
 

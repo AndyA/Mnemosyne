@@ -63,6 +63,20 @@ describe("jpAttr", () => {
     ]
   });
 
+  jpAttr(TestClass, "allTitles", {
+    array: true,
+    transform: function(v, name) {
+      return v.join(", ");
+    },
+    paths: [
+      "$.data.title",
+      "$.data.display.title",
+      "$.data.display.alt.title",
+      "$.data.display.short_title"
+    ]
+  });
+
+
   jpAttr(TestClass, "attr", {
     paths: "$.data.attr[*].a[*]",
     array: true
@@ -153,6 +167,8 @@ describe("jpAttr", () => {
       "Fish in space, One, named",
       "Herring in a vacuum, One, named"
     ]);
+
+    expect(o1.allTitles).to.equal("Fish in space, Herring in a vacuum");
 
     expect(o2.parsed).to.equal("Ant Caviar Haggis, Two, parsed");
     expect(o3.parsed).to.equal("Three, Three, parsed");
