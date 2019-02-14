@@ -173,5 +173,12 @@ describe("jpAttr", () => {
     expect(o2.parsed).to.equal("Ant Caviar Haggis, Two, parsed");
     expect(o3.parsed).to.equal("Three, Three, parsed");
   });
+
+  it("should allow data to override props", () => {
+    const lit = new TestClass("Literal", {
+      title: "Horncrake"
+    });
+    expect(lit.title).to.equal("Horncrake");
+  });
 });
 
