@@ -133,24 +133,23 @@ class MnemosyneContext {
       stale: "update_after"
     });
   }
+
+  async loadAll(kind) {
+    return this.loadQuery("main/kinds", {
+      key: kind,
+      include_docs: true,
+      reduce: false,
+      stale: "update_after"
+    });
+  }
 }
 
 lazyAttr(MnemosyneContext, "services", function() {
-  return this.loadQuery("main/kinds", {
-    key: "service",
-    include_docs: true,
-    reduce: false,
-    stale: "update_after"
-  });
+  return this.loadAll("service");
 });
 
 lazyAttr(MnemosyneContext, "masterBrands", function() {
-  return this.loadQuery("main/kinds", {
-    key: "masterBrand",
-    include_docs: true,
-    reduce: false,
-    stale: "update_after"
-  });
+  return this.loadAll("masterBrand");
 });
 
 module.exports = MnemosyneContext;
