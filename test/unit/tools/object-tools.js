@@ -25,14 +25,6 @@ class Base {
   static get ident() {
     return "5c3079bc-008d-43e0-b698-da8ff75e33b0";
   }
-
-  toJSON() {
-    const props = getReadable(this);
-    let json = {};
-    for (const prop of props)
-      json[prop] = this[prop];
-    return json;
-  }
 }
 
 class Derived extends Base {
