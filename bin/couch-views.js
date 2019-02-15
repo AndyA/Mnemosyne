@@ -110,6 +110,16 @@ class CouchDesign {
   }
 }
 
+function clean(doc) {
+  let out = Object.assign({}, doc);
+  delete out._id;
+  delete out._rev;
+}
+
+function sameDoc(da, db) {
+  return JSON.stringify(clean(da)) === JSON.stringify(clean(db));
+}
+
 async function updateDesign(db, design) {
   for (const docName of Object.keys(design)) {
     const cd = new CouchDesign(docName, design[docName]);
@@ -121,8 +131,14 @@ async function updateDesign(db, design) {
     });
 
     let newDD = cd.toJSON();
-    if (oldDD)
+
+    if (oldDD) {
+      if (sameDoc(oldDD, newDD)) {
+        console.log("Skipping unchanged " + cd.id);
+        return;
+      }
       newDD._rev = oldDD._rev;
+    }
 
     await db.put(newDD);
     console.log("Updated " + cd.id);
