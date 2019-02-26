@@ -11,6 +11,7 @@ const moment = require("moment");
 const config = require("config");
 require("lib/js/mnemosyne/time");
 
+const MnemosyneBase = require("lib/js/mnemosyne/base");
 const MnemosyneBroadcast = require("lib/js/mnemosyne/broadcast");
 const MnemosyneEpisode = require("lib/js/mnemosyne/episode");
 const MnemosyneService = require("lib/js/mnemosyne/service");
@@ -19,8 +20,9 @@ const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
 
 const foldAttr = "_fold";
 
-class MnemosyneContext {
+class MnemosyneContext extends MnemosyneBase {
   constructor() {
+    super();
     this.db = nano(Object.assign({}, config.get("db")));
   }
 
@@ -159,12 +161,12 @@ class MnemosyneContext {
   }
 }
 
-lazyAttr(MnemosyneContext, "services", function() {
-  return this.loadAll("service");
-});
-
-lazyAttr(MnemosyneContext, "masterBrands", function() {
-  return this.loadAll("masterBrand");
-});
+MnemosyneContext
+  .lazyAttr("services", function() {
+    return this.loadAll("service");
+  })
+  .lazyAttr("masterBrands", function() {
+    return this.loadAll("masterBrand");
+  });
 
 module.exports = MnemosyneContext;
