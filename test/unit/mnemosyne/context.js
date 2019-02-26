@@ -9,14 +9,13 @@ const expect = chai.expect;
 
 require("../../../webapp/use.js");
 
-const db = require("lib/js/db");
 const Trove = require("lib/js/tools/trove");
 const MnemosyneContext = require("lib/js/mnemosyne/context");
 
 after(() => {
-  db.end(err => {
-    if (err) console.log(err);
-  });
+//  db.end(err => {
+//    if (err) console.log(err);
+//  });
 });
 
 describe("MnemosyneContext", () => {
