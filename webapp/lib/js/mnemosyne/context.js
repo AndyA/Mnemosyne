@@ -17,11 +17,18 @@ const MnemosyneService = require("lib/js/mnemosyne/service");
 const MnemosyneMasterBrand = require("lib/js/mnemosyne/master-brand");
 const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
 
+const foldAttr = "_fold";
+
 class MnemosyneContext {
   constructor() {
     this.db = new PouchDB(Object.assign({}, config.get("db")));
   }
 
+  // By convention if a view has a compound key with a numeric
+  // element last we treat the last element of the key as an
+  // index. Index 0 is the main thing; higher indexes are folded
+  // into the parent in an attribute called _fold (defined as 
+  // foldAttr above).
   static foldView(res) {
     let out = [];
     for (let row of res.rows) {
@@ -30,10 +37,10 @@ class MnemosyneContext {
         const index = key[key.length - 1];
         if (_.isNumber(index)) {
           if (index === 0) {
-            row._fold = [];
+            row[foldAttr] = [];
             out.push(row);
           } else {
-            out[out.length - 1]._fold.push(row);
+            out[out.length - 1][foldAttr].push(row);
           }
           continue;
         }
@@ -78,7 +85,7 @@ class MnemosyneContext {
       broadcast: me.makeDocument(row.doc)
     };
 
-    const foldDocs = row._fold.map(r => me.makeDocument(r.doc));
+    const foldDocs = row[foldAttr].map(r => me.makeDocument(r.doc));
     for (const fd of foldDocs) {
       const key = fd.constructor.key;
       if (prog.hasOwnProperty(key))
