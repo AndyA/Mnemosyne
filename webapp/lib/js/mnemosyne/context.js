@@ -51,19 +51,26 @@ class MnemosyneContext {
     return out;
   }
 
-  static makeDocument(doc) {
+  static documentClass(doc) {
     switch (doc.kind) {
       case "service":
-        return new MnemosyneService(doc);
+        return MnemosyneService;
       case "masterBrand":
-        return new MnemosyneMasterBrand(doc);
+        return MnemosyneMasterBrand;
       case "broadcast":
-        return new MnemosyneBroadcast(doc);
+        return MnemosyneBroadcast;
       case "episode":
-        return new MnemosyneEpisode(doc);
+        return MnemosyneEpisode;
       default:
-        throw ("Bad document kind");
+        return null;
     }
+  }
+
+  static makeDocument(doc) {
+    const cl = this.documentClass(doc);
+    if (null === cl)
+      throw ("Bad document kind");
+    return new cl(doc);
   }
 
   async loadQuery(...args) {
