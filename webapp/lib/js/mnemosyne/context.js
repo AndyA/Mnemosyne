@@ -8,6 +8,7 @@ const lazyAttr = require("lib/js/tools/lazy-attr");
 const Trove = require("lib/js/tools/trove");
 
 const moment = require("moment");
+const config = require("config");
 require("lib/js/mnemosyne/time");
 
 const MnemosyneBroadcast = require("lib/js/mnemosyne/broadcast");
@@ -18,7 +19,7 @@ const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
 
 class MnemosyneContext {
   constructor() {
-    this.db = new PouchDB("http://localhost:5984/mnemosyne");
+    this.db = new PouchDB(Object.assign({}, config.get("db")));
   }
 
   static foldView(res) {

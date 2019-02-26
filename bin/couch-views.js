@@ -2,6 +2,7 @@
 
 const _ = require("lodash");
 const PouchDB = require("pouchdb");
+const config = require("config");
 
 const design = {
   main: {
@@ -146,7 +147,7 @@ async function updateDesign(db, design) {
   }
 }
 
-const db = new PouchDB("http://localhost:5984/mnemosyne");
+const db = new PouchDB(Object.assign({}, config.get("db")));
 
 updateDesign(db, design)
   .catch(err => {

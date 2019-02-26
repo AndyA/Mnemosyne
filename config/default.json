@@ -1,0 +1,5 @@
+{
+   "db" : {
+      "name" : "http://localhost:5984/mnemosyne"
+   }
+}
