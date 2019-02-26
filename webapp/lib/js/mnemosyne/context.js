@@ -2,7 +2,7 @@
 
 const _ = require("lodash");
 const Promise = require("bluebird");
-const PouchDB = require("pouchdb");
+const nano = require("nano");
 
 const lazyAttr = require("lib/js/tools/lazy-attr");
 const Trove = require("lib/js/tools/trove");
@@ -21,7 +21,7 @@ const foldAttr = "_fold";
 
 class MnemosyneContext {
   constructor() {
-    this.db = new PouchDB(Object.assign({}, config.get("db")));
+    this.db = nano(Object.assign({}, config.get("db")));
   }
 
   // By convention if a view has a compound key with a numeric
@@ -73,8 +73,8 @@ class MnemosyneContext {
     return new cl(doc);
   }
 
-  async loadQuery(...args) {
-    let res = await this.db.query(...args);
+  async loadView(...args) {
+    let res = await this.db.view(...args);
     return this.makeThings(res);
   }
 
@@ -122,7 +122,7 @@ class MnemosyneContext {
   }
 
   async loadThing(id) {
-    const trove = await this.loadQuery("main/pidOrID", {
+    const trove = await this.loadView("main", "pidOrID", {
       startkey: [id, 0],
       endkey: [id, 999],
       inclusive_end: false,
@@ -139,7 +139,7 @@ class MnemosyneContext {
     const start = m.startOf("day").dbFormat();
     const end = m.add(1, "day").dbFormat();
 
-    return this.loadQuery("main/broadcastsByServiceDate", {
+    return this.loadView("main", "broadcastsByServiceDate", {
       startkey: [service, start],
       endkey: [service, end],
       include_docs: true,
@@ -150,7 +150,7 @@ class MnemosyneContext {
   }
 
   async loadAll(kind) {
-    return this.loadQuery("main/kinds", {
+    return this.loadView("main", "kinds", {
       key: kind,
       include_docs: true,
       reduce: false,

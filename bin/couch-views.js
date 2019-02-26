@@ -1,7 +1,7 @@
 "use strict";
 
 const _ = require("lodash");
-const PouchDB = require("pouchdb");
+const nano = require("nano");
 const config = require("config");
 
 const design = {
@@ -142,16 +142,14 @@ async function updateDesign(db, design) {
       newDD._rev = oldDD._rev;
     }
 
-    await db.put(newDD);
+    await db.insert(newDD);
     console.log("Updated " + cd.id);
   }
 }
 
-const db = new PouchDB(Object.assign({}, config.get("db")));
+const db = nano(Object.assign({}, config.get("db")));
 
 updateDesign(db, design)
   .catch(err => {
     console.log(err)
-  })
-  .finally(() => db.close(() => {
-  }));
+  });
