@@ -114,6 +114,7 @@ function clean(doc) {
   let out = Object.assign({}, doc);
   delete out._id;
   delete out._rev;
+  return out;
 }
 
 function sameDoc(da, db) {
