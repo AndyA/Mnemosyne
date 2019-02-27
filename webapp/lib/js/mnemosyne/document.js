@@ -8,7 +8,7 @@ const MnemosyneBase = require("./base");
 
 class MnemosyneDocument extends MnemosyneBase {
   constructor(doc) {
-    super(doc);
+    super();
     Object.assign(this, doc);
   }
 
