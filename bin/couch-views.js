@@ -70,6 +70,44 @@ const design = {
         }
       }
     }
+  },
+  explore: {
+    language: 'javascript',
+    views: {
+      serviceDates: {
+        map: function(doc) {
+          if (doc.broadcast) {
+            emit([
+              doc.broadcast.service[0].$.sid,
+              doc.broadcast.published_time[0].$.start
+            ], {
+              start: doc.broadcast.published_time[0].$.start,
+              end: doc.broadcast.published_time[0].$.end,
+              broadcasts: 1
+            });
+          }
+        },
+        reduce: function(keys, values, rereduce) {
+          return {
+            start: values.map(function(i) {
+              return i.start
+            }).reduce(function(a, b) {
+              return a < b ? a : b
+            }),
+            end: values.map(function(i) {
+              return i.end
+            }).reduce(function(a, b) {
+              return a > b ? a : b
+            }),
+            broadcasts: values.map(function(i) {
+              return i.broadcasts
+            }).reduce(function(a, b) {
+              return a + b;
+            })
+          };
+        }
+      }
+    }
   }
 }
 
@@ -124,10 +162,11 @@ function sameDoc(da, db) {
 
 async function updateDesign(db, design) {
   for (const docName of Object.keys(design)) {
+    console.log("Document: " + docName);
     const cd = new CouchDesign(docName, design[docName]);
 
     const oldDD = await db.get(cd.id).catch(err => {
-      if (err.name === "not_found")
+      if (err.error === "not_found")
         return null;
       throw err;
     });
@@ -137,7 +176,7 @@ async function updateDesign(db, design) {
     if (oldDD) {
       if (sameDoc(oldDD, newDD)) {
         console.log("Skipping unchanged " + cd.id);
-        return;
+        continue;
       }
       newDD._rev = oldDD._rev;
     }
