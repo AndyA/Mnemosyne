@@ -3,6 +3,8 @@
 const Promise = require("bluebird");
 const assert = require("assert");
 
+const PagerStream = require("./pagerstream");
+
 // Retrieve a (possibly huge) view in multiple pages using the approach here:
 // http://docs.couchdb.org/en/2.2.0/ddocs/views/pagination.html#paging-alternate-method
 
@@ -23,6 +25,10 @@ class Pager {
     delete this.params.limit;
 
     this.next = {};
+  }
+
+  stream() {
+    return new PagerStream(this);
   }
 
   nextPage() {
