@@ -25,10 +25,12 @@ describe("Pager", () => {
       [
         ctx.db.list({
           reduce: false,
+          include_docs: true,
           limit: 100
         }),
         ctx.db.view(designName, viewName, {
           reduce: false,
+          include_docs: true,
           limit: 100
         })
       ]
@@ -50,6 +52,7 @@ describe("Pager", () => {
 
     let params = {
       reduce: false,
+      include_docs: true,
       page_size: pageSize,
       limit: expectDocs.length
     };
