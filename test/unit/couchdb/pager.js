@@ -69,9 +69,9 @@ describe("Pager", () => {
     expect(got).to.deep.equal(expectChunks);
   }
 
-  for (let pos of [0, 1, 17]) {
-    for (let pageSize of [1, 2, 13, 1000]) {
-      for (let limit of [1, 10, 200]) {
+  for (let pos of [0, 17]) {
+    for (let pageSize of [1, 2, 1000]) {
+      for (let limit of [1, 200]) {
         const desc = `pos: ${pos}, pageSize: ${pageSize}, limit: ${limit}`;
         it(`should read all docs (${desc})`, async () => {
           await testPager(refAll.rows, pos, pageSize, limit,
