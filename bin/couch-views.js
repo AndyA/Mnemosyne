@@ -77,12 +77,16 @@ const design = {
       serviceDates: {
         map: function(doc) {
           if (doc.broadcast) {
-            emit([
-              doc.broadcast.service[0].$.sid,
-              doc.broadcast.published_time[0].$.start
-            ], {
-              start: doc.broadcast.published_time[0].$.start,
-              end: doc.broadcast.published_time[0].$.end,
+            var start = doc.broadcast.published_time[0].$.start;
+            var end = doc.broadcast.published_time[0].$.end;
+            var key = start.split(/\D+/).filter(function(c) {
+              return c.length
+            });
+            key.unshift(doc.broadcast.service[0].$.sid);
+
+            emit(key, {
+              start: start,
+              end: end,
               broadcasts: 1
             });
           }
