@@ -21,15 +21,13 @@ describe("MnemosyneEpisode", () => {
     expect(ep.link)
     .to.equal("/b008gdwj");
     expect(ep.title)
-      .to.equal("A Vision of the World");
+      .to.equal("Edwardians in Colour: The Wonderful World of Albert Kahn: Reversioned Series: A Vision of the World");
     expect(ep.containersTitle)
       .to.equal("Edwardians in Colour: The Wonderful World of Albert Kahn: Reversioned Series");
     expect(ep.synopsis.short)
       .to.equal("This episode documents Albert Kahn\'s first voyage.");
     expect(ep.shortSynopsis)
       .to.equal("This episode documents Albert Kahn\'s first voyage.");
-    expect(ep.presentationTitle)
-    .to.equal("Episode 1");
   });
 
 });
