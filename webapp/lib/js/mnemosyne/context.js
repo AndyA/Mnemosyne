@@ -19,11 +19,12 @@ const MnemosyneService = require("lib/js/mnemosyne/service");
 const MnemosyneMasterBrand = require("lib/js/mnemosyne/master-brand");
 const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
 const GlobalData = require("lib/js/tools/global-data");
-const Schedule = require("lib/js/mnemosyne/mixin/schedule");
 
 const foldAttr = "_fold";
 
-class MnemosyneContext extends MW.mix(MnemosyneBase).with(Schedule) {
+class MnemosyneContext extends MW.mix(MnemosyneBase).with(
+    require("lib/js/mnemosyne/mixin/schedule")
+  ) {
   constructor() {
     super();
     this.db = nano(Object.assign({}, config.get("db")));
