@@ -181,7 +181,7 @@ class MnemosyneContext extends MnemosyneBase {
   async loadServices() {
     let [services, serviceDates] = await Promise.all([
       this.loadAll("service"),
-      this.db.view("explore", "serviceDates", {
+      this.db.view("main", "serviceDates", {
         reduce: true,
         group_level: 1
       })

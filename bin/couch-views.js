@@ -68,12 +68,7 @@ const design = {
           if (doc.pid)
             emitWithEpisode(doc.pid);
         }
-      }
-    }
-  },
-  explore: {
-    language: 'javascript',
-    views: {
+      },
       serviceDates: {
         map: function(doc) {
           if (doc.broadcast) {
@@ -111,6 +106,11 @@ const design = {
           };
         }
       }
+    }
+  },
+  explore: {
+    language: 'javascript',
+    views: {
     }
   }
 }
