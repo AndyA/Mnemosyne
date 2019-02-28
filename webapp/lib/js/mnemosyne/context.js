@@ -31,7 +31,9 @@ class MnemosyneContext extends MW.mix(MnemosyneBase).with(
 
     this.gd = new GlobalData(10 * 60 * 1000) // 10m timeout
       .add("services", key => this.loadServices())
-      .add("masterBrands", key => this.loadAll("masterBrand"));
+      .add("masterBrands", key => this.loadAll("masterBrand"))
+      .on("evict", key => console.log("Evicted " + key))
+      .on("refresh", (key, v) => console.log("Refreshed " + key));
   }
 
   destroy() {
