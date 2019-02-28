@@ -3,6 +3,7 @@ $mnemosyne-blue: #2f7ab9;
 $mnemosyne-blue-light: lighten($mnemosyne-blue, 30%);
 $light-grey: #ccc;
 $dark-grey: #555;
+$slider-columns: 13;
 
 @mixin clearfix() {
   *zoom: 1;
