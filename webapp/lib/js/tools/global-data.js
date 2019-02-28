@@ -3,16 +3,20 @@
 const _ = require("lodash");
 const assert = require("assert");
 const Promise = require("bluebird");
+const EventEmitter = require("events");
 
-class GlobalData {
+class GlobalData extends EventEmitter {
   constructor(opt) {
+    super();
+
     const parseOpt = opt => {
       if (_.isNumber(opt)) return parseOpt({
           interval: opt
         });
       return Object.assign({
         interval: 1000,
-        ttl: 60000
+        ttl: 60000,
+        stale: true
       }, opt || {});
     }
 
@@ -22,7 +26,11 @@ class GlobalData {
     const periodic = () => {
       this.now = new Date().getTime();
       for (let obj of Object.values(this.cache)) {
-        if (obj.hasOwnProperty("expires") && obj.expires <= this.now) {
+        if (obj.expires !== undefined && obj.expires <= this.now) {
+          // Stash stale value so we can return it pending refresh
+          this.emit("evict", obj);
+          if (obj.stale)
+            obj.staleValue = obj.value;
           delete obj.value;
           delete obj.expires;
         }
@@ -41,8 +49,8 @@ class GlobalData {
       if (_.isNumber(opt)) return parseOpt({
           ttl: opt
         });
-      return Object.assign({
-        ttl: this.opt.ttl,
+
+      return Object.assign({}, this.opt, {
         vf
       }, opt);
     }
@@ -56,12 +64,22 @@ class GlobalData {
   get(key) {
     let obj = this.cache[key];
     assert(obj, key + " not defined");
-    if (obj.hasOwnProperty("value"))
+
+    if (obj.value !== undefined && !obj.value.isPending())
       return obj.value;
-    return obj.value = Promise.resolve(obj.vf(key)).then(v => {
-      obj.expires = this.now + obj.ttl;
-      return v;
-    });
+
+    if (obj.value === undefined) {
+      obj.value = Promise.resolve(obj.vf(key)).then(v => {
+        obj.expires = this.now + obj.ttl;
+        delete obj.staleValue;
+        return v;
+      });
+    }
+
+    if (obj.staleValue !== undefined)
+      return obj.staleValue;
+
+    return obj.value;
   }
 }
 
