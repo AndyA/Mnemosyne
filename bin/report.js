@@ -7,6 +7,8 @@ const lazy = require("lazy-eval").default;
 const dns = Promise.promisifyAll(require("dns"));
 const YAML = require("yamljs");
 const moment = require("moment");
+const csv = require("csv-stringify/lib/sync");
+const Entities = require("html-entities").AllHtmlEntities;
 
 const BEFORE = 5;
 const AFTER = 1;
@@ -141,6 +143,33 @@ class ActivityLog {
 
     return users;
   }
+
+  summariseRun(run) {
+    let runDesc = [];
+    const entities = new Entities();
+
+    for (const ent of run.entries) {
+      const desc = [
+        ent.action,
+        ent.objectType.toLowerCase(),
+        ent.objectName,
+        ent.objectSubtype,
+        `(ID: ${ent.objectID})`
+      ]
+        .map(x => entities.decode(x))
+        .filter(x => x !== undefined && x !== null && x.length)
+        .join(" ");
+
+      if (runDesc.length && runDesc[runDesc.length - 1].desc === desc)
+        runDesc[runDesc.length - 1].count++;
+      else
+        runDesc.push({
+          desc,
+          count: 1
+        });
+    }
+    return runDesc.map(ent => ent.count > 1 ? ent.desc + " x " + ent.count : ent.desc);
+  }
 }
 
 const program = require("commander");
@@ -159,18 +188,22 @@ program
     al.findByDatabase(database)
       .then(log => {
         const users = al.mergeWorkRuns(log, BEFORE, AFTER);
-        console.log(["email", "database", "from", "to", "events"].join("\t"));
+        let rows = [];
+        rows.push(["email", "database", "from", "to", "events", "details"]);
         for (const email of Object.keys(users)) {
           for (let run of users[email]) {
-            console.log([
+            const desc = al.summariseRun(run);
+            rows.push([
               email,
               run.entries[0].database,
               toSpreadsheetString(run.start),
               toSpreadsheetString(run.end),
-              run.entries.length
-            ].join("\t"));
+              run.entries.length,
+              desc.join("\n")
+            ]);
           }
         }
+        console.log(csv(rows));
       })
       .catch(e => console.log(e))
       .finally(() => al.close());
@@ -190,9 +223,11 @@ program
 
     al.detailByDatabase(database)
       .then(log => {
-        console.log(cols.join("\t"));
+        let rows = [];
+        rows.push(cols);
         for (const row of log)
-          console.log(cols.map(c => row[c]).join("\t"));
+          rows.push(cols.map(c => row[c]))
+        console.log(csv(rows));
       })
       .catch(e => console.log(e))
       .finally(() => al.close());
