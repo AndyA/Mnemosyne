@@ -183,7 +183,8 @@ class MnemosyneContext extends MnemosyneBase {
       this.loadAll("service"),
       this.db.view("main", "serviceDates", {
         reduce: true,
-        group_level: 1
+        group_level: 1,
+        stale: "update_after"
       })
     ]);
 
