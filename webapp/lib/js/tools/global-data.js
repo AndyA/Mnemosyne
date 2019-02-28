@@ -25,26 +25,43 @@ class GlobalData extends EventEmitter {
   }
 
   destroy() {
-    for (const obj of Object.values(this.cache)) {
-      if (obj.timeout)
-        clearTimeout(obj.timeout);
-    }
+    for (const key of this.keys())
+      this.remove(key);
+  }
+
+  keys() {
+    return Object.keys(this.cache);
+  }
+
+  has(key) {
+    return this.cache[key] !== undefined;
   }
 
   add(key, opt, vf) {
-    const parseOpt = opt => {
-      if (_.isNumber(opt)) return parseOpt({
-          ttl: opt
-        });
+    if (arguments.length === 2)
+      return this.add(key, {}, opt);
 
-      return Object.assign({}, this.opt, {
-        vf
-      }, opt);
-    }
+    if (_.isNumber(opt))
+      return this.add(key, {
+        ttl: opt
+      }, vf);
 
-    assert(!this.cache.hasOwnProperty(key), key + " already defined");
+    assert(!this.has(key), key + " already defined");
+    assert(_.isFunction(vf), key + " needs a value function");
 
-    this.cache[key] = parseOpt(opt);
+    this.cache[key] = Object.assign({}, this.opt, {
+      vf
+    }, opt);
+
+    return this;
+  }
+
+  remove(key) {
+    let obj = this.cache[key];
+    assert(obj, key + " not defined");
+    delete this.cache[key];
+    if (obj.timeout)
+      clearTimeout(obj.timeout);
     return this;
   }
 

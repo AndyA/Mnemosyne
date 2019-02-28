@@ -122,4 +122,63 @@ describe("GlobalData", () => {
     const err = checkLog(log);
     expect(err).to.deep.equal([]);
   });
+
+  it("should handle constructor args", () => {
+    const gd1 = new GlobalData();
+    expect(gd1.opt).to.deep.equal({
+      ttl: 60000,
+      stale: true
+    });
+
+    const gd2 = new GlobalData(123);
+    expect(gd2.opt).to.deep.equal({
+      ttl: 123,
+      stale: true
+    });
+
+    const gd3 = new GlobalData({
+      stale: false
+    });
+    expect(gd3.opt).to.deep.equal({
+      ttl: 60000,
+      stale: false
+    });
+
+  });
+
+  it("should handle add args", () => {
+    const gd1 = new GlobalData({
+      ttl: 1000,
+      stale: false
+    });
+
+    gd1
+      .add("key1", () => 1)
+      .add("key2", 500, () => 2)
+      .add("key3", {
+        stale: true
+      }, () => 3)
+
+    let cache = _.cloneDeep(gd1.cache);
+    for (var ent of Object.values(cache)) {
+      delete ent.vf;
+    }
+
+    expect(cache).to.deep.equal({
+      key1: {
+        stale: false,
+        ttl: 1000,
+      },
+      key2: {
+        stale: false,
+        ttl: 500,
+      },
+      key3: {
+        stale: true,
+        ttl: 1000,
+      }
+    });
+    gd1.destroy();
+  });
 });
+
