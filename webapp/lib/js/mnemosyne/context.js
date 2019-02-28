@@ -1,5 +1,7 @@
 "use strict";
 
+const MW = require("mixwith");
+
 const _ = require("lodash");
 const Promise = require("bluebird");
 const nano = require("nano");
@@ -7,7 +9,6 @@ const nano = require("nano");
 const lazyAttr = require("lib/js/tools/lazy-attr");
 const Trove = require("lib/js/tools/trove");
 
-const moment = require("moment");
 const config = require("config");
 require("lib/js/mnemosyne/time");
 
@@ -18,10 +19,11 @@ const MnemosyneService = require("lib/js/mnemosyne/service");
 const MnemosyneMasterBrand = require("lib/js/mnemosyne/master-brand");
 const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
 const GlobalData = require("lib/js/tools/global-data");
+const Schedule = require("lib/js/mnemosyne/mixin/schedule");
 
 const foldAttr = "_fold";
 
-class MnemosyneContext extends MnemosyneBase {
+class MnemosyneContext extends MW.mix(MnemosyneBase).with(Schedule) {
   constructor() {
     super();
     this.db = nano(Object.assign({}, config.get("db")));
@@ -153,21 +155,6 @@ class MnemosyneContext extends MnemosyneBase {
     return trove.singleton;
   }
 
-  async loadServiceDay(service, day) {
-    const m = moment.utc(day);
-    const start = m.startOf("day").dbFormat();
-    const end = m.add(1, "day").dbFormat();
-
-    return this.loadView("main", "broadcastsByServiceDate", {
-      startkey: [service, start],
-      endkey: [service, end],
-      include_docs: true,
-      inclusive_end: false,
-      reduce: false,
-      stale: "update_after"
-    });
-  }
-
   async loadAll(kind) {
     return this.loadView("main", "kinds", {
       key: kind,
@@ -195,6 +182,7 @@ class MnemosyneContext extends MnemosyneBase {
 
     return services;
   }
+
 }
 
 module.exports = MnemosyneContext;
