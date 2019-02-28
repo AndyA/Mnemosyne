@@ -111,7 +111,8 @@ function checkLog(log) {
 
   return err;
 }
-let gd = new GlobalData(17);
+
+let gd = new GlobalData();
 
 after(() => gd.destroy());
 

@@ -11,10 +11,10 @@ class GlobalData extends EventEmitter {
 
     const parseOpt = opt => {
       if (_.isNumber(opt)) return parseOpt({
-          interval: opt
+          ttl: opt
         });
+
       return Object.assign({
-        interval: 1000,
         ttl: 60000,
         stale: true
       }, opt || {});
@@ -22,26 +22,13 @@ class GlobalData extends EventEmitter {
 
     this.opt = parseOpt(opt);
     this.cache = {};
-
-    const periodic = () => {
-      this.now = new Date().getTime();
-      for (let obj of Object.values(this.cache)) {
-        if (obj.expires !== undefined && obj.expires <= this.now) {
-          // Stash stale value so we can return it pending refresh
-          this.emit("evict", obj);
-          if (obj.stale)
-            obj.staleValue = obj.value;
-          delete obj.value;
-          delete obj.expires;
-        }
-      }
-    }
-    periodic();
-    this.timer = setInterval(periodic, this.opt.interval);
   }
 
   destroy() {
-    clearInterval(this.timer);
+    for (const obj of Object.values(this.cache)) {
+      if (obj.timeout)
+        clearTimeout(obj.timeout);
+    }
   }
 
   add(key, opt, vf) {
@@ -70,8 +57,18 @@ class GlobalData extends EventEmitter {
 
     if (obj.value === undefined) {
       obj.value = Promise.resolve(obj.vf(key)).then(v => {
-        obj.expires = this.now + obj.ttl;
         delete obj.staleValue;
+        this.emit("refresh", key, v);
+        obj.timeout = setTimeout(() => {
+          this.emit("evict", key);
+          // Stash stale value so we can return it pending refresh
+          if (obj.stale)
+            obj.staleValue = obj.value;
+
+          delete obj.value;
+          delete obj.timeout;
+
+        }, obj.ttl);
         return v;
       });
     }
