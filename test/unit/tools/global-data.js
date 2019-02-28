@@ -115,7 +115,7 @@ let gd = new GlobalData(17);
 
 after(() => gd.destroy());
 
-describe.only("GlobalData", () => {
+describe("GlobalData", () => {
   it("should return correct (if stale) data", async () => {
     const log = await testGlobalDate(gd);
     const err = checkLog(log);
