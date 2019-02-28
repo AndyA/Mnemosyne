@@ -190,7 +190,7 @@ class MnemosyneContext extends MnemosyneBase {
 
     for (const sd of serviceDates.rows) {
       let svc = services.find("pid", sd.key);
-      svc.service.meta = sd.value;
+      svc.service.history = sd.value;
     }
 
     return services;
