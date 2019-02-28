@@ -17,6 +17,7 @@ const MnemosyneEpisode = require("lib/js/mnemosyne/episode");
 const MnemosyneService = require("lib/js/mnemosyne/service");
 const MnemosyneMasterBrand = require("lib/js/mnemosyne/master-brand");
 const MnemosyneProgramme = require("lib/js/mnemosyne/programme");
+const GlobalData = require("lib/js/tools/global-data");
 
 const foldAttr = "_fold";
 
@@ -24,6 +25,14 @@ class MnemosyneContext extends MnemosyneBase {
   constructor() {
     super();
     this.db = nano(Object.assign({}, config.get("db")));
+
+    this.gd = new GlobalData(10 * 60 * 1000) // 10m timeout
+      .add("services", key => this.loadServices())
+      .add("masterBrands", key => this.loadAll("masterBrand"));
+  }
+
+  destroy() {
+    this.gd.destroy();
   }
 
   // By convention if a view has a compound key with a numeric
@@ -75,9 +84,12 @@ class MnemosyneContext extends MnemosyneBase {
     return new cl(doc);
   }
 
-  async loadView(...args) {
-    let res = await this.db.view(...args);
-    return this.makeThings(res);
+  get services() {
+    return this.gd.get("services");
+  }
+
+  get masterBrands() {
+    return this.gd.get("masterBrands");
   }
 
   async makeProgramme(row) {
@@ -123,6 +135,11 @@ class MnemosyneContext extends MnemosyneBase {
     return new Trove(await Promise.all(me.foldView(res).map(r => this.makeThing(r))));
   }
 
+  async loadView(...args) {
+    let res = await this.db.view(...args);
+    return this.makeThings(res);
+  }
+
   async loadThing(id) {
     const trove = await this.loadView("main", "pidOrID", {
       startkey: [id, 0],
@@ -159,14 +176,24 @@ class MnemosyneContext extends MnemosyneBase {
       stale: "update_after"
     });
   }
-}
 
-MnemosyneContext
-  .lazyAttr("services", function() {
-    return this.loadAll("service");
-  })
-  .lazyAttr("masterBrands", function() {
-    return this.loadAll("masterBrand");
-  });
+  // Services involve a second query to get the serviceDays
+  async loadServices() {
+    let [services, serviceDates] = await Promise.all([
+      this.loadAll("service"),
+      this.db.view("explore", "serviceDates", {
+        reduce: true,
+        group_level: 1
+      })
+    ]);
+
+    for (const sd of serviceDates.rows) {
+      let svc = services.find("pid", sd.key);
+      svc.service.meta = sd.value;
+    }
+
+    return services;
+  }
+}
 
 module.exports = MnemosyneContext;
