@@ -21,3 +21,9 @@ Handlebars.registerHelper("toJSON", function(object) {
 Handlebars.registerHelper("toPrettyJSON", function(object) {
   return new Handlebars.SafeString(JSON.stringify(object, null, 2));
 });
+
+Handlebars.registerHelper("classFlags", function(...flags) {
+  return flags
+    .filter(f => this[f])
+    .join(" ");
+});
