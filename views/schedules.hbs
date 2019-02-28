@@ -2,7 +2,7 @@
 <!--  <pre class="json">{{toPrettyJSON around}}</pre>-->
   <ul class="slider">
     {{#each around}}
-      <li>
+    <li {{#if today}}class="today"{{/if}}>
         {{#if link}}
           <a href="{{link}}">
             <span class="day-name">{{dayName date}}</span>
