@@ -124,9 +124,9 @@ a {
     float: left;
     list-style: none;
     width: ($content-width / $slider-columns);
+    height: 48px;
     padding: 8px 0;
     margin: 0;
-    height: 48px;
     text-align: center;
     background: $light-grey;
     font-weight: bold;
@@ -137,8 +137,8 @@ a {
     }
 
     &:hover {
-      background: $dark-grey;
       color: white;
+      background: $dark-grey;
     }
 
     a {
