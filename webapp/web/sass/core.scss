@@ -114,3 +114,34 @@ a {
   }
 }
 
+.slider {
+  padding: 0;
+  margin: 0;
+  li {
+    display: inline-block;
+    list-style: none;
+    width: ($content-width / 14);
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background: $light-grey;
+    font-weight: bold;
+
+    &:hover {
+      background: $dark-grey;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    span {
+      display: block;
+      text-transform: uppercase;
+    }
+  }
+}

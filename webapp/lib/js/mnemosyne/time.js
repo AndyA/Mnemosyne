@@ -9,3 +9,7 @@ moment.fn.dbFormat = function() {
 moment.fn.shortTime = function() {
   return this.format("HH:mm");
 }
+
+moment.fn.dayName = function() {
+  return this.format("ddd");
+}

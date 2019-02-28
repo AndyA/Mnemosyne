@@ -25,34 +25,72 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
 
   // Load days around the specified day
   async loadDaysAround(service, day, count) {
+
+    function addElipsis(days) {
+      let out = [];
+      for (const day of days) {
+        if (out.length) {
+          const prev = out[out.length - 1];
+          if (moment(prev.date).add(1, "day") < day.date)
+            out.push({
+              today: false,
+              elipsis: true
+            });
+        }
+        out.push(day);
+      }
+      return out;
+    }
+
+    function centre(days) {
+      const pad = Array(count).fill({
+        today: false,
+        missing: true
+      });
+      const padded = [...pad, ...days, ...pad];
+      const today = _.findIndex(padded, "today");
+      return padded.slice(today - count, today + count + 1);
+    }
+
     let key = day.split(/-/);
     key.unshift(service);
 
     const [before, after] = await Promise.all(
-      [true, false].map(descending => this.db.view("main", "serviceDates", {
-        startkey: key,
-        reduce: true,
-        group_level: 4,
-        stale: "update_after",
-        limit: count + (descending ? 0 : 1),
-        descending
-      })));
+      [true, false].map(descending => {
+        const limit = count + (descending ? 0 : 1);
 
-    return [
-      ... _.reverse(before.rows),
-      ... after.rows
-    ].map(r => {
-      const [service, ...dateParts] = r.key;
-      const date = dateParts.join("-");
-      return Object.assign({
-        link: ["", "schedules", service, date].join("/"),
-        service,
-        date,
-        today: date === day
-      }, r.value);
-    }).filter(r => r.service === service);
+        return this.db.view("main", "serviceDates", {
+          startkey: key,
+          reduce: true,
+          group_level: 4,
+          stale: "update_after",
+          limit,
+          descending
+        }).then(data => {
+          return data.rows
+            .filter(r => r.key[0] === service)
+            .map(r => {
+              const [service, ...dateParts] = r.key;
+              const date = dateParts.join("-");
+              return Object.assign({
+                link: ["", "schedules", service, date].join("/"),
+                service,
+                date: moment.utc(date),
+                today: date === day,
+                missing: false
+              }, r.value);
+            });
+        });
+
+      }));
+
+    return centre(addElipsis([
+      ... _.reverse(before),
+      ... after
+    ]));
   }
 
-});
+}
+);
 
 module.exports = Schedule;

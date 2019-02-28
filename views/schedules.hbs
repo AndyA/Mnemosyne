@@ -1,4 +1,19 @@
 <div class="content-width">
+<!--  <pre class="json">{{toPrettyJSON around}}</pre>-->
+  <ul class="slider">
+    {{#each around}}
+      <li>
+        {{#if link}}
+          <a href="{{link}}">
+            <span class="day-name">{{dayName date}}</span>
+            <span class="day-number">{{dayNumber date}}</span>
+          </a>
+        {{else if elipsis}}
+          <span>...</span>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
   {{#each progs.rows}}
     <h2 id="{{shortTime txTime}}">
       <span class="time">{{shortTime txTime}}</span>
