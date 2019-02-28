@@ -189,7 +189,7 @@ program
       .then(log => {
         const users = al.mergeWorkRuns(log, BEFORE, AFTER);
         let rows = [];
-        rows.push(["email", "database", "from", "to", "events", "details"]);
+        rows.push(["email", "database", "from", "to", "minutes", "events", "details"]);
         for (const email of Object.keys(users)) {
           for (let run of users[email]) {
             const desc = al.summariseRun(run);
@@ -198,6 +198,7 @@ program
               run.entries[0].database,
               toSpreadsheetString(run.start),
               toSpreadsheetString(run.end),
+              (moment.utc(run.end) - moment.utc(run.start)) / 60000,
               run.entries.length,
               desc.join("\n")
             ]);
