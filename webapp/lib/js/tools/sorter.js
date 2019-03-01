@@ -3,14 +3,10 @@
 const _ = require("lodash");
 
 function sorter(...keys) {
-  function compareNumber(a, b) {
+  function compareThing(a, b) {
     if (a < b) return -1;
     if (a > b) return 1;
     return 0;
-  }
-
-  function compareString(a, b) {
-    return a.toString().localeCompare(b);
   }
 
   function makeTerm(key) {
@@ -31,10 +27,10 @@ function sorter(...keys) {
 
     if (key[0] === "#") {
       const field = key.substr(1);
-      return (a, b) => compareNumber(a[field], b[field]);
+      return (a, b) => compareThing(a[field], b[field]);
     }
 
-    return (a, b) => compareString(a[key], b[key]);
+    return (a, b) => compareThing(a[key], b[key]);
   }
 
   const terms = _.flattenDeep(keys).map(makeTerm);
