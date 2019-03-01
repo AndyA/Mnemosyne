@@ -11,6 +11,7 @@ class MnemosyneProgramme extends MnemosyneDocument {
 MnemosyneProgramme
   .jpAttr("title", "$.episode.title")
   .jpAttr("link", "$.broadcast.link")
+  .jpAttr("broadcastID", "$.broadcast._id")
   .jpAttr("txTime", "$.broadcast.txTime")
   .jpAttr("serviceName", "$.service.name");
 

@@ -10,17 +10,19 @@
     <p class="synopsis long">{{episode.longSynopsis}}</p>
   {{/with}}
 
-  <h2>All Broadcasts</h2>
-  <ul>
-  {{#each broadcasts.rows}}
-    <li>
-      <a href="{{link}}">
-        <span>{{dateTime txTime}}</span>
-        <span>{{serviceName}}</span>
-      </a>
-    </li>
-  {{/each}}
-  </ul>
+  <div class="broadcast-list">
+    <h2>All Broadcasts</h2>
+    <ul>
+    {{#each broadcasts.rows}}
+      <li class="{{classFlags 'current'}}">
+        <a href="{{link}}">
+          <span>{{dateTime txTime}}</span>
+          <span>{{serviceName}}</span>
+        </a>
+      </li>
+    {{/each}}
+    </ul>
+  </div>
 
 </div>
 
