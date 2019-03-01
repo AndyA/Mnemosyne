@@ -7,7 +7,7 @@ Handlebars.registerHelper("shortTime", function(m) {
 });
 
 Handlebars.registerHelper("prettyDate", function(m) {
-  return m.format("MMMM Do, YYYY");
+  return m.format("dddd, MMMM Do, YYYY");
 });
 
 Handlebars.registerHelper("dayName", function(m) {
