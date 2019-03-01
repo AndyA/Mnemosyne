@@ -6,6 +6,10 @@ Handlebars.registerHelper("shortTime", function(m) {
   return m.shortTime();
 });
 
+Handlebars.registerHelper("prettyDate", function(m) {
+  return m.format("MMMM Do, YYYY");
+});
+
 Handlebars.registerHelper("dayName", function(m) {
   return m.dayName();
 });
