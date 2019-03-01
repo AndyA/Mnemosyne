@@ -10,6 +10,10 @@ Handlebars.registerHelper("prettyDate", function(m) {
   return m.format("dddd, MMMM Do, YYYY");
 });
 
+Handlebars.registerHelper("dateTime", function(m) {
+  return m.format("Do MMM YYYY, HH:mm");
+});
+
 Handlebars.registerHelper("dayName", function(m) {
   return m.format("ddd");
 });
