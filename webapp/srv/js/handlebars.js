@@ -3,7 +3,7 @@
 const Handlebars = require("handlebars");
 
 Handlebars.registerHelper("shortTime", function(m) {
-  return m.shortTime();
+  return m.format("HH:mm");
 });
 
 Handlebars.registerHelper("prettyDate", function(m) {
@@ -11,7 +11,7 @@ Handlebars.registerHelper("prettyDate", function(m) {
 });
 
 Handlebars.registerHelper("dayName", function(m) {
-  return m.dayName();
+  return m.format("ddd");
 });
 
 Handlebars.registerHelper("dayNumber", function(m) {
