@@ -111,7 +111,7 @@ class MnemosyneContext extends MW.mix(MnemosyneBase).with(
       broadcast: me.makeDocument(row.doc)
     };
 
-    const foldDocs = row[foldAttr].map(r => me.makeDocument(r.doc));
+    const foldDocs = (row[foldAttr] || []).map(r => me.makeDocument(r.doc));
     for (const fd of foldDocs) {
       const key = fd.constructor.key;
       if (prog.hasOwnProperty(key))
