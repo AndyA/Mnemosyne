@@ -18,10 +18,10 @@
   <h2>{{prettyDate date}}</h2>
 
   {{#each progs.rows}}
-    <h2 id="{{shortTime txTime}}">
+    <h3 id="{{shortTime txTime}}">
       <span class="time">{{shortTime txTime}}</span>
       <a href="{{link}}">{{title}}</a>
-    </h2>
+    </h3>
     <p class="synopsis short">{{episode.shortSynopsis}}</p>
     <p class="synopsis medium">{{episode.mediumSynopsis}}</p>
     <p class="synopsis long">{{episode.longSynopsis}}</p>
