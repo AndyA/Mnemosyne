@@ -52,7 +52,7 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
       return padded.slice(today - count, today + count + 1);
     }
 
-   const key = [service, ...day.split(/-/)];
+    const key = [service, ...day.split(/-/)];
 
     const [before, after] = await Promise.all(
       [true, false].map(descending => {

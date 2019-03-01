@@ -23,7 +23,8 @@ const GlobalData = require("lib/js/tools/global-data");
 const foldAttr = "_fold";
 
 class MnemosyneContext extends MW.mix(MnemosyneBase).with(
-    require("lib/js/mnemosyne/mixin/schedule")
+    require("lib/js/mnemosyne/mixin/schedule"),
+    require("lib/js/mnemosyne/mixin/programme")
   ) {
   constructor() {
     super();
