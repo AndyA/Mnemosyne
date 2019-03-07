@@ -10,8 +10,8 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
 
   async loadServiceDay(service, day) {
     const m = moment.utc(day);
-    const start = m.startOf("day").dbFormat();
-    const end = m.add(1, "day").dbFormat();
+    const start = m.startOf("day").toStore();
+    const end = m.add(1, "day").toStore();
 
     return this.loadView("main", "broadcastsByServiceDate", {
       startkey: [service, start],

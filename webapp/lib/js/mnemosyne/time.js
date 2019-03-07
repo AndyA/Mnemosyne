@@ -2,6 +2,15 @@
 
 const moment = require("moment");
 
-moment.fn.dbFormat = function() {
-  return this.format("YYYY-MM-DD[T]HH:mm:ss[Z]");
+const storeFormat = "YYYY-MM-DD[T]HH:mm:ss[Z]";
+
+moment.fn.toStore = function() {
+  return this.format(storeFormat);
+}
+
+moment.fromStore = function(dt) {
+  const m = moment.utc(dt, storeFormat, true);
+  if (!m.isValid())
+    throw new Error("Invalid store time: " + dt);
+  return m;
 }
