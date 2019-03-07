@@ -13,7 +13,7 @@ class MnemosyneBroadcast extends MnemosyneDocument {
 MnemosyneBroadcast
   .jpAttr("txTime", {
     paths: "$.broadcast.published_time[*]['$'].start",
-    parser: v => moment.utc(v)
+    parser: v => moment.fromStore(v)
   });
 
 module.exports = MnemosyneBroadcast;
