@@ -36,7 +36,7 @@ class DocPipe extends stream.Transform {
     this._stages = [];
 
     if (opt.allDirty)
-      this.addStage((doc, ctx) => ctx.save());
+      this.allDirty();
   }
 
   _checkStage(stage) {
@@ -46,6 +46,10 @@ class DocPipe extends stream.Transform {
     if (!stage.process)
       throw new Error("Stage needs a process method");
     return stage;
+  }
+
+  allDirty() {
+    this.addStage((doc, ctx) => ctx.save());
   }
 
   addStage(stage, priority = 0) {
