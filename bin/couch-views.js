@@ -77,7 +77,7 @@ const design = {
             var key = start.split(/\D+/).filter(function(c) {
               return c.length
             });
-            key.unshift(doc.broadcast.service[0].$.sid);
+            key.unshift(doc.serviceName);
 
             emit(key, {
               start: start,
@@ -111,6 +111,41 @@ const design = {
   explore: {
     language: 'javascript',
     views: {
+      broadcastDays: {
+        map: function(doc) {
+          if (doc.broadcast && doc.broadcastDay && doc.serviceName) {
+            var key = doc.broadcastDay.split(/\D+/).filter(function(c) {
+              return c.length
+            });
+            key.unshift(doc.serviceName);
+
+            emit(key, {
+              start: doc.broadcastDay,
+              end: doc.broadcastDay,
+              broadcasts: 1
+            });
+          }
+        },
+        reduce: function(keys, values, rereduce) {
+          return {
+            start: values.map(function(i) {
+              return i.start
+            }).reduce(function(a, b) {
+              return a < b ? a : b
+            }),
+            end: values.map(function(i) {
+              return i.end
+            }).reduce(function(a, b) {
+              return a > b ? a : b
+            }),
+            broadcasts: values.map(function(i) {
+              return i.broadcasts
+            }).reduce(function(a, b) {
+              return a + b;
+            })
+          };
+        }
+      }
     }
   }
 }

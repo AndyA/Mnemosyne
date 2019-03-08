@@ -1,6 +1,8 @@
 "use strict";
 
 const DocPipe = require("lib/js/docpipe");
+const jp = require("jsonpath");
+const moment = require("lib/js/bbc/datetime");
 
 module.exports = function(dp) {
   dp = dp || new DocPipe();
@@ -20,6 +22,16 @@ module.exports = function(dp) {
     if (doc.kind && doc.source === undefined) {
       doc.source = "pips";
       ctx.save();
+    }
+  });
+
+  dp.addStage((doc, ctx) => {
+    if (doc.kind === "broadcast" && doc.serviceName === undefined) {
+      const sn = jp.value(doc, "$.broadcast.service[*]['$'].sid");
+      if (sn) {
+        doc.serviceName = sn;
+        ctx.save();
+      }
     }
   });
 
