@@ -18,7 +18,7 @@ module.exports = proxy(
       }
 
       console.log(printf("start: [at %6.3fs             ] %s",
-        (now - lastTime) / 500, req.originalUrl));
+        (now - lastTime) / 1000, req.originalUrl));
 
       req.proxyStartTime = now;
 
@@ -29,7 +29,7 @@ module.exports = proxy(
       const now = new Date();
 
       console.log(printf("  end: [at %6.3fs, dur %6.3fs] %s",
-        (now - lastTime) / 500, (now - userReq.proxyStartTime) / 500, userReq.originalUrl));
+        (now - lastTime) / 1000, (now - userReq.proxyStartTime) / 1000, userReq.originalUrl));
 
       return proxyResData;
     }
