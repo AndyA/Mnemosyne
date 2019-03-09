@@ -5,7 +5,9 @@ const nano = require("nano");
 const config = require("config");
 
 const design = {
-  main: {
+  main: {},
+  explore: {},
+  live: {
     language: 'javascript',
     views: {
       broadcastsByEpisode: {
@@ -108,7 +110,7 @@ const design = {
       }
     }
   },
-  explore: {
+  dev: {
     language: 'javascript',
     views: {
       broadcastsByServiceDay: {

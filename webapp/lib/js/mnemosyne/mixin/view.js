@@ -5,21 +5,21 @@ const _ = require("lodash");
 
 const nameMap = {
   broadcastDays: [
-    "explore", "broadcastDays"],
+    "dev", "broadcastDays"],
   broadcastsByServiceDay: [
-    "explore", "broadcastsByServiceDay"],
+    "dev", "broadcastsByServiceDay"],
   broadcastsByEpisode: [
-    "main", "broadcastsByEpisode"],
+    "live", "broadcastsByEpisode"],
   broadcastsByServiceDate: [
-    "main", "broadcastsByServiceDate"],
+    "live", "broadcastsByServiceDate"],
   genres: [
-    "main", "genres"],
+    "live", "genres"],
   kinds: [
-    "main", "kinds"],
+    "live", "kinds"],
   pidOrID: [
-    "main", "pidOrID"],
+    "live", "pidOrID"],
   serviceDates: [
-    "main", "serviceDates"]
+    "live", "serviceDates"]
 };
 
 const View = MW.Mixin(superclass => class extends superclass {
