@@ -111,6 +111,29 @@ const design = {
   explore: {
     language: 'javascript',
     views: {
+      broadcastsByServiceDay: {
+        map: function(doc) {
+          if (doc.broadcast) {
+            emit([
+              doc.broadcast.service[0].$.sid,
+              doc.broadcastDay,
+              doc.broadcast.published_time[0].$.start,
+              0
+            ], null);
+
+            if (doc.episodeID) {
+              emit([
+                doc.broadcast.service[0].$.sid,
+                doc.broadcastDay,
+                doc.broadcast.published_time[0].$.start,
+                1
+              ], {
+                _id: doc.episodeID
+              });
+            }
+          }
+        }
+      },
       broadcastDays: {
         map: function(doc) {
           if (doc.broadcast && doc.broadcastDay && doc.serviceName) {
