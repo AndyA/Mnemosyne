@@ -11,7 +11,7 @@ require("../../../webapp/use.js");
 const MnemosyneContext = require("lib/js/mnemosyne/context");
 const {Pager, PageAll, PageView} = require("lib/js/couchdb/pager.js");
 
-const designName = "main";
+const designName = "live";
 const viewName = "pidOrID";
 
 describe("Pager", () => {
