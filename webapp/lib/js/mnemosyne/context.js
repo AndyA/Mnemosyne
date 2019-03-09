@@ -143,16 +143,8 @@ class MnemosyneContext extends MW.mix(MnemosyneBase).with(
   }
 
   async loadView(...args) {
-    console.log(args.length);
-    if (args.length === 2) {
-      let res = await this.view(...args);
-      return this.makeThings(res);
-    } else if (args.length === 3) {
-      let res = await this.db.view(...args);
-      return this.makeThings(res);
-    } else {
-      throw new Error("Oops");
-    }
+    let res = await this.view(...args);
+    return this.makeThings(res);
   }
 
   async loadThing(id) {

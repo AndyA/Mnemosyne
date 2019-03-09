@@ -42,7 +42,6 @@ const View = MW.Mixin(superclass => class extends superclass {
     const param = Object.assign({
       stale: "update_after"
     }, ...params);
-    console.log({view, param});
     return this.db.view(...view, param);
   }
 }
