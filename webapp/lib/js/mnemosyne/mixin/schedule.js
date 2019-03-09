@@ -2,25 +2,24 @@
 
 const MW = require("mixwith");
 
-const moment = require("moment");
+const moment = require("lib/js/bbc/datetime");
 const _ = require("lodash");
 const Promise = require("bluebird");
 
 const Schedule = MW.Mixin(superclass => class extends superclass {
 
   async loadServiceDay(service, day) {
-    const m = moment.utc(day);
-    const start = m.startOf("day").toStore();
-    const end = m.add(1, "day").toStore();
+    const start = moment.radioTimes(day).startOf("day");
+    const end = moment(start).add(1, "day");
 
-    return this.loadView("main", "broadcastsByServiceDate", {
-      startkey: [service, start],
-      endkey: [service, end],
-      include_docs: true,
+    return this.loadView("explore", "broadcastsByServiceDay", {
+      startkey: [service, start.format("YYYY-MM-DD")],
+      endkey: [service, end.format("YYYY-MM-DD")],
       inclusive_end: false,
       reduce: false,
+      include_docs: true,
       stale: "update_after"
-    });
+    })
   }
 
   // Load days around the specified day
@@ -58,14 +57,17 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
       [true, false].map(descending => {
         const limit = count + (descending ? 0 : 1);
 
-        return this.db.view("main", "serviceDates", {
+        return this.db.view("explore", "broadcastDays", {
           startkey: key,
           reduce: true,
           group_level: 4,
           stale: "update_after",
-          limit,
+          limit: count + 1,
           descending
         }).then(data => {
+          // Drop duplicate
+          if (descending)
+            data.rows.shift();
           return data.rows
             .filter(r => r.key[0] === service)
             .map(r => {
@@ -74,7 +76,7 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
               return Object.assign({
                 link: ["", "schedules", service, date].join("/"),
                 service,
-                date: moment.utc(date),
+                date: moment.radioTimes(date),
                 today: date === day,
                 missing: false
               }, r.value);
