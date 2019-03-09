@@ -24,7 +24,8 @@ const foldAttr = "_fold";
 
 class MnemosyneContext extends MW.mix(MnemosyneBase).with(
     require("lib/js/mnemosyne/mixin/schedule"),
-    require("lib/js/mnemosyne/mixin/programme")
+    require("lib/js/mnemosyne/mixin/programme"),
+    require("lib/js/mnemosyne/mixin/view")
   ) {
   constructor() {
     super();
@@ -142,29 +143,35 @@ class MnemosyneContext extends MW.mix(MnemosyneBase).with(
   }
 
   async loadView(...args) {
-    let res = await this.db.view(...args);
-    return this.makeThings(res);
+    console.log(args.length);
+    if (args.length === 2) {
+      let res = await this.view(...args);
+      return this.makeThings(res);
+    } else if (args.length === 3) {
+      let res = await this.db.view(...args);
+      return this.makeThings(res);
+    } else {
+      throw new Error("Oops");
+    }
   }
 
   async loadThing(id) {
-    const trove = await this.loadView("main", "pidOrID", {
+    const trove = await this.loadView("pidOrID", {
       startkey: [id, 0],
       endkey: [id, 999],
       inclusive_end: false,
       reduce: false,
       include_docs: true,
-      reduce: false,
-      stale: "update_after"
+      reduce: false
     });
     return trove.singleton;
   }
 
   async loadAll(kind) {
-    return this.loadView("main", "kinds", {
+    return this.loadView("kinds", {
       key: kind,
       include_docs: true,
-      reduce: false,
-      stale: "update_after"
+      reduce: false
     });
   }
 
@@ -172,10 +179,9 @@ class MnemosyneContext extends MW.mix(MnemosyneBase).with(
   async loadServices() {
     let [services, serviceDates] = await Promise.all([
       this.loadAll("service"),
-      this.db.view("main", "serviceDates", {
+      this.view("serviceDates", {
         reduce: true,
-        group_level: 1,
-        stale: "update_after"
+        group_level: 1
       })
     ]);
 

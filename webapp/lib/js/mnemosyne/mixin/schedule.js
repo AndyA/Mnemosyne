@@ -12,13 +12,12 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
     const start = moment.radioTimes(day).startOf("day");
     const end = moment(start).add(1, "day");
 
-    return this.loadView("explore", "broadcastsByServiceDay", {
+    return this.loadView("broadcastsByServiceDay", {
       startkey: [service, start.format("YYYY-MM-DD")],
       endkey: [service, end.format("YYYY-MM-DD")],
       inclusive_end: false,
       reduce: false,
-      include_docs: true,
-      stale: "update_after"
+      include_docs: true
     })
   }
 
@@ -55,11 +54,10 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
 
     const [before, after] = await Promise.all(
       [true, false].map(descending => {
-        return this.db.view("explore", "broadcastDays", {
+        return this.view("broadcastDays", {
           startkey: key,
           reduce: true,
           group_level: 4,
-          stale: "update_after",
           limit: count + 1,
           descending
         }).then(data => {

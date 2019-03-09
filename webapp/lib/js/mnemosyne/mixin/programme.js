@@ -5,12 +5,10 @@ const MW = require("mixwith");
 const Programme = MW.Mixin(superclass => class extends superclass {
 
   async loadAllBroadcasts(prog) {
-    let broadcasts = await
-     this.loadView("main", "broadcastsByEpisode", {
-      key: prog.episode._id, 
+    let broadcasts = await this.loadView("broadcastsByEpisode", {
+      key: prog.episode._id,
       reduce: false,
-      include_docs: true,
-      stale: "update_after"
+      include_docs: true
     });
 
     let thisOne = broadcasts.find("broadcastID", prog.broadcastID);
