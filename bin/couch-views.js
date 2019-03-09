@@ -115,6 +115,21 @@ const design = {
           }
         },
         reduce: function(keys, values, rereduce) {
+          //          function showArray(ar) {
+          //            ar = ar || [];
+          //            var l = ar.length;
+          //            if (l)
+          //              return l + " elements from " + JSON.stringify(ar[0]) + " to " + JSON.stringify(ar[l - 1]);
+          //            return l + " elements";
+          //          }
+
+          //          log(
+          //            "LOG: " +
+          //            "keys: [" + showArray(keys) + "], " +
+          //            "values: [" + showArray(values) + "], " +
+          //            "rereduce: " + (rereduce ? "true" : "false")
+          //          );
+
           return {
             start: values.map(function(i) {
               return i.start
