@@ -55,8 +55,6 @@ const Schedule = MW.Mixin(superclass => class extends superclass {
 
     const [before, after] = await Promise.all(
       [true, false].map(descending => {
-        const limit = count + (descending ? 0 : 1);
-
         return this.db.view("explore", "broadcastDays", {
           startkey: key,
           reduce: true,
