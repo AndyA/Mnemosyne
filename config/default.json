@@ -1,5 +1,5 @@
 {
    "db" : {
-      "url" : "http://localhost:5984/mnemosyne"
+      "url" : "http://localhost:31792/db/mnemosyne"
    }
 }
