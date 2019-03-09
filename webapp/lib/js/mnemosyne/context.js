@@ -169,15 +169,15 @@ class MnemosyneContext extends MW.mix(MnemosyneBase).with(
 
   // Services involve a second query to get the serviceDays
   async loadServices() {
-    let [services, serviceDates] = await Promise.all([
+    let [services, broadcastDays] = await Promise.all([
       this.loadAll("service"),
-      this.view("serviceDates", {
+      this.view("broadcastDays", {
         reduce: true,
         group_level: 1
       })
     ]);
 
-    for (const sd of serviceDates.rows) {
+    for (const sd of broadcastDays.rows) {
       let svc = services.find("pid", sd.key);
       svc.service.history = sd.value;
     }

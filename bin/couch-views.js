@@ -70,43 +70,6 @@ const design = {
           if (doc.pid)
             emitWithEpisode(doc.pid);
         }
-      },
-      serviceDates: {
-        map: function(doc) {
-          if (doc.broadcast) {
-            var start = doc.broadcast.published_time[0].$.start;
-            var end = doc.broadcast.published_time[0].$.end;
-            var key = start.split(/\D+/).filter(function(c) {
-              return c.length
-            });
-            key.unshift(doc.serviceName);
-
-            emit(key, {
-              start: start,
-              end: end,
-              broadcasts: 1
-            });
-          }
-        },
-        reduce: function(keys, values, rereduce) {
-          return {
-            start: values.map(function(i) {
-              return i.start
-            }).reduce(function(a, b) {
-              return a < b ? a : b
-            }),
-            end: values.map(function(i) {
-              return i.end
-            }).reduce(function(a, b) {
-              return a > b ? a : b
-            }),
-            broadcasts: values.map(function(i) {
-              return i.broadcasts
-            }).reduce(function(a, b) {
-              return a + b;
-            })
-          };
-        }
       }
     }
   },

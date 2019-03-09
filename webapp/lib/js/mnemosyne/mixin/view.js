@@ -18,8 +18,6 @@ const nameMap = {
     "live", "kinds"],
   pidOrID: [
     "live", "pidOrID"],
-  serviceDates: [
-    "live", "serviceDates"]
 };
 
 const View = MW.Mixin(superclass => class extends superclass {
