@@ -43,8 +43,8 @@ const docs = [
   }
 ];
 
-describe("DocPipe", () => {
-  describe("process / processAll", () => {
+describe.only("DocPipe", () => {
+  describe("processDoc / processAll", () => {
 
     it("should handle function stages", async () => {
       const dp = new DocPipe();
@@ -120,6 +120,37 @@ describe("DocPipe", () => {
 
       const got = await dp.processAll(docs);
       const want = docs.filter(d => d._id >= 3 && 0 === d._id % 2);
+      expect(got).to.deep.equal(want);
+    });
+
+    it("should allow a DocPipe as a stage", async () => {
+      const dp = new DocPipe();
+      dp.addStage((doc, ctx) => ctx.save(Object.assign({
+        log: []
+      }, doc)), -1000);
+      dp.addStage((doc, ctx) => {
+        doc.log.push(4)
+      }, 40);
+      dp.addStage((doc, ctx) => {
+        doc.log.push(1)
+      }, 10);
+
+      const dp1 = new DocPipe();
+      dp1.addStage((doc, ctx) => {
+        doc.log.push(3)
+      }, 400);
+      dp1.addStage((doc, ctx) => {
+        doc.log.push(2)
+      }, 100);
+      dp.addStage(dp1, 20);
+
+      const got = await dp.processAll(docs);
+      expect(got).to.not.deep.equal(docs);
+
+      const want = docs.map(d => Object.assign({ }, d, {
+        log: [1, 2, 3, 4]
+      }));
+
       expect(got).to.deep.equal(want);
     });
   });

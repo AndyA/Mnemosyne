@@ -72,24 +72,29 @@ class DocPipe extends stream.Transform {
       .map(s => s.stage);
   }
 
-  async process(doc) {
-    let ctx = new Context(doc);
+  // We have the same signature as a stage - composition ahoy!
+  async process(doc, ctx) {
     for (const stage of this.stages) {
       const nextDoc = await stage.process(doc, ctx);
       if (ctx.skipped) return;
       doc = nextDoc || doc;
     }
-    if (ctx.dirty)
-      return doc;
+    return doc;
+  }
+
+  async processDoc(doc) {
+    let ctx = new Context(doc);
+    doc = await this.process(doc, ctx);
+    if (ctx.dirty) return doc;
   }
 
   async processAll(docs) {
-    return Promise.all(docs.map(d => this.process(d)))
+    return Promise.all(docs.map(d => this.processDoc(d)))
       .then(docs => docs.filter(d => d !== undefined));;
   }
 
   _transform(chunk, encoding, callback) {
-    this.process(chunk).then(doc => {
+    this.processDoc(chunk).then(doc => {
       if (doc !== undefined)
         this.push(doc);
       callback();
