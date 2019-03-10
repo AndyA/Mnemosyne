@@ -7,7 +7,7 @@ const Promise = require("bluebird");
 
 require("../../../webapp/use.js");
 
-const DocPipe = require("lib/js/docpipe");
+const {DocPipe} = require("lib/js/docpipe");
 
 class Broadcasts {
   process(doc, ctx) {
@@ -43,7 +43,7 @@ const docs = [
   }
 ];
 
-describe("DocPipe", () => {
+describe.only("DocPipe", () => {
   describe("processDoc / processAll", () => {
 
     it("should handle function stages", async () => {
@@ -199,7 +199,7 @@ describe("DocPipe", () => {
         const dp = new DocPipe({
           allDirty: true
         });
-        const got = await drainStream(ts.pipe(dp));
+        const got = await drainStream(ts.pipe(dp.getStream()));
         expect(got).to.deep.equal(docs);
       });
 
@@ -225,7 +225,7 @@ describe("DocPipe", () => {
             });
         });
 
-        const got = await drainStream(ts.pipe(dp));
+        const got = await drainStream(ts.pipe(dp.getStream()));
         const want = [
           {
             _id: 2,

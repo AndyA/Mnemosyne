@@ -1,6 +1,6 @@
 "use strict";
 
-const DocPipe = require("lib/js/docpipe");
+const {DocPipe} = require("lib/js/docpipe");
 const jp = require("jsonpath");
 const moment = require("lib/js/bbc/datetime");
 

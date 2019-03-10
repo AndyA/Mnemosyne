@@ -3,6 +3,8 @@
 const stream = require("stream");
 const _ = require("lodash");
 
+const DocPipeStream = require("./stream");
+
 class Context {
   constructor(doc) {
     this.doc = doc;
@@ -20,22 +22,16 @@ class Context {
   }
 }
 
-class DocPipe extends stream.Transform {
+class DocPipe {
   constructor(options) {
-
-    const opt = Object.assign({}, {
-      highWaterMark: 256,
+    this.opt = Object.assign({
       allDirty: false
-    }, options || {}, {
-      objectMode: true
-    })
+    }, options || {});
 
-    super(opt);
-    this.opt = opt;
     this.seq = 0;
     this._stages = [];
 
-    if (opt.allDirty)
+    if (this.opt.allDirty)
       this.allDirty();
   }
 
@@ -85,7 +81,7 @@ class DocPipe extends stream.Transform {
   async processDoc(doc) {
     let ctx = new Context(doc);
     doc = await this.process(doc, ctx);
-    if (ctx.dirty) return doc;
+    if (ctx.dirty && !ctx.skipped) return doc;
   }
 
   async processAll(docs) {
@@ -93,14 +89,12 @@ class DocPipe extends stream.Transform {
       .then(docs => docs.filter(d => d !== undefined));;
   }
 
-  _transform(chunk, encoding, callback) {
-    this.processDoc(chunk).then(doc => {
-      if (doc !== undefined)
-        this.push(doc);
-      callback();
-    });
+  getStream(opt) {
+    return new DocPipeStream(this, opt);
   }
-
 }
 
-module.exports = DocPipe;
+module.exports = {
+  DocPipe,
+  DocPipeStream
+};
