@@ -64,9 +64,10 @@ module.exports = {
     table: "fenchurch_ping"
   },
   programme: {
-    options: {
-      ignore_extra_columns: 1
+    child_of: {
+      listing: "listing"
     },
+    order: "when",
     pkey: "_uuid",
     plural: "programmes",
     table: "mnemosyne_programmes_v2"

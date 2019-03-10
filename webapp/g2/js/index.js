@@ -65,6 +65,10 @@ class G2Trove extends Trove {
     return this.loadQueryDeep(sql.join(" "), [vals]);
   }
 
+  async loadByID(id) {
+    return this.loadByColumn(this.info.pkey, id);
+  }
+
   infoFor(kind) {
     return this.loader.schema.infoFor(kind);
   }
