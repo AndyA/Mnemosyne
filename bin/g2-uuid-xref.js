@@ -18,7 +18,6 @@ const ignore = new Set([
 ]);
 
 const createXrefTable = [
-
   "DROP TABLE IF EXISTS `labs_uuid_xref`",
 
   "CREATE TABLE `labs_uuid_xref` ("
@@ -28,7 +27,18 @@ const createXrefTable = [
   + "  PRIMARY KEY (`uuid`, `found_in`),"
   + "  KEY `labs_uuid_xref_uuid` (`uuid`)"
   + ") ENGINE=InnoDB DEFAULT CHARSET=utf8"
+];
 
+const createMapTable = [
+  "DROP TABLE IF EXISTS `labs_uuid_map`",
+
+  "CREATE TABLE `labs_uuid_map` AS"
+  + "  SELECT `q`.*, COUNT(*) AS `count`"
+  + "    FROM ("
+  + "      SELECT GROUP_CONCAT(`found_in` ORDER BY `found_in`) AS `fields`"
+  + "        FROM `labs_uuid_xref`"
+  + "       GROUP BY `uuid`) AS `q`"
+  + "  GROUP BY `fields`"
 ];
 
 class XrefInserter extends stream.Writable {
@@ -183,6 +193,7 @@ async function mule(pool) {
   await runScript(pool, createXrefTable);
   let ti = await getTables(pool, ignore);
   await surveyAll(pool, ti);
+  await runScript(pool, createMapTable);
 
   await ti.counters;
 }
