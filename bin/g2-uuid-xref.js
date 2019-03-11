@@ -10,6 +10,10 @@ const printf = require("printf");
 const _ = require("lodash");
 const UUID = require("lib/js/tools/uuid.js");
 
+Promise.config({
+  cancellation: true
+});
+
 const ignore = new Set([
   "mnemosyne_broadcast",
   "mnemosyne_episode",
@@ -19,7 +23,7 @@ const ignore = new Set([
   "mnemosyne_pips_master_brand",
   "mnemosyne_pips_service",
   "mnemosyne_programmes_v2_noncomplied",
-  "labs_uuid_map", 
+  "labs_uuid_map",
   "labs_uuid_xref",
 ]);
 
@@ -55,6 +59,7 @@ class XrefInserter extends stream.Writable {
       objectMode: true
     });
     super(o);
+    this.opt = o;
     this.conn = conn;
   }
 
@@ -80,6 +85,49 @@ class XrefInserter extends stream.Writable {
   }
 
   _final(callback) {
+    callback();
+  }
+}
+
+class MySQLReader extends stream.Readable {
+  constructor(opt, conn, ...query) {
+    const o = Object.assign({
+      highWaterMark: 10000
+    }, opt, {
+      objectMode: true
+    });
+
+    super(o);
+    this.conn = conn;
+
+    this.q = this.conn.query(...query)
+      .on("error", e => this.emit("error", e))
+      .on("end", () => this.push(null))
+      .on("result", r => {
+        if (!this.push(r))
+          this.conn.pause();
+      })
+  }
+
+  _read(size) {
+    this.conn.resume();
+  }
+}
+
+class Counter extends stream.Transform {
+  constructor(every) {
+    super({
+      objectMode: true
+    });
+    this.every = every;
+    this.count = 0;
+  }
+
+  _transform(chunk, encoding, callback) {
+    this.count++;
+    if (this.count % this.every === 0)
+      this.emit("count", this.count);
+    this.push(chunk);
     callback();
   }
 }
@@ -200,7 +248,7 @@ async function mule(pool) {
   let ti = await getTables(pool, ignore);
   await surveyAll(pool, ti);
   await runScript(pool, createMapTable);
-  await ti.counters;
+  ti.counters.cancel();
 }
 
 const pool = mysql.createPool({
