@@ -11,10 +11,16 @@ const _ = require("lodash");
 const UUID = require("lib/js/tools/uuid.js");
 
 const ignore = new Set([
+  "mnemosyne_broadcast",
+  "mnemosyne_episode",
   "mnemosyne_listings_v2_noncomplied",
+  "mnemosyne_pips_day",
+  "mnemosyne_pips_id_map",
+  "mnemosyne_pips_master_brand",
+  "mnemosyne_pips_service",
   "mnemosyne_programmes_v2_noncomplied",
+  "labs_uuid_map", 
   "labs_uuid_xref",
-  "labs_uuid_map"
 ]);
 
 const createXrefTable = [
@@ -194,7 +200,6 @@ async function mule(pool) {
   let ti = await getTables(pool, ignore);
   await surveyAll(pool, ti);
   await runScript(pool, createMapTable);
-
   await ti.counters;
 }
 
