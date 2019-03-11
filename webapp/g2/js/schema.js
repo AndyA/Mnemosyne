@@ -18,6 +18,14 @@ module.exports = {
     plural: "contributors",
     table: "mnemosyne_contributors"
   },
+  coordinate: {
+    child_of: {
+      programme: "_parent"
+    },
+    order: "+index",
+    plural: "coordinates",
+    table: "mnemosyne_coordinates"
+  },
   edit: {
     json: ["data"],
     pkey: "uuid",
