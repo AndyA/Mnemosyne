@@ -83,10 +83,6 @@ class XrefInserter extends stream.Writable {
       encoding
     }], callback);
   }
-
-  _final(callback) {
-    callback();
-  }
 }
 
 class MySQLReader extends stream.Readable {
@@ -114,7 +110,7 @@ class MySQLReader extends stream.Readable {
   }
 }
 
-class Counter extends stream.Transform {
+class StreamCounter extends stream.Transform {
   constructor(every) {
     super({
       objectMode: true
@@ -125,9 +121,37 @@ class Counter extends stream.Transform {
 
   _transform(chunk, encoding, callback) {
     this.count++;
-    if (this.count % this.every === 0)
+    if (this.count === 1 || (this.count % this.every === 0))
       this.emit("count", this.count);
     this.push(chunk);
+    callback();
+  }
+
+  _flush(callback) {
+    this.emit("count", this.count);
+    callback();
+  }
+}
+
+class UUIDFinder extends stream.Transform {
+  constructor(table) {
+    super({
+      objectMode: true
+    });
+    this.table = table;
+  }
+
+  _transform(chunk, encoding, callback) {
+    for (const [key, val] of Object.entries(chunk)) {
+      this.push({
+        uuid: val === null
+          ? "(null)"
+          : UUID.valid(val)
+            ? val
+            : "(invalid)",
+        found_in: [this.table, key].join(".")
+      });
+    }
     callback();
   }
 }
@@ -141,7 +165,7 @@ async function runScript(pool, script) {
   pool.pool.releaseConnection(conn);
 }
 
-async function scanTable(connRead, xi, table, info) {
+async function scanTable(connRead, connWrite, table, info) {
   const [meta] = await connRead.query("DESCRIBE `" + table + "`");
   const cols = meta.filter(r => r.Type === "varchar(36)").map(r => r.Field);
 
@@ -155,45 +179,24 @@ async function scanTable(connRead, xi, table, info) {
   console.log(prefix + "has UUIDs in [" + cols.join(", ") + "]");
 
   const colsSql = cols.map(c => "`" + c + "`").join(", ");
+  const qs = new MySQLReader({}, connRead.connection, "SELECT " + colsSql + " FROM `" + table + "`");
 
-  let doneRows = 0;
-
-  const updateStatus = () => {
+  const cs = new StreamCounter(100);
+  cs.on("count", count => {
     const status = (info.count === undefined)
-      ? printf("%8d/%8s (%6s%%)", doneRows, "?", "?")
-      : printf("%8d/%8d (%6.2f%%)", doneRows, info.count, (doneRows * 100 / info.count));
+      ? printf("%10d/%10s (%6s%%)", count, "?", "?")
+      : printf("%10d/%10d (%6.2f%%)", count, info.count, (count * 100 / info.count));
     slog(prefix + status);
-  }
+  });
+
+  const uf = new UUIDFinder(table);
+  const xi = new XrefInserter(connWrite);
 
   return new Promise(async (resolve, reject) => {
-    const q = connRead.connection
-      .query("SELECT " + colsSql + " FROM `" + table + "`")
-      .on("error", reject)
-      .on("end", () => {
-        updateStatus();
-        console.log("");
-        resolve();
-      })
-      .on("result", r => {
-        const ok = Object.entries(r)
-          .map(([key, val]) => {
-            return {
-              uuid: val === null
-                ? "(null)"
-                : UUID.valid(val)
-                  ? val
-                  : "(invalid)",
-              found_in: [table, key].join(".")
-            };
-          })
-          .map(r => xi.write(r));
-
-        if (ok.indexOf(false) >= 0)
-          connRead.connection.pause();
-        doneRows++;
-        if (doneRows % 100 === 0)
-          updateStatus();
-      });
+    qs.pipe(cs).pipe(uf).pipe(xi).on("finish", () => {
+      console.log("");
+      resolve();
+    });
   });
 }
 
@@ -201,19 +204,11 @@ async function surveyAll(pool, ti) {
   const connRead = await pool.getConnection();
   const connWrite = await pool.getConnection();
 
-  const xi = new XrefInserter(connWrite);
-
-  xi.on("drain", () => connRead.connection.resume());
-
   for (const table of ti.names) {
     const info = ti.info[table];
-    await scanTable(connRead, xi, table, info);
+    await scanTable(connRead, connWrite, table, info);
   }
 
-  console.log("Ending writer");
-  await Promise.fromCallback(cb => xi.end(cb));
-
-  console.log("Releasing connections");
   pool.pool.releaseConnection(connRead);
   pool.pool.releaseConnection(connWrite);
 
@@ -245,9 +240,11 @@ async function getTables(pool, ignore) {
 
 async function mule(pool) {
   await runScript(pool, createXrefTable);
+
   let ti = await getTables(pool, ignore);
   await surveyAll(pool, ti);
-  await runScript(pool, createMapTable);
+  //  await runScript(pool, createMapTable);
+  console.log("Stopping counters");
   ti.counters.cancel();
 }
 
