@@ -9,6 +9,7 @@ const slog = require("single-line-log").stdout;
 const printf = require("printf");
 const _ = require("lodash");
 const UUID = require("lib/js/tools/uuid.js");
+const nano = require('nano')('http://localhost:5984');
 
 Promise.config({
   cancellation: true
@@ -51,10 +52,44 @@ const createMapTable = [
   + "  GROUP BY `fields`"
 ];
 
+class XrefToCouch extends stream.Writable {
+  constructor(db, opt) {
+    const o = Object.assign({
+      highWaterMark: 1000
+    }, opt || {}, {
+      objectMode: true
+    });
+    super(o);
+    this.opt = o;
+    this.db = db;
+    this.seq = 0;
+  }
+
+  _writev(chunks, callback) {
+    const docs = chunks.map(c => c.chunk).map(c => ({
+      _id: [c.uuid, c.found_in, this.seq++].join(":")
+    }));
+
+    this.db
+      .bulk({
+        docs
+      })
+      .then(() => callback())
+      .catch(callback);
+  }
+
+  _write(chunk, encoding, callback) {
+    this._writev([{
+      chunk,
+      encoding
+    }], callback);
+  }
+}
+
 class XrefInserter extends stream.Writable {
   constructor(conn, opt) {
     const o = Object.assign({
-      highWaterMark: 10000
+      highWaterMark: 1000
     }, opt || {}, {
       objectMode: true
     });
@@ -88,7 +123,7 @@ class XrefInserter extends stream.Writable {
 class MySQLReader extends stream.Readable {
   constructor(opt, conn, ...query) {
     const o = Object.assign({
-      highWaterMark: 10000
+      highWaterMark: 100
     }, opt, {
       objectMode: true
     });
@@ -190,7 +225,13 @@ async function scanTable(connRead, connWrite, table, info) {
   });
 
   const uf = new UUIDFinder(table);
-  const xi = new XrefInserter(connWrite);
+  const xi = connWrite.bulk
+    ? new XrefToCouch(connWrite)
+    : new XrefInserter(connWrite);
+
+  [qs, xi].map(p => p.on("error", e => {
+    throw e;
+  }));
 
   return new Promise(async (resolve, reject) => {
     qs.pipe(cs).pipe(uf).pipe(xi).on("finish", () => {
@@ -200,17 +241,17 @@ async function scanTable(connRead, connWrite, table, info) {
   });
 }
 
-async function surveyAll(pool, ti) {
+async function surveyAll(db, pool, ti) {
   const connRead = await pool.getConnection();
-  const connWrite = await pool.getConnection();
+  //  const connWrite = await pool.getConnection();
 
   for (const table of ti.names) {
     const info = ti.info[table];
-    await scanTable(connRead, connWrite, table, info);
+    await scanTable(connRead, db, table, info);
   }
 
   pool.pool.releaseConnection(connRead);
-  pool.pool.releaseConnection(connWrite);
+  //  pool.pool.releaseConnection(connWrite);
 
 }
 
@@ -238,14 +279,24 @@ async function getTables(pool, ignore) {
   };
 }
 
-async function mule(pool) {
-  await runScript(pool, createXrefTable);
+async function mule(nano, pool) {
+  //  await runScript(pool, createXrefTable);
+
+  const db = await getCouch(nano, "g2xref");
 
   let ti = await getTables(pool, ignore);
-  await surveyAll(pool, ti);
+  await surveyAll(db, pool, ti);
   //  await runScript(pool, createMapTable);
   console.log("Stopping counters");
   ti.counters.cancel();
+}
+
+async function getCouch(nano, name) {
+  return nano.db.get(name).catch(e => {
+    if (e.error === "not_found")
+      return nano.db.create(name).then(() => nano.db.get(name));
+    throw (e);
+  }).then(db => nano.use(name));
 }
 
 const pool = mysql.createPool({
@@ -258,6 +309,6 @@ const pool = mysql.createPool({
   dateStrings: true
 });
 
-mule(pool)
+mule(nano, pool)
   .catch(e => console.log(e))
   .finally(() => pool.end());
