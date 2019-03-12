@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/fonts/bbc-reith.css" rel="stylesheet">
+    <link href="/css/mnemosyne.css" rel="stylesheet">
+    <script async src="/js/mnemosyne.js"></script>
+    <title>{{title}}</title>
+    <script>
+      // For debugging
+      var STASH = {{toJSON this}}
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="top-nav">
+        <div class="content-width">
+          <h1><a href="/">Mnemosyne</a></h1>
+          <nav>
+            <ul class="horizontal-menu">
+              <li><a href="/channels">Channels</a></li>
+              <li><a href="/calendar">Calendar</a></li>
+              <li><a href="/issues">Radio Times</a></li>
+              <li><a href="/faqs">FAQs</a></li>
+              <li><a href="http://www.bbc.co.uk/blogs/mnemosyne">Blog</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="search">
+        <div class="content-width">
+          <form id="search" action="/search/0/20">
+            <div>
+              <div class="search-box">
+                <input type="text" name="q" placeholder="Search">
+                <button type="submit"></button>
+              </div>
+              <nav>
+                <ul class="horizontal-menu">
+                  <li><a class="reveal closed" data-show="#panel-advanced" href="#">Advanced</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="fold" id="panel-advanced">
+              Advanced
+            </div>
+          </form>
+        </div>
+      </div>
+    </header>
+    {{{body}}}
+    <div class="content-width" id="debug"></div>
+  </body>
+</html>
