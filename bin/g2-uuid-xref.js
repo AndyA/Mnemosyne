@@ -201,6 +201,7 @@ async function runScript(pool, script) {
 }
 
 async function scanTable(connRead, connWrite, table, info) {
+  await connRead.query("SET @@net_write_timeout := 7200");
   const [meta] = await connRead.query("DESCRIBE `" + table + "`");
   const cols = meta.filter(r => r.Type === "varchar(36)").map(r => r.Field);
 
