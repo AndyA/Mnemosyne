@@ -9,22 +9,79 @@ use warnings;
 use Dancer ':script';
 use Dancer::Plugin::Database;
 
-use constant XREF_TABLE => 'labs_uuid_xref';
-use constant IGNORE     => qw(
+use List::Flatten;
+use JSON ();
+
+use constant IGNORE => qw(
+ mnemosyne_broadcast
+ mnemosyne_episode
  mnemosyne_listings_v2_noncomplied
+ mnemosyne_pips_day
+ mnemosyne_pips_id_map
+ mnemosyne_pips_master_brand
+ mnemosyne_pips_service
  mnemosyne_programmes_v2_noncomplied
  labs_uuid_map
+ labs_uuid_xref
 );
 
 $| = 1;
 
-xref( database, XREF_TABLE, IGNORE );
-make_map(database);
+run_script( database,
+  "-- DROP labs_uuid_xref_raw",
+  "DROP TABLE IF EXISTS `labs_uuid_xref_raw`",
+
+  "-- CREATE labs_uuid_xref_raw",
+  [ "CREATE TABLE `labs_uuid_xref_raw` (",
+    "  `uuid` varchar(36) NOT NULL COMMENT 'Unique object identifier',",
+    "  `found_in` VARCHAR(80) NOT NULL COMMENT 'table.field where found'",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8"
+  ]
+);
+
+xref( database, 'labs_uuid_xref_raw', IGNORE );
+
+run_script( database,
+  "-- DROP labs_uuid_xref",
+  "DROP TABLE IF EXISTS `labs_uuid_xref`",
+
+  "-- CREATE labs_uuid_xref",
+  [ "CREATE TABLE `labs_uuid_xref` (",
+    "  `uuid` varchar(36) NOT NULL COMMENT 'Unique object identifier',",
+    "  `found_in` VARCHAR(80) NOT NULL COMMENT 'table.field where found',",
+    "  `count` INT(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT 'cardinality', ",
+    "  PRIMARY KEY (`uuid`, `found_in`),",
+    "  KEY `uuid` (`uuid`)",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8"
+  ],
+
+  "-- POPULATE labs_uuid_xref",
+  [ "INSERT INTO `labs_uuid_xref`",
+    "  SELECT `uuid`, `found_in`, COUNT(*) AS `count`",
+    "    FROM `labs_uuid_xref_raw`",
+    "   GROUP BY `uuid`, `found_in`"
+  ]
+);
+
+run_script( database,
+  "-- DROP labs_uuid_map",
+  "DROP TABLE IF EXISTS `labs_uuid_map`",
+
+  "-- CREATE labs_uuid_map",
+  [ "CREATE TABLE `labs_uuid_map` AS",
+    "  SELECT `q`.*, COUNT(*) AS `count`",
+    "    FROM (",
+    "      SELECT GROUP_CONCAT(`found_in` ORDER BY `found_in`) AS `fields`",
+    "        FROM `labs_uuid_xref`",
+    "       GROUP BY `uuid`) AS `q`",
+    "  GROUP BY `fields`"
+  ]
+);
 
 sub xref {
   my ( $dbh, $xref_table, @ignore ) = @_;
   my %ignore = map { $_ => 1 } $xref_table, @ignore;
-  $dbh->do("TRUNCATE `$xref_table`");
+  #  $dbh->do("TRUNCATE `$xref_table`");
   my @tables = grep { !$ignore{$_} } find_tables(database);
   for my $tbl (@tables) {
     say "Scanning $tbl";
@@ -32,26 +89,16 @@ sub xref {
   }
 }
 
-sub make_map {
-  my $dbh = shift;
-  say "Making labs_uuid_map";
-  $dbh->do("DROP TABLE labs_uuid_map");
-  $dbh->do(
-    join( " ",
-      "CREATE TABLE labs_uuid_map AS",
-      "  SELECT q.*, COUNT(*) AS count",
-      "    FROM (",
-      "      SELECT GROUP_CONCAT(found_in ORDER BY found_in) AS `fields`",
-      "        FROM labs_uuid_xref",
-      "       GROUP BY uuid) AS q",
-      "  GROUP BY fields" )
-  );
-
+sub run_script {
+  my ( $dbh, @sql ) = @_;
+  for my $sql (@sql) {
+    if ( !ref $sql && $sql =~ /^--/ ) {
+      say $sql;
+      next;
+    }
+    $dbh->do( join( " ", flat $sql) );
+  }
 }
-
-=for ref
-
-=cut
 
 sub scan_table {
   my ( $dbh, $xref_table, $table ) = @_;
@@ -62,13 +109,17 @@ sub scan_table {
     return unless @queue;
     my $sql = join ' ',
      "INSERT INTO `$xref_table` ( `uuid`, `found_in` ) VALUES ",
-     join( ', ', ('(?, ?)') x @queue ),
-     'ON DUPLICATE KEY UPDATE `count` = `count` + 1';
+     join( ', ', ('(?, ?)') x @queue );
     $dbh->do( $sql, {}, map { @$_ } splice @queue );
   };
 
+  my %required = map { $_ => 1 }
+   map  { $_->{Field} }
+   grep { $_->{Type} eq "varchar(36)" }
+   @{ $dbh->selectall_arrayref( "DESCRIBE `$table`", { Slice => {} } ) };
+
   my $is_uuid = uuid_re();
-  my %seen    = ();
+  my %seen = map { ( "$table.$_" => 1 ) } keys %required;
 
   my ($total) = $dbh->selectrow_array("SELECT COUNT(*) FROM `$table`");
   my $done    = 0;
@@ -78,9 +129,16 @@ sub scan_table {
   $sth->execute;
   while ( my $row = $sth->fetchrow_hashref ) {
     while ( my ( $col, $val ) = each %$row ) {
-      next unless defined $val && $val =~ $is_uuid;
+      next unless $required{$col} || ( defined $val && $val =~ $is_uuid );
+      if ( !defined $val ) {
+        $val = "(null)";
+      }
+      elsif ( $val !~ $is_uuid ) {
+        $val = "(invalid)";
+      }
+
       my $loc = "$table.$col";
-      $seen{$loc}++;
+      $seen{"+$loc"}++ unless $seen{$loc};
       push @queue, [$val, $loc];
       $flush->() if @queue >= 1000;
     }
