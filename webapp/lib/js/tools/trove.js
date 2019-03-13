@@ -10,6 +10,10 @@ class Trove {
     this.indexes = {};
   }
 
+  toJSON() {
+    return this._rows;
+  }
+
   getUniqueIndex(field) {
     if (this.uniqueIndexes.hasOwnProperty(field))
       return this.uniqueIndexes[field];
