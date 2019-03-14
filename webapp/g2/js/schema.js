@@ -121,6 +121,8 @@ module.exports = {
     table: "mnemosyne_related_meta"
   },
   service: {
+    // Disable this because it stops our old versions applying cleanly
+    //    json: ["data"],
     pkey: "_uuid",
     plural: "services",
     table: "mnemosyne_services"
