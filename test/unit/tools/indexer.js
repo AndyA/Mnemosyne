@@ -126,7 +126,42 @@ describe("Indexer", () => {
       });
     });
 
-
+    it("should handle JSONPath", () => {
+      const idx = Indexer.allByKey([
+        {
+          x: {
+            ID: "one"
+          }
+        },
+        {
+          x: {
+            ID: "two"
+          }
+        },
+        {
+          x: {
+            ID: "three"
+          }
+        },
+      ], "$.x.ID");
+      expect(idx).to.deep.equal({
+        one: [{
+          x: {
+            ID: "one"
+          }
+        }],
+        two: [{
+          x: {
+            ID: "two"
+          }
+        }],
+        three: [{
+          x: {
+            ID: "three"
+          }
+        }],
+      });
+    });
   });
 
 });

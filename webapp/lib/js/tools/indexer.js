@@ -1,6 +1,7 @@
 "use strict";
 
 const _ = require("lodash");
+const jp = require("jsonpath");
 
 function buildIndex(recs, keys, idx, cb) {
   if (!_.isArray(recs))
@@ -13,17 +14,20 @@ function buildIndex(recs, keys, idx, cb) {
 
   const keyLeaf = keyPath.pop();
 
+  function getKey(rec, key) {
+    const val = key[0] === "$" ? jp.value(rec, key) : rec[key];
+    if (val === undefined)
+      throw new Error("Missing key " + key);
+    return val;
+  }
+
   for (const rec of recs) {
     let slot = idx;
     for (const key of keyPath) {
-      const kv = rec[key];
-      if (kv === undefined)
-        throw new Error("Missing key " + key);
+      const kv = getKey(rec, key);
       slot = slot[kv] = slot[kv] || {};
     }
-    const kv = rec[keyLeaf];
-    if (kv === undefined)
-      throw new Error("Missing key " + keyLeaf);
+    const kv = getKey(rec, keyLeaf);
     cb(slot, kv, rec);
   }
 }
