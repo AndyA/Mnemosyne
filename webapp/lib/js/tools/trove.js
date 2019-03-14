@@ -15,15 +15,11 @@ class Trove {
   }
 
   getUniqueIndex(field) {
-    if (this.uniqueIndexes.hasOwnProperty(field))
-      return this.uniqueIndexes[field];
-    return this.uniqueIndexes[field] = Indexer.uniqueByKey(this._rows, field);
+    return this.uniqueIndexes[field] = this.uniqueIndexes[field] || Indexer.uniqueByKey(this._rows, field);
   }
 
   getIndex(field) {
-    if (this.indexes.hasOwnProperty(field))
-      return this.indexes[field];
-    return this.indexes[field] = Indexer.allByKey(this._rows, field);
+    return this.indexes[field] = this.indexes[field] || Indexer.allByKey(this._rows, field);
   }
 
   find(field, value) {
