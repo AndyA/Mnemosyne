@@ -238,7 +238,27 @@ const cases = [
 
 ];
 
-describe.only("MnemosyneVersions", () => {
+describe("MnemosyneVersions", () => {
+  describe("numify", () => {
+    it("should pass a number", () => {
+      expect(MnemosyneVersions.numify(1e9)).to.equal(1e9);
+    });
+    it("should numify a string", () => {
+      expect(MnemosyneVersions.numify("1e9")).to.equal(1e9);
+    });
+    it("should handle a structure", () => {
+      expect(MnemosyneVersions.numify(
+        {
+          age: "1e9",
+          list: [1, "2", "3.0"]
+        }
+      )).to.deep.equal({
+        age: 1e9,
+        list: [1, 2, 3]
+      });
+    });
+  });
+
   describe("applyEdit", () => {
     for (const tc of cases) {
       it(tc.name, () => {
