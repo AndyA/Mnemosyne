@@ -34,9 +34,7 @@ module.exports = {
     table: "mnemosyne_coordinates"
   },
   edit: {
-    json: [
-      "data"
-    ],
+    json: ["data"],
     pkey: "uuid",
     plural: "edits",
     table: "mnemosyne_edit"
@@ -49,9 +47,7 @@ module.exports = {
     table: "mnemosyne_edit_digest"
   },
   error: {
-    json: [
-      "request"
-    ],
+    json: ["request"],
     pkey: "uuid",
     plural: "errors",
     table: "mnemosyne_errorlog"
@@ -63,9 +59,7 @@ module.exports = {
       programme: "_parent",
       service: "_parent"
     },
-    json: [
-      "data"
-    ],
+    json: ["data"],
     order: "+index",
     pkey: "_uuid",
     plural: "extras",
@@ -87,22 +81,6 @@ module.exports = {
     pkey: "_uuid",
     plural: "listings",
     table: "mnemosyne_listings_v2"
-  },
-  listing_note: {
-    child_of: {
-      service: "service"
-    },
-    plural: "listing_notes",
-    table: "mnemosyne_listing_notes"
-  },
-  ping: {
-    json: [
-      "path",
-      "status"
-    ],
-    pkey: "origin_node",
-    plural: "pings",
-    table: "fenchurch_ping"
   },
   programme: {
     order: "when",
@@ -155,7 +133,7 @@ module.exports = {
   },
   service_incorporates: {
     child_of: {
-      service: "incorporated_into"
+      service: "service"
     },
     table: "mnemosyne_service_incorporates"
   },
@@ -163,6 +141,8 @@ module.exports = {
     child_of: {
       programme: "_parent"
     },
+    json: ["table"],
+    order: "+index",
     plural: "tables",
     table: "mnemosyne_tables"
   },
@@ -176,10 +156,7 @@ module.exports = {
       programme: "object",
       service: "object"
     },
-    json: [
-      "old_data",
-      "new_data"
-    ],
+    json: ["old_data", "new_data"],
     order: "+sequence",
     pkey: "uuid",
     plural: "versions",
