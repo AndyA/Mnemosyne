@@ -8,7 +8,7 @@ const stream = require("stream");
 const Trove = require("lib/js/tools/trove");
 const UUID = require("lib/js/tools/uuid");
 const MnemosyneDocument = require("lib/js/mnemosyne/document");
-const MnemosyneVersions = require("lib/js/mnemosyne/versions");
+const GV = require("lib/js/mnemosyne/versions");
 
 class G2Schema {
   constructor(schema) {
@@ -144,21 +144,21 @@ class G2Document extends MnemosyneDocument {
 
           let old_data = undefined;
           if (v.old_data !== null) {
-            const diff = MnemosyneVersions.deepDiff(v.new_data, doc);
-            old_data = MnemosyneVersions.applyEdit(v.old_data, diff.before, diff.after);
+            const diff = GV.deepDiff(v.new_data, doc);
+            old_data = GV.applyEdit(v.old_data, diff.before, diff.after);
           //            console.log("DIFF:", JSON.stringify({
           //              diff,
           //              old_data
           //            }, null, 2));
           }
 
-          doc = MnemosyneVersions.applyEdit(doc, doc, old_data);
+          doc = GV.applyEdit(doc, doc, old_data);
           ver.unshift({
             doc,
             v
           });
         } else if (v.delta) {
-          doc = MnemosyneVersions.applyEdit(doc, v.delta.after, v.delta.before);
+          doc = GV.applyEdit(doc, v.delta.after, v.delta.before);
           ver.unshift({
             doc,
             v
@@ -308,7 +308,7 @@ class G2Trove extends Trove {
       delete newRow.mnemosyne.versions;
     }
 
-    return new G2Document(MnemosyneVersions.numify(newRow));
+    return new G2Document(GV.numify(newRow));
   }
 
   shapeData() {
