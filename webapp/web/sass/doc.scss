@@ -1,0 +1,12 @@
+.markdown {
+  .meta {
+    margin-top: 2em;
+    background: $light-grey;
+    td {
+      padding: 0.2em 1em;
+    }
+    td:first-child:after {
+      content: ":";
+    }
+  }
+}
