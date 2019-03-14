@@ -146,10 +146,10 @@ class G2Document extends MnemosyneDocument {
           if (v.old_data !== null) {
             const diff = MnemosyneVersions.deepDiff(v.new_data, doc);
             old_data = MnemosyneVersions.applyEdit(v.old_data, diff.before, diff.after);
-            console.log("DIFF:", JSON.stringify({
-              diff,
-              old_data
-            }, null, 2));
+          //            console.log("DIFF:", JSON.stringify({
+          //              diff,
+          //              old_data
+          //            }, null, 2));
           }
 
           doc = MnemosyneVersions.applyEdit(doc, doc, old_data);
