@@ -14,7 +14,9 @@ class UUID {
   }
 
   static _hash(uuid) {
-    if (this.valid(uuid) || this.validHash(uuid))
+    if (this.validHash(uuid))
+      return uuid;
+    if (this.valid(uuid))
       return uuid.replace(/-/g, "");
 
     throw new Error("Invalid UUID");
