@@ -6,6 +6,9 @@ const Promise = require("bluebird");
 const stream = require("stream");
 
 const Trove = require("lib/js/tools/trove");
+const UUID = require("lib/js/tools/uuid");
+const MnemosyneDocument = require("lib/js/mnemosyne/document");
+const MnemosyneVersions = require("lib/js/mnemosyne/versions");
 
 class G2Schema {
   constructor(schema) {
@@ -67,7 +70,8 @@ class G2TroveReader extends stream.Readable {
             pool.pool.releaseConnection(conn);
           })
           .on("result", r => this._enqueue(r));
-      });
+      })
+      .catch(e => this.emit("error", e));
   }
 
   _makeTrove() {
@@ -126,6 +130,48 @@ class G2TroveExpander extends G2TroveTransform {
   }
 }
 
+class G2Document extends MnemosyneDocument {
+  getAllVersions() {
+    let doc = this.mnemosyne;
+    let ver = [{
+      doc
+    }];
+    if (this.versions.length) {
+      const versions = _.reverse(this.versions.slice(0));
+      for (const v of versions) {
+        if (v.old_data !== undefined || v.new_data !== undefined) {
+          // Old style Mnemosyne version
+
+          let old_data = undefined;
+          if (v.old_data !== null) {
+            const diff = MnemosyneVersions.deepDiff(v.new_data, doc);
+            old_data = MnemosyneVersions.applyEdit(v.old_data, diff.before, diff.after);
+            console.log("DIFF:", JSON.stringify({
+              diff,
+              old_data
+            }, null, 2));
+          }
+
+          doc = MnemosyneVersions.applyEdit(doc, doc, old_data);
+          ver.unshift({
+            doc,
+            v
+          });
+        } else if (v.delta) {
+          doc = MnemosyneVersions.applyEdit(doc, v.delta.after, v.delta.before);
+          ver.unshift({
+            doc,
+            v
+          });
+        } else {
+          throw new Error("Funny looking version");
+        }
+      }
+    }
+    return ver;
+  }
+}
+
 class G2Trove extends Trove {
   constructor(loader, kind) {
     super([]);
@@ -143,7 +189,16 @@ class G2Trove extends Trove {
   }
 
   formatSQL(sql) {
-    return sql.replace(/@self/g, "`" + this.info.table + "`");
+    const stash = {
+      self: this.info.table,
+      key: this.info.pkey
+    };
+
+    return sql.replace(/@(\w+)/g, (m, name) => {
+      if (stash[name] === undefined)
+        throw new Error("@" + name + " not known");
+      return stash[name];
+    });
   }
 
   async loadQuery(sql, ...params) {
@@ -239,7 +294,11 @@ class G2Trove extends Trove {
 
   _shapeRow(row) {
     if (row.mnemosyne) return row;
+
+    const pk = row[this.info.pkey];
+
     let newRow = {
+      _id: UUID.hash(pk),
       mnemosyne: row,
       kind: this.kind
     };
@@ -249,18 +308,12 @@ class G2Trove extends Trove {
       delete newRow.mnemosyne.versions;
     }
 
-    return newRow;
-  }
-
-  _translateVersions(row) {
-    if (!row.versions || !row.versions.length)
-      return row;
-    return row;
+    return new G2Document(MnemosyneVersions.numify(newRow));
   }
 
   shapeData() {
     this.rows = this.rows.map(row => {
-      return this._translateVersions(this._shapeRow(row));
+      return this._shapeRow(row);
     });
   }
 }
@@ -276,6 +329,7 @@ module.exports = {
   G2Schema,
   G2TroveReader,
   G2TroveExpander,
+  G2Document,
   G2Trove,
   G2Loader
 };
