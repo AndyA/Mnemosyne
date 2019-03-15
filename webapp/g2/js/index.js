@@ -8,5 +8,6 @@ module.exports = {
   G2Trove: require("./trove"),
   G2TroveExpander: require("./trove-expander"),
   G2TroveReader: require("./trove-reader"),
-  G2TroveTransform: require("./trove-transform")
+  G2TroveTransform: require("./trove-transform"),
+  G2Util: require("./util")
 };

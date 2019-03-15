@@ -7,6 +7,7 @@ const Trove = require("lib/js/tools/trove");
 const UUID = require("lib/js/tools/uuid");
 const GV = require("lib/js/mnemosyne/versions");
 const G2Document = require("./document");
+const G2Util = require("./util");
 
 class G2Trove extends Trove {
   constructor(table, rows) {
@@ -52,7 +53,7 @@ class G2Trove extends Trove {
 
     if (this.info.order) {
       sql.push("ORDER BY");
-      sql.push(this.parseOrder(this.info.order));
+      sql.push(G2Util.parseOrder(this.info.order));
     }
 
 
@@ -80,20 +81,6 @@ class G2Trove extends Trove {
 
   pluckUnique(key) {
     return _.uniq(this.pluck(key));
-  }
-
-  parseOrder(...order) {
-    const parts = _.flattenDeep(order).join(",").split(/\s*,\s*/);
-    return parts.map(p => {
-      switch (p[0]) {
-        case '-':
-          return "`" + p.substr(1) + "` DESC";
-        case '+':
-          return "`" + p.substr(1) + "` ASC";
-        default:
-          return "`" + p + "`";
-      }
-    }).join(", ");
   }
 
   async expandChild(key) {
