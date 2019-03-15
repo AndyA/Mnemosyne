@@ -14,7 +14,6 @@ module.exports = mds.middleware({
     mdf.meta = mdf.meta || {
       title: "Untitled"
     };
-    console.log(mdf);
 
     return {
       title: mdf.meta.title || "Untitled",
