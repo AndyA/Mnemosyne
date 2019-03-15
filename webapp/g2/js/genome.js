@@ -34,6 +34,9 @@ module.exports = {
     table: "mnemosyne_coordinates"
   },
   edit: {
+    "child_of": {
+      "programmes_v2": "object",
+    },
     json: ["data"],
     pkey: "uuid",
     plural: "edits",

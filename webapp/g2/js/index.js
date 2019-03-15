@@ -41,6 +41,16 @@ class G2Schema {
   }
 }
 
+class G2Table {
+  constructor(loader, kind) {
+    this.loader = loader;
+    this.kind = kind;
+  }
+
+  async getMeta() {
+  }
+}
+
 class G2TroveReader extends stream.Readable {
   constructor(opt, loader, kind, sql, ...params) {
     const o = Object.assign({
@@ -131,31 +141,63 @@ class G2TroveExpander extends G2TroveTransform {
 }
 
 class G2Document extends MnemosyneDocument {
+  _checkVersions() {
+    if (!this.versions) return;
+    const versions = _.reverse(this.versions.slice(0));
+
+    // Find old style versions
+    const gv = versions.filter(
+      v => v.old_data !== undefined
+        || v.new_data !== undefined);
+
+    if (gv.length === 0) {
+      // All new style
+    } else if (gv.length === this.versions.length) {
+      // All mnemosyne style
+      let doc = undefined;
+      for (const v of versions) {
+        if (doc !== undefined && !GV.sameValue(doc, v.new_data)) {
+          const diff = GV.deepDiff(v.new_data, doc);
+          console.log({
+            doc,
+            new_data: v.new_data,
+            diff
+          });
+          throw new Error("New value / doc mismatch");
+        }
+        doc = v.old_data;
+      }
+    } else {
+      throw new Error("Found a mix of G2 and G3 versions");
+    }
+  }
+
   getAllVersions() {
+    this._checkVersions();
     let doc = this.mnemosyne;
     let ver = [{
       doc
     }];
-    if (this.versions.length) {
+    if (this.versions && this.versions.length) {
       const versions = _.reverse(this.versions.slice(0));
       for (const v of versions) {
         if (v.old_data !== undefined || v.new_data !== undefined) {
-          // Old style Mnemosyne version
+          // Old style Mnemosyne version. Just merge
+          const oldDoc = GV.mergeDeep(doc, v.old_data);
+          // Make a new style delta
+          const delta = GV.deepDiff(oldDoc, doc);
+          doc = oldDoc;
 
-          let old_data = undefined;
-          if (v.old_data !== null) {
-            const diff = GV.deepDiff(v.new_data, doc);
-            old_data = GV.applyEdit(v.old_data, diff.before, diff.after);
-          //            console.log("DIFF:", JSON.stringify({
-          //              diff,
-          //              old_data
-          //            }, null, 2));
-          }
+          let newVersion = Object.assign({}, v, {
+            delta
+          });
 
-          doc = GV.applyEdit(doc, doc, old_data);
+          delete newVersion.old_data;
+          delete newVersion.new_data;
+
           ver.unshift({
             doc,
-            v
+            v: newVersion
           });
         } else if (v.delta) {
           doc = GV.applyEdit(doc, v.delta.after, v.delta.before);
@@ -173,8 +215,8 @@ class G2Document extends MnemosyneDocument {
 }
 
 class G2Trove extends Trove {
-  constructor(loader, kind) {
-    super([]);
+  constructor(loader, kind, rows) {
+    super(rows);
 
     this.loader = loader;
     this.kind = kind;
@@ -267,7 +309,6 @@ class G2Trove extends Trove {
   }
 
   async expandChild(key) {
-    assert(this.info.has && this.info.has[key], "no child called " + key);
     const me = this.constructor;
     const childInfo = this.infoFor(key);
     const fk = this.info.has[key];
@@ -292,14 +333,14 @@ class G2Trove extends Trove {
     return this;
   }
 
-  _shapeRow(row) {
+  _getRow(row) {
     if (row.mnemosyne) return row;
 
     const pk = row[this.info.pkey];
 
     let newRow = {
       _id: UUID.hash(pk),
-      mnemosyne: row,
+      mnemosyne: Object.assign(row),
       kind: this.kind
     };
 
@@ -311,17 +352,19 @@ class G2Trove extends Trove {
     return new G2Document(GV.numify(newRow));
   }
 
-  shapeData() {
-    this.rows = this.rows.map(row => {
-      return this._shapeRow(row);
-    });
+  getData() {
+    return new this.constructor(
+      this.loader, this.kind,
+      this.rows.map(row => {
+        return this._getRow(row);
+      }));
   }
 }
 
 class G2Loader {
   constructor(pool) {
     this.pool = pool;
-    this.schema = new G2Schema(require("./schema"));
+    this.schema = new G2Schema(require("./mnemosyne"));
   }
 }
 
