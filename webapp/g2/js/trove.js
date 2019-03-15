@@ -26,7 +26,7 @@ class G2Trove extends Trove {
   }
 
   setRawRows(rows) {
-    this.rows = rows.map(r => this.decodeRow(r));
+    this.rows = rows.map(r => this._decodeRow(r));
     return this;
   }
 
@@ -64,7 +64,7 @@ class G2Trove extends Trove {
     return this.loadByColumn(this.info.pkey, id);
   }
 
-  decodeRow(row) {
+  _decodeRow(row) {
     let out = Object.assign({}, row);
     for (const js of this.info.json || [])
       out[js] = JSON.parse(out[js]);
