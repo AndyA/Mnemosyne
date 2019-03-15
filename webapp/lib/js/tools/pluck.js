@@ -13,6 +13,9 @@ class Pluck {
     if (_.isArray(data))
       return data.map(i => this.pluck(i, shape));
 
+    if (_.isFunction(shape))
+      return shape(data);
+
     if (_.isString(shape))
       return jp.value(data, shape);
 
