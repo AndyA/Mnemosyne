@@ -2,8 +2,10 @@
 
 const Indexer = require("lib/js/tools/indexer");
 const Pluck = require("lib/js/tools/pluck");
+const _ = require("lodash");
 
 const G2Trove = require("./trove");
+const G2Util = require("./util");
 
 class G2Table {
   constructor(loader, kind) {
@@ -24,11 +26,12 @@ class G2Table {
 
   formatSQL(sql) {
     const stash = {
-      self: this.info.table,
-      key: this.info.pkey
+      self: G2Util.quoteName(this.info.table),
+      key: G2Util.quoteName(this.info.pkey),
+      order: this.info.order ? "ORDER BY " + G2Util.parseOrder(this.info.order) : "",
     };
 
-    return sql.replace(/@(\w+)/g, (m, name) => {
+    return _.flattenDeep([sql]).join(" ").replace(/@(\w+)/g, (m, name) => {
       if (stash[name] === undefined)
         throw new Error("@" + name + " not known");
       return stash[name];
@@ -37,7 +40,7 @@ class G2Table {
 
   async query(sql, ...params) {
     const sqlQuery = this.formatSQL(sql);
-    //    console.log("QUERY: " + sqlQuery, params);
+    //    console.log("QUERY: " + sqlQuery + " (" + JSON.stringify(params) + ")");
     return this.pool.query(sqlQuery, ...params);
   }
 

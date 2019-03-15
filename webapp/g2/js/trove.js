@@ -21,6 +21,13 @@ class G2Trove extends Trove {
     return G2Document;
   }
 
+  _decodeRow(row) {
+    let out = Object.assign({}, row);
+    for (const js of this.info.json || [])
+      out[js] = JSON.parse(out[js]);
+    return out;
+  }
+
   setRawRows(rows) {
     this.rows = rows.map(r => this._decodeRow(r));
     return this;
@@ -37,26 +44,11 @@ class G2Trove extends Trove {
   }
 
   async loadByColumn(col, vals) {
-    const sql = [`SELECT * FROM @self WHERE \`${col}\` IN (?)`];
-
-    if (this.info.order) {
-      sql.push("ORDER BY");
-      sql.push(G2Util.parseOrder(this.info.order));
-    }
-
-
-    return this.loadQueryDeep(sql.join(" "), [vals]);
+    return this.loadQueryDeep(["SELECT * FROM @self WHERE ", G2Util.quoteName(col), " IN (?) @order"], [vals]);
   }
 
   async loadByID(id) {
-    return this.loadByColumn(this.info.pkey, id);
-  }
-
-  _decodeRow(row) {
-    let out = Object.assign({}, row);
-    for (const js of this.info.json || [])
-      out[js] = JSON.parse(out[js]);
-    return out;
+    return this.loadQueryDeep("SELECT * FROM @self WHERE @key IN (?)", [vals]);
   }
 
   pluck(key) {
@@ -112,7 +104,6 @@ class G2Trove extends Trove {
       newRow.versions = newRow.mnemosyne.versions;
       delete newRow.mnemosyne.versions;
     }
-
 
     const documentClass = this.constructor.documentClass;
     return new documentClass(GV.numify(newRow));

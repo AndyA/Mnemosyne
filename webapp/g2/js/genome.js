@@ -6,13 +6,14 @@ module.exports = {
       issue: "programme",
       programme: "programme"
     },
+    order: "blog_id",
     table: "mnemosyne_blog_link"
   },
   comment: {
     child_of: {
       edit: "edit"
     },
-    order: "+when",
+    order: "when",
     pkey: "uuid",
     plural: "comments",
     table: "fenchurch_comment"
@@ -21,7 +22,7 @@ module.exports = {
     child_of: {
       programme: "_parent"
     },
-    order: "+index",
+    order: "index",
     plural: "contributors",
     table: "mnemosyne_contributors"
   },
@@ -29,7 +30,7 @@ module.exports = {
     child_of: {
       programme: "_parent"
     },
-    order: "+index",
+    order: "index",
     plural: "coordinates",
     table: "mnemosyne_coordinates"
   },
@@ -60,7 +61,7 @@ module.exports = {
       service: "_parent"
     },
     json: ["data"],
-    order: "+index",
+    order: "index",
     pkey: "_uuid",
     plural: "extras",
     table: "mnemosyne_extra"
@@ -103,6 +104,7 @@ module.exports = {
     child_of: {
       programme: "_parent"
     },
+    order: "index",
     pkey: "_uuid",
     table: "mnemosyne_related"
   },
@@ -110,6 +112,7 @@ module.exports = {
     child_of: {
       programme: "_parent"
     },
+    order: "_uuid",
     pkey: "_uuid",
     table: "mnemosyne_related_merged"
   },
@@ -117,6 +120,7 @@ module.exports = {
     child_of: {
       related: "_uuid"
     },
+    order: "keep",
     pkey: "_uuid",
     table: "mnemosyne_related_meta"
   },
@@ -144,7 +148,7 @@ module.exports = {
       programme: "_parent"
     },
     json: ["table"],
-    order: "+index",
+    order: "index",
     plural: "tables",
     table: "mnemosyne_tables"
   },
@@ -159,7 +163,7 @@ module.exports = {
       service: "object"
     },
     json: ["old_data", "new_data"],
-    order: "+sequence",
+    order: "sequence",
     pkey: "uuid",
     plural: "versions",
     table: "fenchurch_versions"
