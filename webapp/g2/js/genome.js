@@ -22,6 +22,7 @@ module.exports = {
     child_of: {
       programme: "_parent"
     },
+    //    clean: ["index"],
     order: "index",
     plural: "contributors",
     table: "mnemosyne_contributors"
@@ -30,6 +31,7 @@ module.exports = {
     child_of: {
       programme: "_parent"
     },
+    //    clean: ["index", "issue", "issue_key"],
     order: "index",
     plural: "coordinates",
     table: "mnemosyne_coordinates"

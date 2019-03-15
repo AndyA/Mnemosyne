@@ -27,9 +27,11 @@ class G2Trove extends Trove {
 
   decodeRow(row) {
     let out = Object.assign({}, row);
+    for (const cl of this.info.clean || [])
+      delete out[cl];
     for (const js of this.info.json || [])
       out[js] = JSON.parse(out[js]);
-    return out;
+    return UUID.toHash(out);
   }
 
   setRawRows(rows) {
@@ -56,11 +58,10 @@ class G2Trove extends Trove {
   }
 
   pluck(key) {
-    return this.rows.map(r => {
-      if (r.mnemosyne)
-        return r.mnemosyne[key];
+    return UUID.toUUID(this.rows.map(r => {
+      if (r.mnemosyne) return r.mnemosyne[key];
       return r[key]
-    });
+    }));
   }
 
   pluckUnique(key) {
