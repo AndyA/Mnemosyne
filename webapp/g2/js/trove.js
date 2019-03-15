@@ -30,12 +30,8 @@ class G2Trove extends Trove {
     return this;
   }
 
-  async query(sql, ...params) {
-    return this.table.query(sql, ...params);
-  }
-
   async loadQuery(sql, ...params) {
-    const [res, cols] = await this.query(sql, ...params);
+    const [res, cols] = await this.table.query(sql, ...params);
     return this.setRawRows(res);
   }
 
