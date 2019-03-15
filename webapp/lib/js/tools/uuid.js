@@ -50,6 +50,9 @@ class UUID {
     if (_.isArray(id))
       return id.map(i => this.toHash(i));
 
+    if (_.isPlainObject(id))
+      return _.mapValues(id, i => this.toHash(i));
+
     if (this.valid(id))
       return this.hash(id);
 
@@ -59,6 +62,9 @@ class UUID {
   static toUUID(id) {
     if (_.isArray(id))
       return id.map(i => this.toUUID(i));
+
+    if (_.isPlainObject(id))
+      return _.mapValues(id, i => this.toUUID(i));
 
     if (this.validHash(id))
       return this.format(id);
