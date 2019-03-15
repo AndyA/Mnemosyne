@@ -8,237 +8,237 @@ require("../../../webapp/use.js");
 
 const MnemosyneVersions = require("lib/js/mnemosyne/versions");
 
-const cases = [
-  {
-    name: "should handle scalars",
-    tests: [
-      {
-        doc: undefined,
-        before: undefined,
-        after: "Foo",
-        expect: "Foo"
-      },
-      {
-        doc: "Barley",
-        before: "Barley",
-        after: "Bar",
-        expect: "Bar"
-      },
-      {
-        doc: "Spigot",
-        before: "Spigot",
-        after: undefined,
-        expect: undefined
-      },
-    ]
-  },
-  {
-    name: "should handle arrays",
-    tests: [
-      {
-        doc: undefined,
-        before: undefined,
-        after: ["Foo"],
-        expect: ["Foo"]
-      },
-      {
-        doc: "Barley",
-        before: "Barley",
-        after: ["Bar"],
-        expect: ["Bar"]
-      },
-      {
-        doc: ["Spigot"],
-        before: ["Spigot"],
-        after: ["Fiz"],
-        expect: ["Fiz"]
-      },
-      {
-        doc: ["Plinth"],
-        before: ["Plinth"],
-        after: "Baz",
-        expect: "Baz"
-      },
-    ]
-  },
-  {
-    name: "should detect mismatches",
-    throws: /mismatch/,
-    tests: [
-      {
-        doc: undefined,
-        before: "Foo",
-        after: ["Foo"],
-      },
-      {
-        doc: "Barley",
-        before: "Bareley",
-        after: ["Bar"],
-      },
-      {
-        doc: ["Spigot"],
-        before: "Spigot",
-        after: ["Fiz"],
-      },
-      {
-        doc: "Plinth",
-        before: ["Plinth"],
-        after: "Baz",
-      },
-      {
-        doc: {
-          name: "Andy",
-          log: [1, 2, 3]
+
+describe.only("MnemosyneVersions", () => {
+  const patchCases = [
+    {
+      name: "should handle scalars",
+      tests: [
+        {
+          doc: undefined,
+          before: undefined,
+          after: "Foo",
+          expect: "Foo"
         },
-        before: {
-          log: [1, 2, 4]
+        {
+          doc: "Barley",
+          before: "Barley",
+          after: "Bar",
+          expect: "Bar"
         },
-        after: {
-          log: [1, 2, 5]
+        {
+          doc: "Spigot",
+          before: "Spigot",
+          after: undefined,
+          expect: undefined
         },
-      },
-      {
-        doc: {
-          name: "Andy",
-          date: "2019-01-07",
-          meta: {
-            title: "Hoskins",
-            versions: [1, 2, 3]
-          }
+      ]
+    },
+    {
+      name: "should handle arrays",
+      tests: [
+        {
+          doc: undefined,
+          before: undefined,
+          after: ["Foo"],
+          expect: ["Foo"]
         },
-        before: {
-          meta: {
-            versions: [1, 2, 4]
-          }
+        {
+          doc: "Barley",
+          before: "Barley",
+          after: ["Bar"],
+          expect: ["Bar"]
         },
-        after: {
-          meta: {
-            versions: [1, 2, 3, 4]
-          }
+        {
+          doc: ["Spigot"],
+          before: ["Spigot"],
+          after: ["Fiz"],
+          expect: ["Fiz"]
         },
-      },
-    ]
-  },
-  {
-    name: "should handle structured docs",
-    tests: [
-      {
-        doc: {
-          name: "Andy",
-          date: "2019-01-07"
+        {
+          doc: ["Plinth"],
+          before: ["Plinth"],
+          after: "Baz",
+          expect: "Baz"
         },
-        before: {
-          name: "Andy"
+      ]
+    },
+    {
+      name: "should detect mismatches",
+      throws: /mismatch/,
+      tests: [
+        {
+          doc: undefined,
+          before: "Foo",
+          after: ["Foo"],
         },
-        after: {
-          name: "Sam"
+        {
+          doc: "Barley",
+          before: "Bareley",
+          after: ["Bar"],
         },
-        expect: {
-          name: "Sam",
-          date: "2019-01-07"
+        {
+          doc: ["Spigot"],
+          before: "Spigot",
+          after: ["Fiz"],
         },
-      },
-      {
-        doc: {
-          name: "Andy",
-          date: "2019-01-07"
+        {
+          doc: "Plinth",
+          before: ["Plinth"],
+          after: "Baz",
         },
-        before: {
-          name: "Andy"
+        {
+          doc: {
+            name: "Andy",
+            log: [1, 2, 3]
+          },
+          before: {
+            log: [1, 2, 4]
+          },
+          after: {
+            log: [1, 2, 5]
+          },
         },
-        after: {},
-        expect: {
-          date: "2019-01-07"
+        {
+          doc: {
+            name: "Andy",
+            date: "2019-01-07",
+            meta: {
+              title: "Hoskins",
+              versions: [1, 2, 3]
+            }
+          },
+          before: {
+            meta: {
+              versions: [1, 2, 4]
+            }
+          },
+          after: {
+            meta: {
+              versions: [1, 2, 3, 4]
+            }
+          },
         },
-      },
-      {
-        doc: {
-          meta: {
+      ]
+    },
+    {
+      name: "should handle structured docs",
+      tests: [
+        {
+          doc: {
             name: "Andy",
             date: "2019-01-07"
           },
-        },
-        before: {
-          meta: {
+          before: {
             name: "Andy"
           },
-        },
-        after: {
-          meta: {}
-        },
-        expect: {
-          meta: {
+          after: {
+            name: "Sam"
+          },
+          expect: {
+            name: "Sam",
             date: "2019-01-07"
-          }
+          },
         },
-      },
-      {
-        doc: {
-          name: "Andy",
-          date: "2019-01-07",
-          meta: {
-            title: "Hoskins",
-            versions: [1, 2, 3]
-          }
+        {
+          doc: {
+            name: "Andy",
+            date: "2019-01-07"
+          },
+          before: {
+            name: "Andy"
+          },
+          after: {},
+          expect: {
+            date: "2019-01-07"
+          },
         },
-        before: {
-          meta: {
-            versions: [1, 2, 3]
-          }
+        {
+          doc: {
+            meta: {
+              name: "Andy",
+              date: "2019-01-07"
+            },
+          },
+          before: {
+            meta: {
+              name: "Andy"
+            },
+          },
+          after: {
+            meta: {}
+          },
+          expect: {
+            meta: {
+              date: "2019-01-07"
+            }
+          },
         },
-        after: {
-          meta: {
-            versions: [1, 2, 3, 4]
-          }
+        {
+          doc: {
+            name: "Andy",
+            date: "2019-01-07",
+            meta: {
+              title: "Hoskins",
+              versions: [1, 2, 3]
+            }
+          },
+          before: {
+            meta: {
+              versions: [1, 2, 3]
+            }
+          },
+          after: {
+            meta: {
+              versions: [1, 2, 3, 4]
+            }
+          },
+          expect: {
+            name: "Andy",
+            date: "2019-01-07",
+            meta: {
+              title: "Hoskins",
+              versions: [1, 2, 3, 4]
+            }
+          },
         },
-        expect: {
-          name: "Andy",
-          date: "2019-01-07",
-          meta: {
-            title: "Hoskins",
-            versions: [1, 2, 3, 4]
-          }
+      ]
+    },
+    {
+      name: "should handle nulls",
+      tests: [
+        {
+          doc: null,
+          before: null,
+          after: ["Foo"],
+          expect: ["Foo"]
         },
-      },
-    ]
-  },
-  {
-    name: "should handle nulls",
-    tests: [
-      {
-        doc: null,
-        before: null,
-        after: ["Foo"],
-        expect: ["Foo"]
-      },
-      {
-        doc: null,
-        before: null,
-        after: [null],
-        expect: [null]
-      },
-      {
-        doc: {
-          name: null,
-          date: null
+        {
+          doc: null,
+          before: null,
+          after: [null],
+          expect: [null]
         },
-        before: {
-          name: null
+        {
+          doc: {
+            name: null,
+            date: null
+          },
+          before: {
+            name: null
+          },
+          after: {
+            name: "Andy"
+          },
+          expect: {
+            name: "Andy",
+            date: null
+          },
         },
-        after: {
-          name: "Andy"
-        },
-        expect: {
-          name: "Andy",
-          date: null
-        },
-      },
-    ]
-  },
+      ]
+    },
+  ];
 
-];
-
-describe("MnemosyneVersions", () => {
   describe("numify", () => {
     it("should pass a number", () => {
       expect(MnemosyneVersions.numify(1e9)).to.equal(1e9);
@@ -259,8 +259,54 @@ describe("MnemosyneVersions", () => {
     });
   });
 
+  describe("mergeDeep", () => {
+    const mergeCases = [
+      {
+        a: "a",
+        b: "b",
+        expect: "b"
+      },
+      {
+        a: "a",
+        b: null,
+        expect: null
+      },
+      {
+        a: {
+          doc: [1, 2, 3],
+          log: [1, 2, 3],
+          meta: {
+            date: "2010-01-01",
+            title: "Film"
+          }
+        },
+        b: {
+          log: [4, 5, 6],
+          meta: {
+            title: "Play",
+            time: "19:30"
+          }
+        },
+        expect: {
+          doc: [1, 2, 3],
+          log: [4, 5, 6],
+          meta: {
+            date: "2010-01-01",
+            title: "Play",
+            time: "19:30"
+          }
+        }
+      },
+    ];
+    it("should merge deeply", () => {
+      for (const tc of mergeCases) {
+        expect(MnemosyneVersions.mergeDeep(tc.a, tc.b)).to.deep.equal(tc.expect);
+      }
+    });
+  });
+
   describe("applyEdit", () => {
-    for (const tc of cases) {
+    for (const tc of patchCases) {
       it(tc.name, () => {
         for (const t of tc.tests) {
           if (tc.throws) {
@@ -279,7 +325,7 @@ describe("MnemosyneVersions", () => {
   });
 
   describe("deepDiff", () => {
-    for (const tc of cases) {
+    for (const tc of patchCases) {
       if (tc.throws) continue;
       it(tc.name, () => {
         for (const t of tc.tests) {

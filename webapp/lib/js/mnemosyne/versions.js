@@ -22,6 +22,22 @@ class MnemosyneVersions {
     return _.isEqual(a, b);
   }
 
+  static mergeDeep(...objs) {
+    function m(a, b) {
+      if (b === undefined) return a;
+      if (a === undefined) return b;
+
+      if (_.isPlainObject(a) && _.isPlainObject(b)) {
+        let out = Object.assign({}, a);
+        for (const key of Object.keys(b))
+          out[key] = m(a[key], b[key]);
+        return out;
+      }
+      return b;
+    }
+    return objs.reduce(m);
+  }
+
   static applyEdit(doc, before, after, force = false) {
     if (before === undefined && after === undefined)
       return doc;
@@ -43,12 +59,12 @@ class MnemosyneVersions {
     if (force || this.sameValue(doc, before))
       return after;
 
-    console.log("VALUE MISMATCH:", JSON.stringify({
-      doc,
-      before,
-      after,
-      diff: this.deepDiff(doc, before)
-    }, null, 2));
+    //    console.log("VALUE MISMATCH:", JSON.stringify({
+      //      doc,
+      //      before,
+      //      after,
+      //      diff: this.deepDiff(doc, before)
+      //    }, null, 2));
 
     throw new Error("Previous value mismatch");
   }
