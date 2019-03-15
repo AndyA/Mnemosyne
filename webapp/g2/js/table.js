@@ -13,6 +13,13 @@ const kindMap = {
 };
 
 class G2Table {
+  static async createTable(loader, kind) {
+    let me = new this(loader, kind);
+    const m = await me._makeMeta();
+    me._meta = m;
+    return me;
+  }
+
   constructor(loader, kind) {
     this.loader = loader;
     this.kind = kind;
@@ -47,13 +54,6 @@ class G2Table {
     if (!this._meta)
       throw new Error("G2Table has no meta. Did you make it using G2Table.createTable?");
     return this._meta;
-  }
-
-  static async createTable(loader, kind) {
-    let me = new this(loader, kind);
-    const m = await me._makeMeta();
-    me._meta = m;
-    return me;
   }
 
   _troveClass() {
