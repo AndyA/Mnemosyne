@@ -1,11 +1,11 @@
 "use strict";
 
-const moment = require("moment");
+const moment = require("lib/js/bbc/datetime");
 
 const storeFormat = "YYYY-MM-DD[T]HH:mm:ss[Z]";
 
 moment.fn.toStore = function() {
-  return this.format(storeFormat);
+  return moment.utc(this).format(storeFormat);
 }
 
 moment.fromStore = function(dt) {
@@ -14,3 +14,5 @@ moment.fromStore = function(dt) {
     throw new Error("Invalid store time: " + dt);
   return m;
 }
+
+module.exports = moment;

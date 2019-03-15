@@ -25,6 +25,10 @@ class G2Schema {
     return this.schema[kind];
   }
 
+  get kinds() {
+    return Object.keys(this.schema);
+  }
+
   getRoots() {
     return Object.entries(this.schema)
       .filter(([kind, info]) => !info.child_of && info.pkey)

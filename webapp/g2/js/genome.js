@@ -40,13 +40,6 @@ module.exports = {
     plural: "edits",
     table: "mnemosyne_edit"
   },
-  edit_digest: {
-    child_of: {
-      edit: "uuid"
-    },
-    pkey: "uuid",
-    table: "mnemosyne_edit_digest"
-  },
   error: {
     json: ["request"],
     pkey: "uuid",

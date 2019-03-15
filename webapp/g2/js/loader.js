@@ -11,7 +11,7 @@ class G2Loader {
   }
 
   getTable(kind) {
-    return this.tables[kind] = this.tables[kind] || new G2Table(this, kind);
+    return this.tables[kind] = this.tables[kind] || G2Table.createTable(this, kind);
   }
 
 }

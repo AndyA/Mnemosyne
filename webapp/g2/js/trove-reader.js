@@ -16,17 +16,15 @@ class G2TroveReader extends stream.Readable {
     super(o);
     this.opt = o;
     this.table = table;
-    this.loader = table.loader;
-    this.kind = table.kind;
     this.queue = [];
     this.trove = this.table.createTrove();
 
-    const pool = this.loader.pool;
+    const pool = table.loader.pool;
 
     pool.getConnection()
       .then(conn => {
         this.conn = conn.connection;
-        const q = this.conn.query(this.trove.table.formatSQL(sql), ...params)
+        const q = this.conn.query(this.table.formatSQL(sql), ...params)
           .on("error", e => this.emit("error", e))
           .on("end", () => {
             this._end();
@@ -47,11 +45,11 @@ class G2TroveReader extends stream.Readable {
   _flush() {
     let trove = this.trove;
     this.trove = this.table.createTrove();
-
     trove.setRawRows(this.queue);
+    this.queue = [];
+
     if (!this.push(trove))
       this.conn.pause();
-    this.queue = [];
   }
 
   _enqueue(r) {

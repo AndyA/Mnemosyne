@@ -21,7 +21,11 @@ class G2Trove extends Trove {
     return G2Document;
   }
 
-  _decodeRow(row) {
+  get dateTimeFields() {
+    return this.table.fieldsByType("datetime");
+  }
+
+  decodeRow(row) {
     let out = Object.assign({}, row);
     for (const js of this.info.json || [])
       out[js] = JSON.parse(out[js]);
@@ -29,7 +33,7 @@ class G2Trove extends Trove {
   }
 
   setRawRows(rows) {
-    this.rows = rows.map(r => this._decodeRow(r));
+    this.rows = rows.map(r => this.decodeRow(r));
     return this;
   }
 
@@ -70,7 +74,7 @@ class G2Trove extends Trove {
     const pk = this.pluckUnique(this.info.pkey);
     if (pk.length === 0) return;
 
-    const t = this.table.loader.getTable(key).createTrove();
+    const t = (await this.table.loader.getTable(key)).createTrove();
     let kids = await t.loadByColumn(fk, pk);
 
     for (let row of this.rows) {
