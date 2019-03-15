@@ -43,8 +43,8 @@ class G2Table {
 
   async _makeMeta() {
     const [fieldList, indexList] = await Promise.all([
-      this.trove.query("DESCRIBE @self").then(([fieldList]) => fieldList),
-      this.trove.query("SHOW INDEXES FROM @self").then(([indexList]) => indexList),
+      this.query("DESCRIBE @self").then(([fieldList]) => fieldList),
+      this.query("SHOW INDEXES FROM @self").then(([indexList]) => indexList),
     ]);
 
     const fields = Pluck.pluckValues(Indexer.uniqueByKey(fieldList, "Field"), {
