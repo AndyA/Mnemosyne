@@ -9,7 +9,7 @@ require("../../../webapp/use.js");
 const MnemosyneVersions = require("lib/js/mnemosyne/versions");
 
 
-describe.only("MnemosyneVersions", () => {
+describe("MnemosyneVersions", () => {
   const patchCases = [
     {
       name: "should handle scalars",
