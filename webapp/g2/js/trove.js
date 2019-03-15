@@ -14,11 +14,7 @@ class G2Trove extends Trove {
     super(rows || []);
 
     this.table = table;
-    this.loader = table.loader;
-    this.kind = table.kind;
-
-    this.pool = this.loader.pool;
-    this.info = this.table.infoFor(this.kind);
+    this.info = this.table.info;
   }
 
   static get documentClass() {
@@ -82,7 +78,7 @@ class G2Trove extends Trove {
     const pk = this.pluckUnique(this.info.pkey);
     if (pk.length === 0) return;
 
-    const t = this.loader.getTable(key).createTrove();
+    const t = this.table.loader.getTable(key).createTrove();
     let kids = await t.loadByColumn(fk, pk);
 
     for (let row of this.rows) {
@@ -109,7 +105,7 @@ class G2Trove extends Trove {
     let newRow = {
       _id: UUID.hash(pk),
       mnemosyne: Object.assign(row),
-      kind: this.kind
+      kind: this.table.kind
     };
 
     if (newRow.mnemosyne.versions) {
