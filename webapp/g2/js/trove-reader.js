@@ -26,7 +26,7 @@ class G2TroveReader extends stream.Readable {
     pool.getConnection()
       .then(conn => {
         this.conn = conn.connection;
-        const q = this.conn.query(this.trove.formatSQL(sql), ...params)
+        const q = this.conn.query(this.trove.table.formatSQL(sql), ...params)
           .on("error", e => this.emit("error", e))
           .on("end", () => {
             this._end();

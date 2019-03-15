@@ -30,10 +30,6 @@ class G2Trove extends Trove {
     return this;
   }
 
-  formatSQL(sql) {
-    return this.table.formatSQL(sql);
-  }
-
   async query(sql, ...params) {
     return this.table.query(sql, ...params);
   }
