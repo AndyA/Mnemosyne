@@ -40,7 +40,7 @@ module.exports = {
     json: ["data"],
     pkey: "uuid",
     plural: "edits",
-    table: "mnemosyne_edit"
+    table: "fenchurch_edit"
   },
   error: {
     json: ["request"],
