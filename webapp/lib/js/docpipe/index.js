@@ -2,22 +2,44 @@
 
 const stream = require("stream");
 const _ = require("lodash");
+const assert = require("assert");
 
 const DocPipeStream = require("./stream");
 
 class Context {
-  constructor(doc) {
+  constructor(doc, dp) {
     this.doc = doc;
+    this.dp = dp;
     this.dirty = false;
     this.skipped = false;
+    this.failed = false;
+    this.dp._logStats("created");
+  }
+
+  hardFail() {
+    this.dp.fail();
+    this.failed = true;
+    this.dp._logStats("hardFail");
+  }
+
+  softFail() {
+    this.failed = true;
+    this.dp._logStats("softFail");
   }
 
   save(doc) {
-    this.dirty = true;
+    if (!this.dirty) {
+      this.dirty = true;
+      this.dp._logStats("save");
+    }
+    this.dp._logStats("saveAll");
+    if (this.failed)
+      return this.doc;
     return doc || this.doc;
   }
 
   skip() {
+    this.dp._logStats("skip");
     this.skipped = true;
   }
 }
@@ -33,6 +55,19 @@ class DocPipe {
 
     if (this.opt.allDirty)
       this.allDirty();
+
+    this.stats = {};
+    this.failed = false;
+  }
+
+  _logStats(kind, count = 1) {
+    this.stats[kind] = (this.stats[kind] || 0) + count;
+    return this;
+  }
+
+  fail() {
+    this._stages = [];
+    this.failed = true;
   }
 
   _checkStage(stage) {
@@ -49,6 +84,7 @@ class DocPipe {
   }
 
   addStage(stage, priority = 0) {
+    assert(!this.failed, "Can't add stage to failed DocPipe");
 
     this._stages.push({
       stage: this._checkStage(stage),
@@ -71,6 +107,7 @@ class DocPipe {
   // We have the same signature as a stage - composition ahoy!
   async process(doc, ctx) {
     for (const stage of this.stages) {
+      if (this.failed) break;
       const nextDoc = await stage.process(doc, ctx);
       if (ctx.skipped) return;
       doc = nextDoc || doc;
@@ -79,7 +116,7 @@ class DocPipe {
   }
 
   async processDoc(doc) {
-    let ctx = new Context(doc);
+    let ctx = new Context(doc, this);
     doc = await this.process(doc, ctx);
     if (ctx.dirty && !ctx.skipped) return doc;
   }

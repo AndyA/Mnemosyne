@@ -43,7 +43,7 @@ const docs = [
   }
 ];
 
-describe("DocPipe", () => {
+describe.only("DocPipe", () => {
   describe("processDoc / processAll", () => {
 
     it("should handle function stages", async () => {
