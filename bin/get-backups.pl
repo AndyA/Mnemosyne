@@ -7,6 +7,7 @@ use strict;
 use warnings;
 
 use constant BACKUP => "backwpup/";
+use constant LOCK   => ".no-cron";
 
 use DBI;
 use DateTime;
@@ -15,6 +16,9 @@ use File::Temp;
 use File::chdir;
 use JSON ();
 use Path::Class;
+
+END { unlink LOCK }
+system touch => LOCK;
 
 my %stash = ();
 
@@ -80,7 +84,7 @@ for my $site ( sort keys %{ $stash{live} } ) {
     "SELECT `latest` FROM `backwpup` WHERE `database` = ?",
     {}, $db );
 
-  if ( $got eq $latest ) {
+  if ( defined $got && $got eq $latest ) {
     say "Skipping $site";
     next;
   }
