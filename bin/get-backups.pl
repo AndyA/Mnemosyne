@@ -72,33 +72,37 @@ my $CONN = {
 
 my $dbh = dbh($CONN);
 
-for my $site ( sort keys %{ $stash{live} } ) {
-  my $backup = $stash{live}{$site};
-  my @times  = sort keys %$backup;
-  next unless @times;
-  my $latest = $times[-1];
-  my $db     = "${site}_live";
+for my $env ( sort keys %stash ) {
+  for my $site ( sort keys %{ $stash{$env} } ) {
+    my $backup = $stash{$env}{$site};
+    my @times  = sort keys %$backup;
 
-  my ($got)
-   = $dbh->selectrow_array(
-    "SELECT `latest` FROM `backwpup` WHERE `database` = ?",
-    {}, $db );
+    next unless @times;
 
-  if ( defined $got && $got eq $latest ) {
-    say "Skipping $site";
-    next;
+    my $latest = $times[-1];
+    my $db = join "_", $site, $env;
+
+    my ($got)
+     = $dbh->selectrow_array(
+      "SELECT `latest` FROM `backwpup` WHERE `database` = ?",
+      {}, $db );
+
+    if ( defined $got && $got eq $latest ) {
+      say "[$latest] Skipping $env.$site";
+      next;
+    }
+
+    update_db( $env, $site, $db, $backup->{$latest}, $latest );
+    $dbh->do( "REPLACE INTO `backwpup` (`database`, `latest`) VALUES (?, ?)",
+      {}, $db, $latest );
   }
-
-  update_db( $site, $db, $backup->{$latest}, $latest );
-  $dbh->do( "REPLACE INTO `backwpup` (`database`, `latest`) VALUES (?, ?)",
-    {}, $db, $latest );
 }
 
 $dbh->disconnect;
 
 sub update_db {
-  my ( $site, $db, $tarball, $ts ) = @_;
-  say "Updating $site with backup from $ts";
+  my ( $env, $site, $db, $tarball, $ts ) = @_;
+  say "[$ts] Updating $env.$site";
   my $work = File::Temp->newdir;
   {
     local $CWD = $work;
@@ -116,7 +120,7 @@ sub update_db {
   }, $work;
 
   unless (@sql) {
-    warn "No *.sql.gz found in $tarball";
+    warn "No *.sql.gz or *.sql found in $tarball";
     return;
   }
 
