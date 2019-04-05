@@ -1,0 +1,4 @@
+.idea/
+js/*.html
+node_modules/
+test/coverage

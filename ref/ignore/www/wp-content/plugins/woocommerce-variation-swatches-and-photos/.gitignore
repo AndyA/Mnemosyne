@@ -1,0 +1,11 @@
+
+.buildpath
+/deploy/
+.DS_Store
+/nbproject/private/
+/node_modules/
+.project
+project.properties
+project.xml
+.settings*
+Thumbs.db

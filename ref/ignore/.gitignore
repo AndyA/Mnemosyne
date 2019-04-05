@@ -1,0 +1,7 @@
+.*.sw?
+.AppleDouble
+.DS_Store
+.afpDeleted*
+/tmp/
+Session.vim
+hs~*

@@ -1,0 +1,11 @@
+._*
+######################
+.DS_Store
+.DS_Store?
+*/.DS_Store
+ehthumbs.db
+Icon?
+# OS generated files #
+.Spotlight-V100
+Thumbs.db
+.Trashes

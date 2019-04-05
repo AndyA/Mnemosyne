@@ -1,0 +1,4 @@
+/backwpup-*
+/GeoIP*.dat
+*.log
+/wc-logs/
