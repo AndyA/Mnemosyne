@@ -88,7 +88,7 @@ for my $env ( sort keys %stash ) {
       {}, $db );
 
     if ( defined $got && $got eq $latest ) {
-      say "[$latest] Skipping $env.$site";
+      say "[$latest] Skipping $env/$site";
       next;
     }
 
@@ -102,7 +102,7 @@ $dbh->disconnect;
 
 sub update_db {
   my ( $env, $site, $db, $tarball, $ts ) = @_;
-  say "[$ts] Updating $env.$site";
+  say "[$ts] Updating $env/$site";
   my $work = File::Temp->newdir;
   {
     local $CWD = $work;
