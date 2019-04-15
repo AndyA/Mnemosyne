@@ -2,7 +2,7 @@
 
 use v5.10;
 
-use autodie;
+use autodie qw( :default :system );
 use strict;
 use warnings;
 
