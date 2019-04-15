@@ -17,6 +17,5 @@ find /opt -mindepth 3 -maxdepth 3 -name 'wp-config.php' | while read wpc; do
   popd > /dev/null
 done
 
-
 # vim:ts=2:sw=2:sts=2:et:ft=sh
 
