@@ -1,6 +1,6 @@
 .*.sw?
 /*.sql
-/TTH-Reports/
+/TTH-*
 /backwpup
 /mbox/
 /node_modules/
