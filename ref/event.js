@@ -102,4 +102,6 @@ const event = [
       "version": 12
     }
   }
-]
+];
+
+module.exports = event;
