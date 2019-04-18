@@ -6,9 +6,8 @@ const colors = require("ansi-colors");
 const log = require("fancy-log");
 const notify = require("gulp-notify");
 const uglify = require("gulp-uglify");
-const less = require("gulp-less");
+const sass = require("gulp-sass");
 const gls = require("gulp-live-server");
-const cleanCSS = require("less-plugin-clean-css");
 const browserify = require("browserify");
 const source = require("vinyl-source-stream");
 const transform = require("vinyl-transform");
@@ -29,8 +28,6 @@ const defineModule = require('gulp-define-module');
 const paths = require("./webapp/paths");
 const appConfig = require("./webapp/config");
 
-const configFile = "config.yml";
-
 function flatten() {
   var out = [];
   for (var i = 0; i < arguments.length; i++) {
@@ -46,55 +43,33 @@ function flatten() {
 gulp.task("browser-sync", function() {
   browserSync.init(appConfig.bs);
 
-  gulp.watch([
-      "lib/**/*.pm",
-      "components/*/lib/**.pm",
-      "config.yml",
-    ])
-    .on("change", function() {
-      setTimeout(browserSync.reload, 3000);
-    });
-
-  gulp.watch([
-      "views/**/*.tt",
-    ])
-    .on("change", browserSync.reload);
+  gulp.watch("doc/**/*.md").on("change", e => {
+    const fp = path.relative(".", e.path).replace(/\.md$/, "");
+    browserSync.reload(fp);
+  });
 });
 
-gulp.task("less", function() {
-  const config = YAML.load(configFile);
-
-  var cleanCSSPlugin = new cleanCSS({
-    advanced: true
-  });
-
-  var l = less({
+gulp.task("sass", function() {
+  var s = sass({
     style: "compressed",
-    paths: paths.less_libs,
-    plugins: [cleanCSSPlugin],
+    includePaths: paths.sass_libs
   });
 
-  l.on("error", function(e) {
-    log(e);
-    this.emit("end");
-  });
+  s.on("error", sass.logError);
 
-  return gulp.src(paths.less)
+  return gulp.src(paths.sass)
     .pipe(sourcemaps.init({
       loadMaps: true
     }))
-    .pipe(l)
+    .pipe(s)
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(paths.webroot))
     .pipe(browserSync.stream());
 });
 
-gulp.task("watchless", ["less"], function() {
-  var watchFiles = flatten(configFile, paths.less, paths.less_libs.map(
-    function(dir) {
-      return path.join(dir, "**", "*.less")
-    }));
-  gulp.watch(watchFiles, ["less"]);
+gulp.task("watchsass", ["sass"], function() {
+  var watchFiles = flatten(paths.sass, paths.sass_libs.map(dir => path.join(dir, "**", "*.{sass,scss}")));
+  gulp.watch(watchFiles, ["sass"]);
 });
 
 gulp.task('templates', function() {
@@ -116,55 +91,55 @@ function makeBundler(watch, mode) {
   });
 
   src.pipe(through2.obj(function(file, enc, next) {
-      var bundler = browserify(file.path, {
-        debug: mode === "dev",
-        cache: {},
-        packageCache: {},
-        fullPaths: true,
-        paths: paths.js_libs
+    var bundler = browserify(file.path, {
+      debug: mode === "dev",
+      cache: {},
+      packageCache: {},
+      fullPaths: true,
+      paths: paths.js_libs
+    });
+
+    bundler.transform("babelify", {
+      presets: ["react"]
+    });
+
+    if (mode === "live") {
+      bundler.transform("uglifyify", {
+        global: true
       });
+    }
 
-      bundler.transform("babelify", {
-        presets: ["react"]
+    var bundle = function() {
+      var startTime = process.hrtime();
+      log("Starting " + mode + " bundler for", colors.cyan(file.relative));
+      return bundler.bundle()
+        .on("error", log)
+        .on("end", function() {
+          var endTime = process.hrtime(startTime);
+          log("Finished " + mode + " bundler for", colors.cyan(file.relative),
+            "after", colors.magenta(prettyHrtime(endTime)));
+        })
+        .pipe(exorcist(path.join(paths.webroot, file.relative + ".map")))
+        .pipe(source(file.relative))
+        .pipe(gulp.dest(paths.webroot))
+        .pipe(browserSync.stream());
+
+    }
+
+    if (watch) {
+      bundler.plugin(watchify, {
+        ignoreWatch: true
       });
+      bundler.on('update', bundle);
+    }
 
-      if (mode === "live") {
-        bundler.transform("uglifyify", {
-          global: true
-        });
-      }
+    var def = Q.defer();
+    bundle()
+      .on("end", def.resolve.bind(def));
+    promises.push(def.promise);
 
-      var bundle = function() {
-        var startTime = process.hrtime();
-        log("Starting " + mode + " bundler for", colors.cyan(file.relative));
-        return bundler.bundle()
-          .on("error", log)
-          .on("end", function() {
-            var endTime = process.hrtime(startTime);
-            log("Finished " + mode + " bundler for", colors.cyan(file.relative),
-              "after", colors.magenta(prettyHrtime(endTime)));
-          })
-          .pipe(exorcist(path.join(paths.webroot, file.relative + ".map")))
-          .pipe(source(file.relative))
-          .pipe(gulp.dest(paths.webroot))
-          .pipe(browserSync.stream());
-
-      }
-
-      if (watch) {
-        bundler.plugin(watchify, {
-          ignoreWatch: true
-        });
-        bundler.on('update', bundle);
-      }
-
-      var def = Q.defer();
-      bundle()
-        .on("end", def.resolve.bind(def));
-      promises.push(def.promise);
-
-      next(null, file);
-    }))
+    next(null, file);
+  }))
     .on("data", function() {})
     .on("end", function() {});
 
@@ -211,19 +186,18 @@ gulp.task("server:development", function() {
     "bin/app.js",
     "views/**/*.hbs",
     "webapp/**/*.js",
-  ], function() {
+  ], () => {
     browserSync.reload();
     server.start();
-    // server.start.apply(server);
   });
 
 });
 
-gulp.task("build", ["less", "browserify-live"]);
-gulp.task("make", ["less", "browserify-dev"]);
+gulp.task("build", ["sass", "browserify-live"]);
+gulp.task("make", ["sass", "browserify-dev"]);
 
 gulp.task("watch", [
-  "watchless",
+  "watchsass",
   "watchtemplates",
   "watchify",
   "browser-sync",

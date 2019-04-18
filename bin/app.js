@@ -1,18 +1,31 @@
 "use strict";
 
-var express = require("express");
-var bodyParser = require("body-parser");
+require("../webapp/use");
 
-// Handlebars helpers
-//require("../webapp/lib/js/srv/hb-helpers/config.js");
+const express = require("express");
+const exphbs = require("express-handlebars");
+const bodyParser = require("body-parser");
+const mds = require("markdown-serve");
+const moment = require("lib/js/bbc/datetime");
 
-var WEBROOT = "www";
-var app = express();
+const WEBROOT = "www";
+const app = express();
+
+app.engine(".hbs", exphbs({
+  defaultLayout: "main",
+  extname: ".hbs"
+}));
+
+app.set("view engine", ".hbs");
+
+// Our Handlebars extensions
+require("srv/js/handlebars");
 
 app.use(bodyParser.json());
 
-app.use(require("../webapp/srv/js/views.js"));
-app.use(require("../webapp/srv/js/api.js"));
+app.use("/db", require("srv/js/couch-proxy.js"));
+app.use("/doc", require("srv/js/doc.js"));
+app.use(require("srv/js/views.js"));
 
 app.use(express.static(WEBROOT));
 
