@@ -11,7 +11,9 @@ const _ = require("lodash");
 class Pluck {
   static pluck(data, shape) {
     if (_.isArray(data))
-      return data.map(i => this.pluck(i, shape));
+      return data
+        .map(i => this.pluck(i, shape))
+        .filter(i => i !== undefined);
 
     if (_.isFunction(shape))
       return shape(data);
@@ -25,8 +27,11 @@ class Pluck {
     if (_.isObject(shape)) {
       const keys = Object.keys(shape);
       let out = {};
-      for (const key of keys)
-        out[key] = this.pluck(data, shape[key]);
+      for (const key of keys) {
+        const val = this.pluck(data, shape[key]);
+        if (val !== undefined)
+          out[key] = val;
+      }
       return out;
     }
 
