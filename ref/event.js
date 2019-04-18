@@ -47,7 +47,8 @@ const event = [
       "time": {
         "start": "2019-01-16T22:50:20.000Z"
       // optional: end
-      }
+      },
+      "version": 0
     }
   },
   {
@@ -97,7 +98,8 @@ const event = [
       "time": {
         "start": "2019-04-16T17:36:31.601Z"
       // optional: end
-      }
+      },
+      "version": 12
     }
   }
 ]
