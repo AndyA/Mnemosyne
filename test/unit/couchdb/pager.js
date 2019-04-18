@@ -14,7 +14,7 @@ const {Pager, PageAll, PageView} = require("lib/js/couchdb/pager.js");
 const designName = "live";
 const viewName = "pidOrID";
 
-describe("Pager", () => {
+describe.skip("Pager", () => {
   let refAll;
   let refView;
   let ctx;

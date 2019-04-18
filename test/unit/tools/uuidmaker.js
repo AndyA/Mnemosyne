@@ -18,7 +18,7 @@ describe("UUIDMaker", () => {
   ];
 
   it("should create correct UUIDs", () => {
-    const m = new UUIDMaker("mnemosyne_pips_master_brand");
+    const m = new UUIDMaker("genome_pips_master_brand");
     for (const tc of td) {
       const [info, uuid] = tc;
       expect(m.make(info)).to.equal(uuid);

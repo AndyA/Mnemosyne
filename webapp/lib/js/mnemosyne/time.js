@@ -1,6 +1,6 @@
 "use strict";
 
-const moment = require("lib/js/bbc/datetime");
+const moment = require("moment");
 
 const storeFormat = "YYYY-MM-DD[T]HH:mm:ss[Z]";
 

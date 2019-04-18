@@ -103,16 +103,16 @@ describe("UUID", () => {
   describe("make", () => {
 
     const td = [
-      ["mnemosyne_pips_master_brand", "bbc_cantonese_radio", "59bfffba-561c-700a-7d91-566140612590"],
-      ["mnemosyne_pips_master_brand", "bbc_parliament", "3ad032b6-1498-3bf5-6b96-1fc10262339b"],
-      ["mnemosyne_pips_master_brand", "bbc_radio_bristol", "3cbad5c4-8370-8a71-d0cc-40e55f5feb34"],
-      ["mnemosyne_pips_master_brand", "bbc_radio_cymru_mwy", "8b8e7173-acdd-295b-e1b2-954479c47043"],
-      ["mnemosyne_pips_master_brand", "bbc_radio_shropshire", "c86bfada-97f1-d532-fed3-85481ba59a1c"],
-      ["mnemosyne_pips_service", "bbc_one_london", "bfb69a2e-5d7f-7db5-3ead-bfd7b16e1d53"],
-      ["mnemosyne_pips_service", "bbc_radio_berkshire", "00ed5913-ae8f-1e97-ba9f-f47a4ff57e92"],
-      ["mnemosyne_pips_service", "bbc_radio_cumbria", "f5cda5e3-03f8-5930-770a-9dd05ed2e4f8"],
-      ["mnemosyne_pips_service", "bbc_radio_northampton", "285d48e9-e550-28b7-5621-2025e320ad6d"],
-      ["mnemosyne_pips_service", "bbc_radio_wales_am", "ca132c96-3788-a4eb-4e69-faef5aecae4a"]
+      ["genome_pips_master_brand", "bbc_cantonese_radio", "59bfffba-561c-700a-7d91-566140612590"],
+      ["genome_pips_master_brand", "bbc_parliament", "3ad032b6-1498-3bf5-6b96-1fc10262339b"],
+      ["genome_pips_master_brand", "bbc_radio_bristol", "3cbad5c4-8370-8a71-d0cc-40e55f5feb34"],
+      ["genome_pips_master_brand", "bbc_radio_cymru_mwy", "8b8e7173-acdd-295b-e1b2-954479c47043"],
+      ["genome_pips_master_brand", "bbc_radio_shropshire", "c86bfada-97f1-d532-fed3-85481ba59a1c"],
+      ["genome_pips_service", "bbc_one_london", "bfb69a2e-5d7f-7db5-3ead-bfd7b16e1d53"],
+      ["genome_pips_service", "bbc_radio_berkshire", "00ed5913-ae8f-1e97-ba9f-f47a4ff57e92"],
+      ["genome_pips_service", "bbc_radio_cumbria", "f5cda5e3-03f8-5930-770a-9dd05ed2e4f8"],
+      ["genome_pips_service", "bbc_radio_northampton", "285d48e9-e550-28b7-5621-2025e320ad6d"],
+      ["genome_pips_service", "bbc_radio_wales_am", "ca132c96-3788-a4eb-4e69-faef5aecae4a"]
     ];
 
     it("should compute the right UUID", () => {

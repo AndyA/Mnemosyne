@@ -31,7 +31,6 @@ class Mnemosyne {
   initSequelize() {
     const dbConfig = Object.assign({}, {
       logging: false,
-      operatorsAliases: false
     }, this.config.db);
 
     this.sequelize = new Sequelize(dbConfig);

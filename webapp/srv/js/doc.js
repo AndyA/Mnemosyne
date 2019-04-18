@@ -1,7 +1,7 @@
 "use strict";
 
 const mds = require("markdown-serve");
-const moment = require("lib/js/bbc/datetime");
+const moment = require("moment");
 const Handlebars = require("handlebars");
 
 module.exports = mds.middleware({

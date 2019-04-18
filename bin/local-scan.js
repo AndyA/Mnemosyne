@@ -13,7 +13,6 @@ const config = YAML.load(CONFIG_FILE);
 
 const dbConfig = Object.assign({}, {
   logging: false,
-  operatorsAliases: false
 }, config.db);
 
 const sequelize = new Sequelize(dbConfig);
