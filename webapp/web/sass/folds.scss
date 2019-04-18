@@ -1,0 +1,18 @@
+.reveal {
+  &:after {
+    padding-left: 8px;
+    font-family: FontAwesome;
+  }
+
+  &.open:after {
+    content: "\f0d8";
+  }
+
+  &.closed:after {
+    content: "\f0d7";
+  }
+}
+
+.fold {
+  display: none;
+}

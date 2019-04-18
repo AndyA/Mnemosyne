@@ -1,0 +1,9 @@
+{
+   "dev" : {
+      "database" : "mnemosyne4",
+      "driver" : "mysql",
+      "multipleStatements" : true,
+      "password" : "",
+      "user" : "root"
+   }
+}

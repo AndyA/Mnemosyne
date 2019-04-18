@@ -1,0 +1,28 @@
+<div class="content-width">
+  {{#with thing}}
+    <h2>
+      <span class="time">{{dateTime txTime}}</span>
+      <a href="{{link}}">{{title}}</a>
+    </h2>
+    <h3>{{service.name}}</h3>
+    <p class="synopsis short">{{episode.shortSynopsis}}</p>
+    <p class="synopsis medium">{{episode.mediumSynopsis}}</p>
+    <p class="synopsis long">{{episode.longSynopsis}}</p>
+  {{/with}}
+
+  <div class="broadcast-list">
+    <h2>All Broadcasts</h2>
+    <ul>
+    {{#each broadcasts.rows}}
+      <li class="{{classFlags 'current'}}">
+        <a href="{{link}}">
+          <span>{{dateTime txTime}}</span>
+          <span>{{serviceName}}</span>
+        </a>
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+
+</div>
+
