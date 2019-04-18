@@ -6,7 +6,6 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const mds = require("markdown-serve");
-const moment = require("lib/js/bbc/datetime");
 
 const WEBROOT = "www";
 const app = express();
