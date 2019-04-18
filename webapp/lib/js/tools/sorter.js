@@ -14,7 +14,7 @@ function sorter(...keys) {
       return key;
 
     if (!_.isString(key) || !key.length)
-      throw new Error("Sort keys must be a function of a field name");
+      throw new Error("Sort keys must be a function or a field name");
 
     if (key[0] === "-") {
       const tf = makeTerm(key.substr(1));
