@@ -39,7 +39,6 @@
       "promise-mysql" : "^3.3.1",
       "q" : "^1.5.0",
       "react-json-view" : "^1.19.1",
-      "sequelize" : "^4.43.0",
       "sharp" : "^0.21.3",
       "single-line-log" : "^1.1.2",
       "transformation-matrix-js" : "^2.7.5",
