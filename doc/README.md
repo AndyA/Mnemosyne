@@ -1,2 +1,3 @@
 # Mnemosyne
 
+[Design](doc/design)
