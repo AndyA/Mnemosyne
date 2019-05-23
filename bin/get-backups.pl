@@ -80,7 +80,7 @@ for my $env ( sort keys %stash ) {
     next unless @times;
 
     my $latest = $times[-1];
-    my $db = join "_", $site, $env;
+    ( my $db = join "_", $site, $env ) =~ s/-/_/g;
 
     my ($got)
      = $dbh->selectrow_array(
@@ -131,6 +131,7 @@ sub update_db {
   for my $sql (@sql) {
     say "  Loading $sql into $db";
     my $cmd = join " | ", ( $sql =~ /\.gz$/ ? "gzip -cd $sql" : "cat $sql" ),
+     "sed -e 's/^INSERT /REPLACE /'",
      "mysql -uroot $db";
     say "    $cmd";
     system $cmd;
