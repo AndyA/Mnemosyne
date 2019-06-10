@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS `backwpup`;
 
 CREATE TABLE `backwpup` (
-  `database` varchar(100) NOT NULL,
+  `key` varchar(100) NOT NULL,
   `latest` varchar(40) NOT NULL,
-  PRIMARY KEY (`database`)
+  PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
