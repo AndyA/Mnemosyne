@@ -1,0 +1,14 @@
+{
+  "db": {
+    "database": "mnemosyne",
+    "host": "localhost",
+    "pass": "",
+    "user": "root"
+  },
+  "wpdb": {
+    "host": "127.0.0.1",
+    "port": 3307,
+    "user": "root",
+    "pass": ""
+  }
+}

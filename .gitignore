@@ -2,6 +2,7 @@
 /*.sql
 /TTH-*
 /backwpup
+/config.json
 /mbox/
 /node_modules/
 /skype/
