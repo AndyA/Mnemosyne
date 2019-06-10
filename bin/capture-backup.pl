@@ -6,8 +6,7 @@ use autodie qw( :default :system );
 use strict;
 use warnings;
 
-use constant BACKUP => "backwpup/";
-use constant LOCK   => ".no-cron";
+use constant LOCK => ".no-cron";
 
 use DBI;
 use DateTime;
@@ -64,7 +63,7 @@ find {
       time_zone => "UTC"
     );
 
-    $stash{$env}{$site}{$kind}{$dt} = $tarball->absolute;
+    $stash{$env}{$site}{$dt}{$kind} = $tarball->absolute;
   },
   no_chdir => 1
  },
@@ -75,43 +74,44 @@ my $dbh_wp = dbh($CONN_WP);
 
 for my $env ( sort keys %stash ) {
   for my $site ( sort keys %{ $stash{$env} } ) {
-    for my $kind ( sort keys %{ $stash{$env}{$site} } ) {
-      next if $kind ne "database";
-      my $backup = $stash{$env}{$site}{$kind};
-      my @times  = sort keys %$backup;
+    my $backup = $stash{$env}{$site};
+    my @times  = sort keys %$backup;
 
-      next unless @times;
+    ( my $db = join "_", $site, $env ) =~ s/-/_/g;
 
-      my $latest = $times[-1];
-      ( my $db = join "_", $site, $env ) =~ s/-/_/g;
+    my ($got)
+     = $dbh->selectrow_array(
+      "SELECT `latest` FROM `capture` WHERE `key` = ?",
+      {}, $db );
 
-      my $key = join "_", $kind, $db;
+    my @pending = grep { !$got || $_ gt $got } @times;
+    unless (@pending) {
+      say "No new backups for $env/$site";
+      next;
+    }
 
-      my ($got)
-       = $dbh->selectrow_array(
-        "SELECT `latest` FROM `backwpup` WHERE `key` = ?",
-        {}, $key );
+    for my $dt (@pending) {
+      for my $kind ( sort keys %{ $stash{$env}{$site}{$dt} } ) {
+        my $tarball = $backup->{$dt}{$kind};
+        say "Processing $tarball";
+        my $root = dir $C->{backup}, "home", $env, $site;
+        $root->mkpath;
 
-      if ( defined $got && $got eq $latest ) {
-        say "[$latest] Skipping $kind $env/$site";
-        next;
+        if ( $kind eq "database" ) {
+          update_db( $root, $env, $site, $kind, $db, $tarball, $dt );
+        }
+        elsif ( $kind eq "files" ) {
+          update_files( $root, $env, $site, $kind, $db, $tarball, $dt );
+        }
+        else {
+          die "Unknown kind: $kind";
+        }
+
+        git_snapshot( $root, $env, $site, $kind, $db, $tarball, $dt );
       }
 
-      my $root = dir $C->{backup}, "home", $env, $site;
-      $root->mkpath;
-
-      if ( $kind eq "database" ) {
-        update_db( $root, $env, $site, $db, $backup->{$latest}, $latest );
-      }
-      elsif ( $kind eq "file" ) {
-        update_files( $root, $env, $site, $db, $backup->{$latest}, $latest );
-      }
-      else {
-        die "Unknown kind: $kind";
-      }
-
-      $dbh->do( "REPLACE INTO `backwpup` (`key`, `latest`) VALUES (?, ?)",
-        {}, $key, $latest );
+      $dbh->do( "REPLACE INTO `capture` (`key`, `latest`) VALUES (?, ?)",
+        {}, $db, $dt );
     }
   }
 }
@@ -140,8 +140,14 @@ sub mysql_command {
   return join " ", @cmd;
 }
 
+sub git_dirty {
+  no autodie;
+  system("git diff --cached --quiet") && return 1;
+  return;
+}
+
 sub git_snapshot {
-  my ( $root, $env, $site, $db, $tarball, $ts ) = @_;
+  my ( $root, $env, $site, $kind, $db, $tarball, $ts ) = @_;
 
   local $CWD = $root;
 
@@ -150,21 +156,35 @@ sub git_snapshot {
   }
 
   system "git add .";
+  if ( git_dirty() ) {
+    system "git", "commit", "-m", "Update $kind from $tarball ($ts)";
+  }
+}
+
+sub unpack_tarball {
+  my $tarball = shift;
+
+  my $work = File::Temp->newdir;
+  local $CWD = $work;
+  system tar => "zxf", $tarball;
+  return $work;
 }
 
 sub update_files {
-  my ( $root, $env, $site, $db, $tarball, $ts ) = @_;
-  say "[$ts] Updating files $env/$site";
+  my ( $root, $env, $site, $kind, $db, $tarball, $ts ) = @_;
+  say "[$ts] Updating $kind $env/$site";
+
+  my $work = unpack_tarball($tarball);
+  my $www = dir $root, "www";
+  $www->mkpath;
+  system "rsync", "-a", "--delete", "$work/", "$www/";
 }
 
 sub update_db {
-  my ( $root, $env, $site, $db, $tarball, $ts ) = @_;
-  say "[$ts] Updating database $env/$site";
-  my $work = File::Temp->newdir;
-  {
-    local $CWD = $work;
-    system tar => "zxf", $tarball;
-  }
+  my ( $root, $env, $site, $kind, $db, $tarball, $ts ) = @_;
+  say "[$ts] Updating $kind $env/$site";
+
+  my $work = unpack_tarball($tarball);
 
   my @sql = ();
   find {
@@ -202,7 +222,7 @@ sub update_db {
 
   for my $table (@tables) {
     my $sql = file $dump_dir, "$table.sql";
-    say "$table -> $sql";
+    say "  Dumping $table to $sql";
     my $tmp = file $dump_dir, "$table.tmp.sql";
 
     my @mysqldump = (
