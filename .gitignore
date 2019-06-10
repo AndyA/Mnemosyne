@@ -1,5 +1,6 @@
 .*.sw?
 /*.sql
+/.no-cron
 /TTH-*
 /backwpup
 /config.json
