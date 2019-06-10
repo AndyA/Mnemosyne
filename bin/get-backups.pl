@@ -22,6 +22,10 @@ system touch => LOCK;
 
 my %stash = ();
 
+my $C       = load_json("config.json");
+my $CONN    = $C->{db};
+my $CONN_WP = $C->{wpdb} // $C->{db};
+
 my $name_re = qr{
   ^ 
   (?:backwpup_[0-9A-Z]+_)? 
@@ -63,13 +67,6 @@ find {
  },
  BACKUP;
 
-my $CONN = {
-  host     => "localhost",
-  database => "mnemosyne",
-  user     => "root",
-  pass     => "",
-};
-
 my $dbh = dbh($CONN);
 
 for my $env ( sort keys %stash ) {
@@ -82,10 +79,12 @@ for my $env ( sort keys %stash ) {
     my $latest = $times[-1];
     ( my $db = join "_", $site, $env ) =~ s/-/_/g;
 
+    my $key = "database_$db";
+
     my ($got)
      = $dbh->selectrow_array(
-      "SELECT `latest` FROM `backwpup` WHERE `database` = ?",
-      {}, $db );
+      "SELECT `latest` FROM `backwpup` WHERE `key` = ?",
+      {}, $key );
 
     if ( defined $got && $got eq $latest ) {
       say "[$latest] Skipping $env/$site";
@@ -93,12 +92,31 @@ for my $env ( sort keys %stash ) {
     }
 
     update_db( $env, $site, $db, $backup->{$latest}, $latest );
-    $dbh->do( "REPLACE INTO `backwpup` (`database`, `latest`) VALUES (?, ?)",
-      {}, $db, $latest );
+    $dbh->do( "REPLACE INTO `backwpup` (`key`, `latest`) VALUES (?, ?)",
+      {}, $key, $latest );
   }
 }
 
 $dbh->disconnect;
+
+sub mysql_options {
+  my $conn = shift;
+  my @opt  = ();
+  push @opt, "-u", $conn->{user}
+   if $conn->{user};
+  push @opt, "--host", $conn->{host}
+   if $conn->{host} && $conn->{host} ne "localhost";
+  push @opt, "--port", $conn->{port}
+   if $conn->{port};
+  push @opt, "-p", $conn->{pass}
+   if $conn->{pass};
+  return @opt;
+}
+
+sub mysql_command {
+  my ( $cmd, $conn ) = @_;
+  return join " ", $cmd, mysql_options($conn);
+}
 
 sub update_db {
   my ( $env, $site, $db, $tarball, $ts ) = @_;
@@ -124,15 +142,17 @@ sub update_db {
     return;
   }
 
+  my $mysql = mysql_command( "mysql", $CONN_WP );
+
   say "  Dropping $db";
-  system "echo 'DROP DATABASE IF EXISTS `$db`' | mysql -uroot";
+  system join " | ", "echo 'DROP DATABASE IF EXISTS `$db`'", $mysql;
   say "  Creating $db";
-  system "echo 'CREATE DATABASE `$db`' | mysql -uroot";
+  system join " | ", "echo 'CREATE DATABASE `$db`'", $mysql;
   for my $sql (@sql) {
     say "  Loading $sql into $db";
     my $cmd = join " | ", ( $sql =~ /\.gz$/ ? "gzip -cd $sql" : "cat $sql" ),
      "sed -e 's/^INSERT /REPLACE /'",
-     "mysql -uroot $db";
+     "$mysql $db";
     say "    $cmd";
     system $cmd;
   }
@@ -146,6 +166,15 @@ sub dbh {
   my $args = join ";", map { "$_=$dbc{$_}" } sort keys %dbc;
   return DBI->connect( "DBI:mysql:$args", $user, $pass,
     { mysql_enable_utf8 => 1, RaiseError => 1 } );
+}
+
+sub load_json {
+  my $file = shift;
+  my $fh   = file($file)->openr;
+  $fh->binmode(":utf8");
+  return JSON->new->decode(
+    do { local $/; <$fh> }
+  );
 }
 
 # vim:ts=2:sw=2:sts=2:et:ft=perl

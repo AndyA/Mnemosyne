@@ -1,0 +1,9 @@
+{
+  "db": {
+    "database": "mnemosyne",
+    "host": "localhost",
+    "pass": "",
+    "user": "root"
+  }
+}
+
