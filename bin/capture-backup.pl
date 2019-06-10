@@ -221,6 +221,7 @@ sub update_db {
 
   my @tables = @{ $dbh_wp->selectcol_arrayref("SHOW TABLES IN `$db`") };
   my $dump_dir = dir $root, "sql";
+  $dump_dir->rmtree if -e $dump_dir;
   $dump_dir->mkpath;
 
   for my $table (@tables) {
