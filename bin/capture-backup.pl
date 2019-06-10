@@ -157,7 +157,10 @@ sub git_snapshot {
 
   system "git add .";
   if ( git_dirty() ) {
-    system "git", "commit", "-m", "Update $kind from $tarball ($ts)";
+    local $ENV{GIT_AUTHOR_DATE}    = $ts;
+    local $ENV{GIT_COMMITTER_DATE} = $ts;
+    system "git", "-c", "gc.auto=0", "commit", "-m",
+     "Update $kind from $tarball ($ts)";
   }
 }
 
