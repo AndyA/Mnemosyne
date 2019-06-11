@@ -215,8 +215,12 @@ sub update_db {
 
   my $mysql = mysql_command( "mysql", $CONN_WP );
 
-  say "  Dropping $db";
-  system join " | ", "echo 'DROP DATABASE IF EXISTS `$db`'", $mysql;
+  my $drop_db = sub {
+    say "  Dropping $db";
+    system join " | ", "echo 'DROP DATABASE IF EXISTS `$db`'", $mysql;
+  };
+
+  $drop_db->();
   say "  Creating $db";
   system join " | ", "echo 'CREATE DATABASE `$db`'", $mysql;
   for my $sql (@sql) {
@@ -252,6 +256,7 @@ sub update_db {
     system @mysqldump;
     rename $tmp, $sql;
   }
+  $drop_db->();
 }
 
 sub dbh {
