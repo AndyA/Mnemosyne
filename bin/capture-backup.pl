@@ -24,6 +24,7 @@ my %stash = ();
 my $C       = load_json("config.json");
 my $CONN    = $C->{db};
 my $CONN_WP = $C->{wpdb} // $C->{db};
+my $ROOT    = dir $C->{backup};
 
 my $name_re = qr{
   ^ 
@@ -67,7 +68,7 @@ find {
   },
   no_chdir => 1
  },
- $C->{backup};
+ "$ROOT/";
 
 my $dbh    = dbh($CONN);
 my $dbh_wp = dbh($CONN_WP);
@@ -90,12 +91,13 @@ for my $env ( sort keys %stash ) {
       next;
     }
 
+    my $root = dir $C->{sites}, "home", $env, $site;
+    $root->mkpath;
+
     for my $dt (@pending) {
       for my $kind ( sort keys %{ $stash{$env}{$site}{$dt} } ) {
         my $tarball = $backup->{$dt}{$kind};
         say "Processing $tarball";
-        my $root = dir $C->{backup}, "home", $env, $site;
-        $root->mkpath;
 
         if ( $kind eq "database" ) {
           update_db( $root, $env, $site, $kind, $db, $tarball, $dt );
@@ -113,6 +115,7 @@ for my $env ( sort keys %stash ) {
       $dbh->do( "REPLACE INTO `capture` (`key`, `latest`) VALUES (?, ?)",
         {}, $db, $dt );
     }
+    git_gc($root);
   }
 }
 
@@ -138,6 +141,12 @@ sub mysql_command {
   my @cmd = ( $cmd, @extra, mysql_options($conn) );
   return @cmd if wantarray;
   return join " ", @cmd;
+}
+
+sub git_gc {
+  my $dir = shift;
+  local $CWD = $dir;
+  system "git", "gc";
 }
 
 sub git_dirty {
