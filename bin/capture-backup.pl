@@ -35,6 +35,8 @@ my $name_re = qr{
   _
 }x;
 
+say "Now I shall capture some Wordpress backups";
+
 find {
   wanted => sub {
     return unless -f;
