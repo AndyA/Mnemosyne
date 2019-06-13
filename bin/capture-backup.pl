@@ -35,7 +35,7 @@ my $name_re = qr{
   _
 }x;
 
-say "Now I shall capture some Wordpress backups";
+mention("Now I shall capture some Wordpress backups");
 
 find {
   wanted => sub {
@@ -89,7 +89,7 @@ for my $env ( sort keys %stash ) {
 
     my @pending = grep { !$got || $_ gt $got } @times;
     unless (@pending) {
-      say "No new backups for $env/$site";
+      #      say "No new backups for $env/$site";
       next;
     }
 
@@ -99,7 +99,7 @@ for my $env ( sort keys %stash ) {
     for my $dt (@pending) {
       for my $kind ( sort keys %{ $stash{$env}{$site}{$dt} } ) {
         my $tarball = $backup->{$dt}{$kind};
-        say "Processing $tarball";
+        mention("Processing $tarball");
 
         if ( $kind eq "database" ) {
           update_db( $root, $env, $site, $kind, $db, $tarball, $dt );
@@ -186,7 +186,7 @@ sub unpack_tarball {
 
 sub update_files {
   my ( $root, $env, $site, $kind, $db, $tarball, $ts ) = @_;
-  say "[$ts] Updating $kind $env/$site";
+  mention("Updating $kind $env/$site ($ts)");
 
   my $work = unpack_tarball($tarball);
   my $www = dir $root, "www";
@@ -196,7 +196,7 @@ sub update_files {
 
 sub update_db {
   my ( $root, $env, $site, $kind, $db, $tarball, $ts ) = @_;
-  say "[$ts] Updating $kind $env/$site";
+  mention("Updating $kind $env/$site ($ts)");
 
   my $work = unpack_tarball($tarball);
 
@@ -218,19 +218,19 @@ sub update_db {
   my $mysql = mysql_command( "mysql", $CONN_WP );
 
   my $drop_db = sub {
-    say "  Dropping $db";
+    mention("  Dropping $db");
     system join " | ", "echo 'DROP DATABASE IF EXISTS `$db`'", $mysql;
   };
 
   $drop_db->();
-  say "  Creating $db";
+  mention("  Creating $db");
   system join " | ", "echo 'CREATE DATABASE `$db`'", $mysql;
   for my $sql (@sql) {
-    say "  Loading $sql into $db";
+    mention("  Loading $sql into $db");
     my $cmd = join " | ", ( $sql =~ /\.gz$/ ? "gzip -cd $sql" : "cat $sql" ),
      "sed -e 's/^INSERT /REPLACE /'",
      "$mysql $db";
-    say "    $cmd";
+    mention("    $cmd");
     system $cmd;
   }
 
@@ -241,7 +241,7 @@ sub update_db {
 
   for my $table (@tables) {
     my $sql = file $dump_dir, "$table.sql";
-    say "  Dumping $table to $sql";
+    mention("  Dumping $table to $sql");
     my $tmp = file $dump_dir, "$table.tmp.sql";
 
     my @mysqldump = (
@@ -278,6 +278,14 @@ sub load_json {
   return JSON->new->decode(
     do { local $/; <$fh> }
   );
+}
+
+sub mention {
+  my $msg = join "", @_;
+  my $ts = DateTime->now->iso8601;
+  for my $ln ( split /\n/, $msg ) {
+    say "[$ts] $ln";
+  }
 }
 
 # vim:ts=2:sw=2:sts=2:et:ft=perl
