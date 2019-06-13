@@ -35,7 +35,7 @@ my $name_re = qr{
   _
 }x;
 
-mention("Now I shall capture some Wordpress backups");
+mention("Scanning for new backups");
 
 find {
   wanted => sub {
@@ -123,6 +123,8 @@ for my $env ( sort keys %stash ) {
 
 $dbh_wp->disconnect;
 $dbh->disconnect;
+
+mention("Scan complete");
 
 sub mysql_options {
   my $conn = shift;
