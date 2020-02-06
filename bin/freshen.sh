@@ -49,7 +49,7 @@ done
 
 # Make reports
 banner "Making reports"
-find "$out" -not -name "*-*" -name "*.csv" | while read fn; do
+find "$out" -not -name "*-*" -name "*.csv" | sort | while read fn; do
   bn="$( basename "$fn" ".csv" )"
   freshen "$bn"
 done
