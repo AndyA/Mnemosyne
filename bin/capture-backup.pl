@@ -24,6 +24,7 @@ my %stash = ();
 my $C       = load_json("config.json");
 my $CONN    = $C->{db};
 my $CONN_WP = $C->{wpdb} // $C->{db};
+my $ROOT    = dir $C->{backup};
 
 my $name_re = qr{
   ^ 
@@ -33,6 +34,8 @@ my $name_re = qr{
   (\d{2})-(\d{2})-(\d{2})
   _
 }x;
+
+mention("Scanning for new backups");
 
 find {
   wanted => sub {
@@ -67,7 +70,7 @@ find {
   },
   no_chdir => 1
  },
- $C->{backup};
+ "$ROOT/";
 
 my $dbh    = dbh($CONN);
 my $dbh_wp = dbh($CONN_WP);
@@ -86,16 +89,17 @@ for my $env ( sort keys %stash ) {
 
     my @pending = grep { !$got || $_ gt $got } @times;
     unless (@pending) {
-      say "No new backups for $env/$site";
+      #      say "No new backups for $env/$site";
       next;
     }
+
+    my $root = dir $C->{sites}, "home", $env, $site;
+    $root->mkpath;
 
     for my $dt (@pending) {
       for my $kind ( sort keys %{ $stash{$env}{$site}{$dt} } ) {
         my $tarball = $backup->{$dt}{$kind};
-        say "Processing $tarball";
-        my $root = dir $C->{backup}, "home", $env, $site;
-        $root->mkpath;
+        mention("Processing $tarball");
 
         if ( $kind eq "database" ) {
           update_db( $root, $env, $site, $kind, $db, $tarball, $dt );
@@ -113,11 +117,14 @@ for my $env ( sort keys %stash ) {
       $dbh->do( "REPLACE INTO `capture` (`key`, `latest`) VALUES (?, ?)",
         {}, $db, $dt );
     }
+    git_gc($root);
   }
 }
 
 $dbh_wp->disconnect;
 $dbh->disconnect;
+
+mention("Scan complete");
 
 sub mysql_options {
   my $conn = shift;
@@ -138,6 +145,12 @@ sub mysql_command {
   my @cmd = ( $cmd, @extra, mysql_options($conn) );
   return @cmd if wantarray;
   return join " ", @cmd;
+}
+
+sub git_gc {
+  my $dir = shift;
+  local $CWD = $dir;
+  system "git", "gc";
 }
 
 sub git_dirty {
@@ -175,7 +188,7 @@ sub unpack_tarball {
 
 sub update_files {
   my ( $root, $env, $site, $kind, $db, $tarball, $ts ) = @_;
-  say "[$ts] Updating $kind $env/$site";
+  mention("Updating $kind $env/$site ($ts)");
 
   my $work = unpack_tarball($tarball);
   my $www = dir $root, "www";
@@ -185,7 +198,7 @@ sub update_files {
 
 sub update_db {
   my ( $root, $env, $site, $kind, $db, $tarball, $ts ) = @_;
-  say "[$ts] Updating $kind $env/$site";
+  mention("Updating $kind $env/$site ($ts)");
 
   my $work = unpack_tarball($tarball);
 
@@ -206,16 +219,20 @@ sub update_db {
 
   my $mysql = mysql_command( "mysql", $CONN_WP );
 
-  say "  Dropping $db";
-  system join " | ", "echo 'DROP DATABASE IF EXISTS `$db`'", $mysql;
-  say "  Creating $db";
+  my $drop_db = sub {
+    mention("  Dropping $db");
+    system join " | ", "echo 'DROP DATABASE IF EXISTS `$db`'", $mysql;
+  };
+
+  $drop_db->();
+  mention("  Creating $db");
   system join " | ", "echo 'CREATE DATABASE `$db`'", $mysql;
   for my $sql (@sql) {
-    say "  Loading $sql into $db";
+    mention("  Loading $sql into $db");
     my $cmd = join " | ", ( $sql =~ /\.gz$/ ? "gzip -cd $sql" : "cat $sql" ),
      "sed -e 's/^INSERT /REPLACE /'",
      "$mysql $db";
-    say "    $cmd";
+    mention("    $cmd");
     system $cmd;
   }
 
@@ -226,7 +243,7 @@ sub update_db {
 
   for my $table (@tables) {
     my $sql = file $dump_dir, "$table.sql";
-    say "  Dumping $table to $sql";
+    mention("  Dumping $table to $sql");
     my $tmp = file $dump_dir, "$table.tmp.sql";
 
     my @mysqldump = (
@@ -243,6 +260,7 @@ sub update_db {
     system @mysqldump;
     rename $tmp, $sql;
   }
+  $drop_db->();
 }
 
 sub dbh {
@@ -262,6 +280,14 @@ sub load_json {
   return JSON->new->decode(
     do { local $/; <$fh> }
   );
+}
+
+sub mention {
+  my $msg = join "", @_;
+  my $ts = DateTime->now->iso8601;
+  for my $ln ( split /\n/, $msg ) {
+    say "[$ts] $ln";
+  }
 }
 
 # vim:ts=2:sw=2:sts=2:et:ft=perl

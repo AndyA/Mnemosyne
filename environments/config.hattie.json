@@ -1,5 +1,6 @@
 {
   "backup": "backwpup/",
+  "sites": "sites",
   "db": {
     "database": "mnemosyne",
     "host": "localhost",
