@@ -41,7 +41,7 @@
     "moment-timezone": "^0.5.25",
     "mysql2": "^1.6.5",
     "nano": "^8.0.1",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "pouchdb": "^7.0.0",
     "pouchdb-debug": "^7.0.0",
     "pouchdb-find": "^7.0.0",
