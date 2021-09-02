@@ -1,10 +1,6 @@
 "use strict";
 
-const os = require("os");
-const Promise = require("bluebird");
 const Sequelize = require("sequelize");
-const lazy = require("lazy-eval").default;
-const dns = Promise.promisifyAll(require("dns"));
 const YAML = require("yamljs");
 const moment = require("moment");
 const csv = require("csv-stringify/lib/sync");
@@ -182,7 +178,7 @@ program
   .command("summary")
   .arguments('<database...>')
   .description("Generate summary report")
-  .action((database, options) => {
+  .action((database) => {
     const al = new ActivityLog(program);
     al.findByDatabase(database)
       .then(log => {
@@ -213,7 +209,7 @@ program
   .command("detail")
   .arguments('<database...>')
   .description("Generate detail report")
-  .action((database, options) => {
+  .action((database) => {
     const al = new ActivityLog(program);
 
     const cols = [
