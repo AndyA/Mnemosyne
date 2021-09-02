@@ -2,18 +2,21 @@
 
 const $ = require("jquery");
 
-$(function() {
-  $(".reveal").click(function(e) {
+$(function () {
+  $(".reveal").click(function (e) {
     let $this = $(this);
     let target = $this.attr("data-show");
+    if (!/^[#.][\w-]+$/.test(target))
+      throw new Error(`Bad data-show attribute`)
+
     let $target = $(target);
 
     let shouldOpen = $this.hasClass("closed");
 
-    $(".fold").slideUp(500).promise().done(function() {
+    $(".fold").slideUp(500).promise().done(function () {
       $(".reveal.open").removeClass("open").addClass("closed");
       if (shouldOpen) {
-        $target.slideDown(500).promise().done(function() {
+        $target.slideDown(500).promise().done(function () {
           $this.removeClass("closed").addClass("open");
         });
       }
