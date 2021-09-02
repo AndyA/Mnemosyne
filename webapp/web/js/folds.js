@@ -6,10 +6,7 @@ $(function () {
   $(".reveal").click(function (e) {
     let $this = $(this);
     let target = $this.attr("data-show");
-    if (!/^[#.][\w-]+$/.test(target))
-      throw new Error(`Bad data-show attribute`)
-
-    let $target = $(target);
+    let $target = $.find(target);
 
     let shouldOpen = $this.hasClass("closed");
 
