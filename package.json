@@ -75,7 +75,7 @@
     "gel-grid": "^4.0.0",
     "gel-sass-tools": "^1.2.1",
     "gel-typography": "^2.0.5",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-define-module": "^0.1.5",
     "gulp-handlebars": "^5.0.2",
     "gulp-live-server": "0.0.31",
