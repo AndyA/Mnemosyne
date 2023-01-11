@@ -27,7 +27,7 @@
     "handlebars": "^4.7.7",
     "html-entities": "^1.2.1",
     "jsonpath": "^1.0.1",
-    "knex": "^0.19.5",
+    "knex": "^2.4.0",
     "lazy-eval": "^1.0.5",
     "lodash": "^4.17.21",
     "markdown-serve": "^0.5.0",
